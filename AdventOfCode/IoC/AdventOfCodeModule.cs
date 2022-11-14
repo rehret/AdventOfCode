@@ -2,7 +2,7 @@
 
 using Autofac;
 
-public class AdventOfCodeModule : Module
+internal class AdventOfCodeModule : Module
 {
     protected override void Load(ContainerBuilder builder)
     {

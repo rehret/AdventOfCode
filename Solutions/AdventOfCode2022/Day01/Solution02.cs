@@ -2,7 +2,7 @@
 
 using AdventOfCode;
 
-public class Solution02 : ISolution
+internal class Solution02 : ISolution
 {
     public Task<string> SolveAsync(string[] input)
     {
