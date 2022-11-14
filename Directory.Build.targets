@@ -3,6 +3,7 @@
   <Import Project="InternalsVisibleTo.targets" />
 
   <PropertyGroup>
+    <WarningsAsErrors Condition="$(TreatWarningsAsErrors) == 'true'">$(WarningsAsErrors),CA2007</WarningsAsErrors>
     <IsPackable Condition="$(IsPackable) == '' AND $(IsTestProject) == 'true'">false</IsPackable>
   </PropertyGroup>
 
