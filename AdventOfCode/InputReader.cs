@@ -13,5 +13,8 @@ internal class InputReader
     }
 
     private static string GetInputFilePath(int year, int day) =>
-        $"Solutions/{year:0000}/AdventOfCode{year:0000}/Day{day:00}/input.txt";
+        Path.Combine(
+            Environment.CurrentDirectory,
+            $"Solutions/{year:0000}/AdventOfCode{year:0000}/Day{day:00}/input.txt"
+        );
 }
