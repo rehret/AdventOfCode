@@ -7,7 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\AdventOfCode\AdventOfCode.csproj" />
+    <ProjectReference Include="..\..\..\AdventOfCode\AdventOfCode.csproj" />
   </ItemGroup>
 
 </Project>

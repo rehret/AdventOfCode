@@ -13,5 +13,5 @@ internal class InputReader
     }
 
     private static string GetInputFilePath(int year, int day) =>
-        $"Solutions/AdventOfCode{year:0000}/Day{day:00}/input.txt";
+        $"Solutions/{year:0000}/AdventOfCode{year:0000}/Day{day:00}/input.txt";
 }
