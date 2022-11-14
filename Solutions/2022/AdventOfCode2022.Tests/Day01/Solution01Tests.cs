@@ -3,7 +3,7 @@
 public class Solution01Tests
 {
     [Fact]
-    public async Task SolveAsync_WithSampleInput_ProducesSampleOutput()
+    public Task SolveAsync_WithSampleInput_ProducesSampleOutput()
     {
         // Arrange
 
@@ -11,5 +11,7 @@ public class Solution01Tests
         // Act
 
         // Assert
+
+        return Task.CompletedTask;
     }
 }
