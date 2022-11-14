@@ -26,14 +26,14 @@ public class AdventOfCodeService : IHostedService
     public async Task StartAsync(CancellationToken cancellationToken)
     {
         var args = Environment.GetCommandLineArgs();
-        if (args.Length == 0 || !_argumentRegex.IsMatch(args[1])) // args[0] is "--project=AdventOfCodeRunner/AdventOfCodeRunner.csproj"
+        if (args.Length == 0 || !args.Any(arg => _argumentRegex.IsMatch(arg)))
         {
             Console.WriteLine("Usage: ./run <year>/<day>/<puzzle>");
             _hostLifetime.StopApplication();
             return;
         }
 
-        var match = _argumentRegex.Match(args[1]);
+        var match = args.Select(arg => _argumentRegex.Match(arg)).First(match => match.Success);
         var year = int.Parse(match.Groups["year"].Value);
         var day = int.Parse(match.Groups["day"].Value);
         var puzzle = int.Parse(match.Groups["puzzle"].Value);
