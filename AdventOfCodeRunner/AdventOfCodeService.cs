@@ -14,7 +14,7 @@ public class AdventOfCodeService : IHostedService
     private readonly IInputReader _inputReader;
     private readonly ILifetimeScope _lifetimeScope;
 
-    private readonly Regex _argumentRegex = new Regex(@"(\d{4})/(\d{1,2})/(\d{1,2})", RegexOptions.Compiled);
+    private readonly Regex _argumentRegex = new(@"(?<year>\d{4})/(?<day>\d{1,2})/(?<puzzle>\d{1,2})", RegexOptions.Compiled);
 
     public AdventOfCodeService(IHostApplicationLifetime hostLifetime, IInputReader inputReader, ILifetimeScope lifetimeScope)
     {
@@ -34,9 +34,9 @@ public class AdventOfCodeService : IHostedService
         }
 
         var match = _argumentRegex.Match(args[1]);
-        var year = int.Parse(match.Groups[1].Value);
-        var day = int.Parse(match.Groups[2].Value);
-        var puzzle = int.Parse(match.Groups[3].Value);
+        var year = int.Parse(match.Groups["year"].Value);
+        var day = int.Parse(match.Groups["day"].Value);
+        var puzzle = int.Parse(match.Groups["puzzle"].Value);
 
         var input = ProcessInput(await _inputReader.GetInputAsync(year, day).ConfigureAwait(false));
         var solution = _lifetimeScope.ResolveKeyed<ISolution>((year, day, puzzle));
