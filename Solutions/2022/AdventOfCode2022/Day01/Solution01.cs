@@ -2,9 +2,11 @@
 
 using AdventOfCode;
 
-internal class Solution01 : ISolution
+internal class Solution01 : AbstractSolution<string>
 {
-    public Task<string> SolveAsync(string[] input)
+    public Solution01(IInputProcessor<string> inputProcessor) : base(inputProcessor) { }
+
+    protected override Task<string> ComputeSolutionAsync(IEnumerable<string> input)
     {
         throw new NotImplementedException();
     }

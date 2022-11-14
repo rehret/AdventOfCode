@@ -2,5 +2,5 @@
 
 public interface IInputProcessor<out T>
 {
-    T[] Process(string[] lines);
+    IEnumerable<T> Process(IEnumerable<string> lines);
 }

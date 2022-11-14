@@ -2,9 +2,9 @@
 
 public abstract class InputProcessor<T> : IInputProcessor<T>
 {
-    public T[] Process(string[] lines)
+    public IEnumerable<T> Process(IEnumerable<string> lines)
     {
-        return lines.Select(ProcessLine).ToArray();
+        return lines.Select(ProcessLine);
     }
 
     protected abstract T ProcessLine(string line);
