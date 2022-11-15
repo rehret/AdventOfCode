@@ -1,10 +1,9 @@
 ﻿namespace AdventOfCodeRunner;
 
-using System.Text.RegularExpressions;
-
 using AdventOfCode;
 
 using Autofac;
+using Autofac.Core.Registration;
 
 using Microsoft.Extensions.Hosting;
 
@@ -13,8 +12,6 @@ internal class AdventOfCodeService : IHostedService
     private readonly IHostApplicationLifetime _hostLifetime;
     private readonly IInputReader _inputReader;
     private readonly ILifetimeScope _lifetimeScope;
-
-    private readonly Regex _argumentRegex = new(@"(?<year>\d{4})/(?<day>\d{1,2})/(?<puzzle>\d{1,2})", RegexOptions.Compiled);
 
     public AdventOfCodeService(IHostApplicationLifetime hostLifetime, IInputReader inputReader, ILifetimeScope lifetimeScope)
     {
@@ -26,21 +23,49 @@ internal class AdventOfCodeService : IHostedService
     public async Task StartAsync(CancellationToken cancellationToken)
     {
         var args = Environment.GetCommandLineArgs();
-        if (args.Length == 0 || !args.Any(arg => _argumentRegex.IsMatch(arg)))
+
+        PuzzleSelection puzzleSelection;
+        try
         {
-            Console.WriteLine("Usage: ./run <year>/<day>/<puzzle>");
+            puzzleSelection = PuzzleSelection.FromArguments(args);
+        }
+        catch (PuzzleSelection.InvalidPuzzleSelectionException)
+        {
+            PrintUsage();
+            _hostLifetime.StopApplication();
+            return;
+        }
+        catch (PuzzleSelection.PuzzleSelectionParseException ex)
+        {
+            PrintUsage();
+            Console.WriteLine(ex.Message);
             _hostLifetime.StopApplication();
             return;
         }
 
-        var match = args.Select(arg => _argumentRegex.Match(arg)).First(match => match.Success);
-        if (!TryParseInputGroup(match.Groups["year"].Value, "year", out var year)) return;
-        if (!TryParseInputGroup(match.Groups["day"].Value, "day", out var day)) return;
-        if (!TryParseInputGroup(match.Groups["puzzle"].Value, "puzzle", out var puzzle)) return;
+        ISolution solution;
+        try
+        {
+            solution = _lifetimeScope.ResolveKeyed<ISolution>((puzzleSelection.Year, puzzleSelection.Day, puzzleSelection.Puzzle));
+        }
+        catch (ComponentNotRegisteredException)
+        {
+            Console.WriteLine($"A Solution for {puzzleSelection.Year:0000}/{puzzleSelection.Day:00}/{puzzleSelection.Puzzle:00} has not been registered");
+            _hostLifetime.StopApplication();
+            return;
+        }
 
-        var input = ProcessInput(await _inputReader.GetInputAsync(year, day).ConfigureAwait(false));
-        var solution = _lifetimeScope.ResolveKeyed<ISolution>((year, day, puzzle));
-
+        IEnumerable<string> input;
+        try
+        {
+            input = await _inputReader.GetInputAsync(puzzleSelection.Year, puzzleSelection.Day).ConfigureAwait(false);
+        }
+        catch (FileNotFoundException ex)
+        {
+            Console.WriteLine($"Could not get input file for {puzzleSelection.Year:0000}/{puzzleSelection.Day:00}/{puzzleSelection.Puzzle:00}: '{ex.FileName}'");
+            _hostLifetime.StopApplication();
+            return;
+        }
         var result = await solution.SolveAsync(input).ConfigureAwait(false);
 
         Console.WriteLine(result);
@@ -52,20 +77,8 @@ internal class AdventOfCodeService : IHostedService
         return Task.CompletedTask;
     }
 
-    private static IEnumerable<string> ProcessInput(string input)
+    private static void PrintUsage()
     {
-        return input
-            .Trim()
-            .Split('\n')
-            .Where(line => !string.IsNullOrWhiteSpace(line))
-            .Select(line => line.Trim());
-    }
-
-    private bool TryParseInputGroup(string value, string name, out int parsedInt)
-    {
-        if (int.TryParse(value, out parsedInt)) return true;
-        Console.WriteLine($"Could not parse {name}: '{value}'");
-        _hostLifetime.StopApplication();
-        return false;
+        Console.WriteLine("Usage: ./run <year>/<day>/<puzzle>");
     }
 }
