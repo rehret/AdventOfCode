@@ -52,13 +52,12 @@ internal class AdventOfCodeService : IHostedService
         return Task.CompletedTask;
     }
 
-    private static string[] ProcessInput(string input)
+    private static IEnumerable<string> ProcessInput(string input)
     {
         return input
             .Trim()
             .Split('\n')
             .Where(line => !string.IsNullOrWhiteSpace(line))
-            .Select(line => line.Trim())
-            .ToArray();
+            .Select(line => line.Trim());
     }
 }
