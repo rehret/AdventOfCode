@@ -3,7 +3,7 @@
 public class Solution01Tests
 {
     [Fact]
-    public Task SolveAsync_WithSampleInput_ProducesSampleOutput()
+    public Task ComputeSolutionAsync_WithSampleInput_ProducesSampleOutput()
     {
         // Arrange
 
