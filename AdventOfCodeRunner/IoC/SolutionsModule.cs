@@ -18,6 +18,7 @@ internal class SolutionsModule : Module
     {
         var assemblies = AssemblyHelpers.GetReferencedAssemblies();
         builder.RegisterAssemblyTypes(assemblies)
+            .Where(type => SolutionTypeFullNameRegex.IsMatch(type.FullName ?? string.Empty))
             .Keyed<ISolution>(type =>
             {
                 var parts = GetSolutionTypeParts(type);
