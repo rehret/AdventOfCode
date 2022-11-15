@@ -5,6 +5,7 @@
     <!-- Add default suffix if there isn't a InternalsVisibleToSuffix or InternalsVisibleTo defined -->
     <ItemGroup Condition="@(InternalsVisibleToSuffix->Count()) == 0 AND @(InternalsVisibleTo->Count()) == 0">
       <InternalsVisibleToSuffix Include=".Tests" />
+      <InternalsVisibleTo Include="DynamicProxyGenAssembly2" />
     </ItemGroup>
 
     <!-- Handle InternalsVisibleTo -->
