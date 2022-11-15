@@ -7,7 +7,7 @@ using Autofac;
 
 using Module = Autofac.Module;
 
-public class AdventOfCodeRunnerModule : Module
+internal class AdventOfCodeRunnerModule : Module
 {
     private static readonly Regex ReferencedAssemblyPattern = new Regex(@"AdventOfCode.*\.dll", RegexOptions.Compiled);
 

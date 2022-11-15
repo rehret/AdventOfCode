@@ -8,7 +8,7 @@ using Autofac;
 
 using Microsoft.Extensions.Hosting;
 
-public class AdventOfCodeService : IHostedService
+internal class AdventOfCodeService : IHostedService
 {
     private readonly IHostApplicationLifetime _hostLifetime;
     private readonly IInputReader _inputReader;
