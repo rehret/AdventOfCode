@@ -34,9 +34,9 @@ internal class AdventOfCodeService : IHostedService
         }
 
         var match = args.Select(arg => _argumentRegex.Match(arg)).First(match => match.Success);
-        var year = int.Parse(match.Groups["year"].Value);
-        var day = int.Parse(match.Groups["day"].Value);
-        var puzzle = int.Parse(match.Groups["puzzle"].Value);
+        if (!TryParseInputGroup(match.Groups["year"].Value, "year", out var year)) return;
+        if (!TryParseInputGroup(match.Groups["day"].Value, "day", out var day)) return;
+        if (!TryParseInputGroup(match.Groups["puzzle"].Value, "puzzle", out var puzzle)) return;
 
         var input = ProcessInput(await _inputReader.GetInputAsync(year, day).ConfigureAwait(false));
         var solution = _lifetimeScope.ResolveKeyed<ISolution>((year, day, puzzle));
@@ -59,5 +59,13 @@ internal class AdventOfCodeService : IHostedService
             .Split('\n')
             .Where(line => !string.IsNullOrWhiteSpace(line))
             .Select(line => line.Trim());
+    }
+
+    private bool TryParseInputGroup(string value, string name, out int parsedInt)
+    {
+        if (int.TryParse(value, out parsedInt)) return true;
+        Console.WriteLine($"Could not parse {name}: '{value}'");
+        _hostLifetime.StopApplication();
+        return false;
     }
 }

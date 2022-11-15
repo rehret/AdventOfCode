@@ -25,4 +25,14 @@ public class IntInputProcessorTests
         // Assert
         Assert.Equal(expected, result);
     }
+
+    [Fact]
+    public void Process_GivenInvalidInput_ThrowsIntInputProcessorParsingException()
+    {
+        // Arrange
+        const string input = "A";
+
+        // Act & Assert
+        Assert.Throws<IntInputProcessorParsingException>(() => _inputProcessor.Process(new[] { input }).ToArray());
+    }
 }
