@@ -1,7 +1,5 @@
 ﻿namespace AdventOfCode2021.Day01;
 
-using AdventOfCode;
-
 using AdventOfCode2021.Day01.Models;
 
 internal class Solution01 : AbstractSolution<int>

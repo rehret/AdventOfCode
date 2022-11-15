@@ -2,8 +2,6 @@
 
 using System.Text.RegularExpressions;
 
-using AdventOfCode;
-
 using AdventOfCode2021.Day02.Models;
 
 internal class SubmarineInstructionInputProcessor : InputProcessor<SubmarineInstruction>

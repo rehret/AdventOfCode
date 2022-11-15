@@ -1,7 +1,5 @@
 ﻿namespace AdventOfCode2021.Day01;
 
-using AdventOfCode;
-
 using Autofac;
 
 internal class Module : Autofac.Module

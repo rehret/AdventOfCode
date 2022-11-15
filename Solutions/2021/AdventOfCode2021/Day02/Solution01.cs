@@ -1,7 +1,5 @@
 ﻿namespace AdventOfCode2021.Day02;
 
-using AdventOfCode;
-
 using AdventOfCode2021.Day02.Models;
 
 internal class Solution01 : AbstractSolution<SubmarineInstruction>
