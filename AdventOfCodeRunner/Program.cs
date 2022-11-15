@@ -2,35 +2,37 @@
 
 using System.Reflection;
 
-using AdventOfCodeRunner.IoC;
-
 using Autofac;
 using Autofac.Extensions.DependencyInjection;
 
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 
 public static class Program
 {
-    public static async Task Main(string[] args)
+    public static async Task Main()
     {
-        await CreateHostBuilder(args).RunConsoleAsync().ConfigureAwait(false);
+        var serviceProvider = BuildServiceProvider();
+        await using var _ = serviceProvider.ConfigureAwait(false);
+        var service = serviceProvider.GetRequiredService<IAdventOfCodeService>();
+        await service.ExecuteAsync(CancellationToken.None).ConfigureAwait(false);
     }
 
-    private static IHostBuilder CreateHostBuilder(string[] args)
+    private static AutofacServiceProvider BuildServiceProvider()
     {
-        return Host.CreateDefaultBuilder(args)
-            .ConfigureServices(services =>
+        var serviceCollection = new ServiceCollection()
+            .AddLogging(cfg => cfg.AddSimpleConsole(options =>
             {
-                services.AddHostedService<AdventOfCodeService>();
-                services.AddAutofac(builder => builder.RegisterModule<AdventOfCodeRunnerModule>());
-                services.AddLogging(builder =>
-                {
-                    builder.AddFilter("Microsoft", LogLevel.Warning);
-                });
-            })
-            .ConfigureContainer<ContainerBuilder>(builder => builder.RegisterAssemblyModules(Assembly.GetExecutingAssembly()))
-            .UseServiceProviderFactory(new AutofacServiceProviderFactory());
+                options.IncludeScopes = true;
+                options.SingleLine = false;
+            }))
+            .Configure<LoggerFilterOptions>(cfg => cfg.MinLevel = LogLevel.Information);
+
+        var builder = new ContainerBuilder();
+        builder.Populate(serviceCollection);
+        builder.RegisterAssemblyModules(Assembly.GetExecutingAssembly());
+
+        var container = builder.Build();
+        return new AutofacServiceProvider(container);
     }
 }

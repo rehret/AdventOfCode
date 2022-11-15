@@ -5,22 +5,23 @@ using AdventOfCode;
 using Autofac;
 using Autofac.Core.Registration;
 
-using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
 
-internal class AdventOfCodeService : IHostedService
+internal class AdventOfCodeService
+    : IAdventOfCodeService
 {
-    private readonly IHostApplicationLifetime _hostLifetime;
     private readonly IInputReader _inputReader;
     private readonly ILifetimeScope _lifetimeScope;
+    private readonly ILogger _logger;
 
-    public AdventOfCodeService(IHostApplicationLifetime hostLifetime, IInputReader inputReader, ILifetimeScope lifetimeScope)
+    public AdventOfCodeService(IInputReader inputReader, ILifetimeScope lifetimeScope, ILoggerFactory loggerFactory)
     {
-        _hostLifetime = hostLifetime;
         _inputReader = inputReader;
         _lifetimeScope = lifetimeScope;
+        _logger = loggerFactory.CreateLogger<AdventOfCodeService>();
     }
 
-    public async Task StartAsync(CancellationToken cancellationToken)
+    public async Task ExecuteAsync(CancellationToken cancellationToken)
     {
         var args = Environment.GetCommandLineArgs();
 
@@ -32,14 +33,12 @@ internal class AdventOfCodeService : IHostedService
         catch (PuzzleSelection.InvalidPuzzleSelectionException)
         {
             PrintUsage();
-            _hostLifetime.StopApplication();
             return;
         }
         catch (PuzzleSelection.PuzzleSelectionParseException ex)
         {
             PrintUsage();
-            Console.WriteLine(ex.Message);
-            _hostLifetime.StopApplication();
+            _logger.LogError(ex, "Could not parse puzzle selection");
             return;
         }
 
@@ -50,8 +49,7 @@ internal class AdventOfCodeService : IHostedService
         }
         catch (ComponentNotRegisteredException)
         {
-            Console.WriteLine($"A Solution for {puzzleSelection.Year:0000}/{puzzleSelection.Day:00}/{puzzleSelection.Puzzle:00} has not been registered");
-            _hostLifetime.StopApplication();
+            _logger.LogError("A Solution for {PuzzleSelectionYear:0000}/{PuzzleSelectionDay:00}/{PuzzleSelectionPuzzle:00} has not been registered", puzzleSelection.Year, puzzleSelection.Day, puzzleSelection.Puzzle);
             return;
         }
 
@@ -62,23 +60,16 @@ internal class AdventOfCodeService : IHostedService
         }
         catch (FileNotFoundException ex)
         {
-            Console.WriteLine($"Could not get input file for {puzzleSelection.Year:0000}/{puzzleSelection.Day:00}/{puzzleSelection.Puzzle:00}: '{ex.FileName}'");
-            _hostLifetime.StopApplication();
+            _logger.LogError("Could not get input file for {PuzzleSelectionYear:0000}/{PuzzleSelectionDay:00}/{PuzzleSelectionPuzzle:00}: \'{TargetFileName}\'", puzzleSelection.Year, puzzleSelection.Day, puzzleSelection.Puzzle, ex.FileName);
             return;
         }
         var result = await solution.SolveAsync(input).ConfigureAwait(false);
 
-        Console.WriteLine(result);
-        _hostLifetime.StopApplication();
+        _logger.LogInformation("{Result}", result);
     }
 
-    public Task StopAsync(CancellationToken cancellationToken)
+    private void PrintUsage()
     {
-        return Task.CompletedTask;
-    }
-
-    private static void PrintUsage()
-    {
-        Console.WriteLine("Usage: ./run <year>/<day>/<puzzle>");
+        _logger.LogInformation("Usage: ./run <year>/<day>/<puzzle>");
     }
 }

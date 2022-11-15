@@ -10,6 +10,8 @@ internal class AdventOfCodeRunnerModule : Module
 {
     protected override void Load(ContainerBuilder builder)
     {
+        builder.RegisterType<AdventOfCodeService>().As<IAdventOfCodeService>();
+
         var assemblies = AssemblyHelpers.GetReferencedAssemblies(false);
         builder.RegisterAssemblyModules(assemblies);
     }
