@@ -36,11 +36,15 @@ internal class SolutionsModule : Module
 
         if (!match.Success) return null;
 
+        if (!int.TryParse(match.Groups["year"].Value, out var year)) return null;
+        if (!int.TryParse(match.Groups["day"].Value, out var day)) return null;
+        if (!int.TryParse(match.Groups["solution"].Value, out var solution)) return null;
+
         return new SolutionTypeParts
         {
-            Year = int.Parse(match.Groups["year"].Value),
-            Day = int.Parse(match.Groups["day"].Value),
-            Solution = int.Parse(match.Groups["solution"].Value)
+            Year = year,
+            Day = day,
+            Solution = solution
         };
     }
 
