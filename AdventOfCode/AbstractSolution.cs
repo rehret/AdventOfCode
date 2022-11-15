@@ -15,5 +15,5 @@ public abstract class AbstractSolution<T> : ISolution
         return ComputeSolutionAsync(processedInput);
     }
 
-    protected abstract Task<string> ComputeSolutionAsync(IEnumerable<T> input);
+    public abstract Task<string> ComputeSolutionAsync(IEnumerable<T> input);
 }
