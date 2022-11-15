@@ -13,5 +13,12 @@
     <ProjectReference Include="..\AdventOfCode\AdventOfCode.csproj" />
     <ProjectReference Include="..\Solutions\2022\AdventOfCode2022\AdventOfCode2022.csproj" />
   </ItemGroup>
+  
+  <ItemGroup>
+    <Content Include="..\Resources\**\*">
+      <Link>Resources\%(RecursiveDir)%(Filename)%(Extension)</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
 
 </Project>
