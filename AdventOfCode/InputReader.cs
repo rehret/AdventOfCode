@@ -2,21 +2,12 @@
 
 using System.Text;
 
-public delegate IInputReader InputReaderFactory(PuzzleSelection puzzleSelection);
-
 internal class InputReader
     : IInputReader
 {
-    private readonly PuzzleSelection _puzzleSelection;
-
-    public InputReader(PuzzleSelection puzzleSelection)
+    public async Task<IEnumerable<string>> GetInputAsync(PuzzleSelection puzzleSelection)
     {
-        _puzzleSelection = puzzleSelection;
-    }
-
-    public async Task<IEnumerable<string>> GetInputAsync()
-    {
-        var filepath = GetInputFilePath(_puzzleSelection.Year, _puzzleSelection.Day);
+        var filepath = GetInputFilePath(puzzleSelection.Year, puzzleSelection.Day);
         using var streamReader = new StreamReader(filepath, Encoding.UTF8);
         return (await streamReader.ReadToEndAsync().ConfigureAwait(false))
             .Split('\n')

@@ -1,27 +1,34 @@
 ﻿namespace AdventOfCode;
 
-using Microsoft.Extensions.Logging;
+using System.Reflection;
 
 public abstract class AbstractSolution<TInput, TResult> : ISolution
 {
-    private readonly IInputReader _inputReader;
-    private readonly IInputProcessor<TInput> _inputProcessor;
-    private readonly ILogger _logger;
+    private readonly IInputProvider<TInput> _inputProvider;
 
-    protected AbstractSolution(IInputReader inputReader, IInputProcessor<TInput> inputProcessor, ILoggerFactory loggerFactory)
+    protected AbstractSolution(IInputProvider<TInput> inputProvider)
     {
-        _inputReader = inputReader;
-        _inputProcessor = inputProcessor;
-        _logger = loggerFactory.CreateLogger(GetType());
+        _inputProvider = inputProvider;
     }
 
-    public async Task SolveAsync()
+    public async Task<string> SolveAsync()
     {
-        var input = await _inputReader.GetInputAsync().ConfigureAwait(false);
-        var processedInput = _inputProcessor.Process(input);
-        var result = await ComputeSolutionAsync(processedInput).ConfigureAwait(false);
-        _logger.LogInformation("{Result}", result);
+        var input = await _inputProvider.GetInputAsync(GetPuzzleSelection()).ConfigureAwait(false);
+        var result = await ComputeSolutionAsync(input).ConfigureAwait(false);
+        return GetStringFromResult(result);
     }
 
     public abstract Task<TResult> ComputeSolutionAsync(IEnumerable<TInput> input);
+
+    protected virtual string GetStringFromResult(TResult result) => result?.ToString() ?? string.Empty;
+
+    private PuzzleSelection GetPuzzleSelection()
+    {
+        var attribute = GetType().GetCustomAttribute<SolutionAttribute>();
+        if (attribute == null)
+        {
+            throw new Exception($"Solution '{GetType().FullName}' does not have a SolutionAttribute");
+        }
+        return new PuzzleSelection(attribute.Year, attribute.Day, attribute.Puzzle);
+    }
 }

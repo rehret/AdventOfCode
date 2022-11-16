@@ -1,6 +1,6 @@
 ﻿namespace AdventOfCode2021.Day02.Models;
 
-internal enum SubmarineMovement
+public enum SubmarineMovement
 {
     Forward,
     Up,

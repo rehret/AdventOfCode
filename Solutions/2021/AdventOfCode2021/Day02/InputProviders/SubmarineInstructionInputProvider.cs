@@ -1,12 +1,14 @@
-﻿namespace AdventOfCode2021.Day02.InputProcessors;
+﻿namespace AdventOfCode2021.Day02.InputProviders;
 
 using System.Text.RegularExpressions;
 
 using AdventOfCode2021.Day02.Models;
 
-internal class SubmarineInstructionInputProcessor : InputProcessor<SubmarineInstruction>
+internal class SubmarineInstructionInputProvider : InputProvider<SubmarineInstruction>
 {
     private static readonly Regex WhitespaceRegex = new(@"\s+", RegexOptions.Compiled);
+
+    public SubmarineInstructionInputProvider(IInputReader inputReader) : base(inputReader) { }
 
     protected override SubmarineInstruction ProcessLine(string line)
     {

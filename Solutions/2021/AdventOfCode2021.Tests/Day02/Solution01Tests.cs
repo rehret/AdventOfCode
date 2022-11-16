@@ -3,15 +3,13 @@
 using AdventOfCode2021.Day02;
 using AdventOfCode2021.Day02.Models;
 
-using Microsoft.Extensions.Logging.Abstractions;
-
 public class Solution01Tests
 {
     private readonly Solution01 _solution;
 
     public Solution01Tests()
     {
-        _solution = new Solution01(new Mock<IInputReader>().Object, new Mock<IInputProcessor<SubmarineInstruction>>().Object, new NullLoggerFactory());
+        _solution = new Solution01(new Mock<IInputProvider<SubmarineInstruction>>().Object);
     }
 
     [Fact]

@@ -52,7 +52,8 @@ internal class AdventOfCodeService
             return;
         }
 
-        await solution.SolveAsync().ConfigureAwait(false);
+        var result = await solution.SolveAsync().ConfigureAwait(false);
+        Console.WriteLine(result);
     }
 
     private void PrintUsage()

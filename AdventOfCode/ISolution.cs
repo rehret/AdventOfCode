@@ -2,5 +2,5 @@
 
 public interface ISolution
 {
-    Task SolveAsync();
+    Task<string> SolveAsync();
 }

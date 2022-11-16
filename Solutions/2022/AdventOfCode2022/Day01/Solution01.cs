@@ -1,12 +1,9 @@
 ﻿namespace AdventOfCode2022.Day01;
 
-using Microsoft.Extensions.Logging;
-
-internal class Solution01 : AbstractSolution<string, int>
+[Solution(2022, 1, 1)]
+public class Solution01 : AbstractSolution<string, int>
 {
-    public Solution01(IInputReader inputReader, IInputProcessor<string> inputProcessor, ILoggerFactory loggerFactory)
-        : base(inputReader, inputProcessor, loggerFactory)
-    { }
+    public Solution01(IInputProvider<string> inputProvider) : base(inputProvider) { }
 
     public override Task<int> ComputeSolutionAsync(IEnumerable<string> input)
     {

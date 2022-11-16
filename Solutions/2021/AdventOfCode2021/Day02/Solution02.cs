@@ -2,13 +2,10 @@
 
 using AdventOfCode2021.Day02.Models;
 
-using Microsoft.Extensions.Logging;
-
-internal class Solution02 : AbstractSolution<SubmarineInstruction, int>
+[Solution(2021, 2, 2)]
+public class Solution02 : AbstractSolution<SubmarineInstruction, int>
 {
-    public Solution02(IInputReader inputReader, IInputProcessor<SubmarineInstruction> inputProcessor, ILoggerFactory loggerFactory)
-        : base(inputReader, inputProcessor, loggerFactory)
-    { }
+    public Solution02(IInputProvider<SubmarineInstruction> inputProvider) : base(inputProvider) { }
 
     public override Task<int> ComputeSolutionAsync(IEnumerable<SubmarineInstruction> instructions)
     {

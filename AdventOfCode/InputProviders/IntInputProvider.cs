@@ -1,7 +1,9 @@
-﻿namespace AdventOfCode.InputProcessors;
+﻿namespace AdventOfCode.InputProviders;
 
-internal class IntInputProcessor : InputProcessor<int>
+internal class IntInputProvider : InputProvider<int>
 {
+    public IntInputProvider(IInputReader inputReader) : base(inputReader) { }
+
     protected override int ProcessLine(string line)
     {
         if (!int.TryParse(line, out var parsedInt))

@@ -2,15 +2,12 @@
 
 using AdventOfCode2021.Day01.Models;
 
-using Microsoft.Extensions.Logging;
-
-internal class Solution02 : AbstractSolution<int, int>
+[Solution(2021, 1, 2)]
+public class Solution02 : AbstractSolution<int, int>
 {
     private const ushort WindowSize = 3;
 
-    public Solution02(IInputReader inputReader, IInputProcessor<int> inputProcessor, ILoggerFactory loggerFactory)
-        : base(inputReader, inputProcessor, loggerFactory)
-    { }
+    public Solution02(IInputProvider<int> inputProvider) : base(inputProvider)  { }
 
     public override Task<int> ComputeSolutionAsync(IEnumerable<int> input)
     {
