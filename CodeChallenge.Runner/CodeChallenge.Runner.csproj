@@ -11,12 +11,12 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\CodeChallenge\CodeChallenge.csproj" />
+    <ProjectReference Include="..\Solutions\CodeChallenge\CodeChallenge.csproj" />
     <ProjectReference Include="..\Solutions\AdventOfCode\CodeChallenge.AdventOfCode\CodeChallenge.AdventOfCode.csproj" />
     <ProjectReference Include="..\Solutions\AdventOfCode\2021\CodeChallenge.AdventOfCode.AdventOfCode2021\CodeChallenge.AdventOfCode.AdventOfCode2021.csproj" />
     <ProjectReference Include="..\Solutions\AdventOfCode\2022\CodeChallenge.AdventOfCode.AdventOfCode2022\CodeChallenge.AdventOfCode.AdventOfCode2022.csproj" />
   </ItemGroup>
-  
+
   <ItemGroup>
     <Content Include="..\Resources\**\*">
       <Link>Resources\%(RecursiveDir)%(Filename)%(Extension)</Link>
