@@ -1,0 +1,18 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net7.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\CodeChallenge\CodeChallenge.csproj" />
+  </ItemGroup>
+  
+  <ItemGroup>
+    <PackageReference Include="SimpleBase" Version="4.0.0" />
+    <PackageReference Include="BouncyCastle.NetCore" Version="1.9.0" />
+  </ItemGroup>
+
+</Project>

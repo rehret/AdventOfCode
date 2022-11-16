@@ -4,10 +4,11 @@ using System.Text.RegularExpressions;
 
 using CodeChallenge;
 using CodeChallenge.AdventOfCode;
+using CodeChallenge.TomsDataOnion;
 
 public static class ChallengeSelectionParser
 {
-    private static readonly Regex PuzzleSelectionRegex = new Regex(@"^(?<Type>\w+)/(?<Selection>([\w\d]+/)+[\w\d]+)", RegexOptions.Compiled);
+    private static readonly Regex PuzzleSelectionRegex = new Regex(@"^(?<Type>\w+)/(?<Selection>([\w\d]+/)*[\w\d]+)", RegexOptions.Compiled);
 
     public static bool TryParse(IEnumerable<string> args, out ChallengeSelection challengeSelection)
     {
@@ -28,31 +29,40 @@ public static class ChallengeSelectionParser
         challengeSelection = new ChallengeSelection();
         return type switch
         {
-            PuzzleType.AdventOfCode => AdventOfCodeChallengeSelection.TryParse(match.Groups["Selection"].Value, out challengeSelection),
+            ChallengeType.AdventOfCode => AdventOfCodeChallengeSelection.TryParse(match.Groups["Selection"].Value, out challengeSelection),
+            ChallengeType.TomsDataOnion => TomsDataOnionChallengeSelection.TryParse(match.Groups["Selection"].Value, out challengeSelection),
             _                       => false
         };
     }
 
-    private static bool TryParsePuzzleType(string input, out PuzzleType type)
+    private static bool TryParsePuzzleType(string input, out ChallengeType type)
     {
         switch (input.Trim().ToLower())
         {
             case "advent":
             case "adventofcode":
             {
-                type = PuzzleType.AdventOfCode;
+                type = ChallengeType.AdventOfCode;
+                return true;
+            }
+            case "tomsdataonion":
+            case "toms":
+            case "dataonion":
+            {
+                type = ChallengeType.TomsDataOnion;
                 return true;
             }
             default:
             {
-                type = PuzzleType.AdventOfCode;
+                type = ChallengeType.AdventOfCode;
                 return false;
             }
         }
      }
 
-    private enum PuzzleType
+    private enum ChallengeType
     {
-        AdventOfCode
+        AdventOfCode,
+        TomsDataOnion
     }
 }

@@ -56,9 +56,10 @@ internal class CodeChallengeService
         Console.WriteLine();
         Console.WriteLine("Usage: ./run <puzzle selector>");
         Console.WriteLine();
-        Console.WriteLine("  Puzzle Type       Selector");
-        Console.WriteLine("  --------------    -------------------------------------------");
-        Console.WriteLine("  Advent Of Code    <AdventOfCode|advent>/<year>/<day>/<puzzle>");
+        Console.WriteLine("  Puzzle Type         Selector");
+        Console.WriteLine("  ----------------    -------------------------------------------");
+        Console.WriteLine("  Advent Of Code      <AdventOfCode|advent>/<year>/<day>/<puzzle>");
+        Console.WriteLine("  Tom's Data Onion    <CodeChallenge.TomsDataOnion|Toms|DataOnion>/<layer>");
         Console.WriteLine();
     }
 }
