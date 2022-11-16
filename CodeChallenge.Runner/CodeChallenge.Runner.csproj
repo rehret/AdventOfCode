@@ -1,0 +1,27 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Autofac.Extensions.DependencyInjection" Version="8.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Logging" Version="7.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Console" Version="7.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\CodeChallenge\CodeChallenge.csproj" />
+    <ProjectReference Include="..\Solutions\AdventOfCode\CodeChallenge.AdventOfCode\CodeChallenge.AdventOfCode.csproj" />
+    <ProjectReference Include="..\Solutions\AdventOfCode\2021\CodeChallenge.AdventOfCode.AdventOfCode2021\CodeChallenge.AdventOfCode.AdventOfCode2021.csproj" />
+    <ProjectReference Include="..\Solutions\AdventOfCode\2022\CodeChallenge.AdventOfCode.AdventOfCode2022\CodeChallenge.AdventOfCode.AdventOfCode2022.csproj" />
+  </ItemGroup>
+  
+  <ItemGroup>
+    <Content Include="..\Resources\**\*">
+      <Link>Resources\%(RecursiveDir)%(Filename)%(Extension)</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+</Project>

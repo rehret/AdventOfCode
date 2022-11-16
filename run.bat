@@ -1,2 +1,2 @@
 @echo off
-dotnet run --project=AdventOfCodeRunner/AdventOfCodeRunner.csproj %*
+dotnet run --project=CodeChallenge.Runner\CodeChallenge.Runner.csproj %*

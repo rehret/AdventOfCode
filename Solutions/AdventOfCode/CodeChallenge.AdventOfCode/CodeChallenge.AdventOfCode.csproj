@@ -1,0 +1,12 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <ItemGroup>
+    <InternalsVisibleTo Include="CodeChallenge.AdventOfCode.AdventOfCode2021" />
+    <InternalsVisibleTo Include="CodeChallenge.AdventOfCode.AdventOfCode2022" />
+  </ItemGroup>
+  
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\CodeChallenge\CodeChallenge.csproj" />
+  </ItemGroup>
+
+</Project>

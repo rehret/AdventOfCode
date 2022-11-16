@@ -1,3 +1,3 @@
 #!/bin/bash
 
-dotnet run --Project=AdventOfCodeRunner/AdventOfCodeRunner.csproj $@
+dotnet run --Project=CodeChallenge.Runner/CodeChallenge.Runner.csproj $@
