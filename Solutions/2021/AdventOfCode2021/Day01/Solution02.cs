@@ -2,13 +2,17 @@
 
 using AdventOfCode2021.Day01.Models;
 
-internal class Solution02 : AbstractSolution<int>
+using Microsoft.Extensions.Logging;
+
+internal class Solution02 : AbstractSolution<int, int>
 {
     private const ushort WindowSize = 3;
 
-    public Solution02(IInputProcessor<int> inputProcessor) : base(inputProcessor) { }
+    public Solution02(IInputReader inputReader, IInputProcessor<int> inputProcessor, ILoggerFactory loggerFactory)
+        : base(inputReader, inputProcessor, loggerFactory)
+    { }
 
-    public override Task<string> ComputeSolutionAsync(IEnumerable<int> input)
+    public override Task<int> ComputeSolutionAsync(IEnumerable<int> input)
     {
         var inputArray = input.ToArray();
         var increaseCount = inputArray
@@ -27,6 +31,6 @@ internal class Solution02 : AbstractSolution<int>
                 )
             ).IncreaseCount;
 
-        return Task.FromResult(increaseCount.ToString());
+        return Task.FromResult(increaseCount);
     }
 }

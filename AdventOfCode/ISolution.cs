@@ -2,5 +2,5 @@
 
 public interface ISolution
 {
-    Task<string> SolveAsync(IEnumerable<string> input);
+    Task SolveAsync();
 }

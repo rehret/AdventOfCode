@@ -1,10 +1,14 @@
 ﻿namespace AdventOfCode2022.Day01;
 
-internal class Solution01 : AbstractSolution<string>
-{
-    public Solution01(IInputProcessor<string> inputProcessor) : base(inputProcessor) { }
+using Microsoft.Extensions.Logging;
 
-    public override Task<string> ComputeSolutionAsync(IEnumerable<string> input)
+internal class Solution01 : AbstractSolution<string, int>
+{
+    public Solution01(IInputReader inputReader, IInputProcessor<string> inputProcessor, ILoggerFactory loggerFactory)
+        : base(inputReader, inputProcessor, loggerFactory)
+    { }
+
+    public override Task<int> ComputeSolutionAsync(IEnumerable<string> input)
     {
         throw new NotImplementedException();
     }

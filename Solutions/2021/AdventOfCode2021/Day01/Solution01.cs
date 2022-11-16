@@ -2,11 +2,15 @@
 
 using AdventOfCode2021.Day01.Models;
 
-internal class Solution01 : AbstractSolution<int>
-{
-    public Solution01(IInputProcessor<int> inputProcessor) : base(inputProcessor) { }
+using Microsoft.Extensions.Logging;
 
-    public override Task<string> ComputeSolutionAsync(IEnumerable<int> input)
+internal class Solution01 : AbstractSolution<int, int>
+{
+    public Solution01(IInputReader inputReader, IInputProcessor<int> inputProcessor, ILoggerFactory loggerFactory)
+        : base(inputReader, inputProcessor, loggerFactory)
+    { }
+
+    public override Task<int> ComputeSolutionAsync(IEnumerable<int> input)
     {
         var increaseCount = input
             .Aggregate(
@@ -19,6 +23,6 @@ internal class Solution01 : AbstractSolution<int>
             )
             .IncreaseCount;
 
-        return Task.FromResult(increaseCount.ToString());
+        return Task.FromResult(increaseCount);
     }
 }

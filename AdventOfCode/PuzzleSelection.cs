@@ -1,21 +1,10 @@
-﻿namespace AdventOfCodeRunner;
+﻿namespace AdventOfCode;
 
 using System.Text.RegularExpressions;
 
-internal class PuzzleSelection
+public record PuzzleSelection(int Year, int Day, int Puzzle)
 {
     private static readonly Regex ArgumentRegex = new(@"^(?<year>\d{4})/(?<day>\d{1,2})/(?<puzzle>\d{1,2}$)", RegexOptions.Compiled);
-
-    public int Year { get; }
-    public int Day { get; }
-    public int Puzzle { get; }
-
-    private PuzzleSelection(int year, int day, int puzzle)
-    {
-        Year = year;
-        Day = day;
-        Puzzle = puzzle;
-    }
 
     public static PuzzleSelection FromArguments(string[] args)
     {

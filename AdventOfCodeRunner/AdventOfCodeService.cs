@@ -2,7 +2,8 @@
 
 using AdventOfCode;
 
-using Autofac;
+using AdventOfCodeRunner.IoC;
+
 using Autofac.Core.Registration;
 
 using Microsoft.Extensions.Logging;
@@ -10,14 +11,12 @@ using Microsoft.Extensions.Logging;
 internal class AdventOfCodeService
     : IAdventOfCodeService
 {
-    private readonly IInputReader _inputReader;
-    private readonly ILifetimeScope _lifetimeScope;
+    private readonly SolutionFactory _solutionFactory;
     private readonly ILogger _logger;
 
-    public AdventOfCodeService(IInputReader inputReader, ILifetimeScope lifetimeScope, ILoggerFactory loggerFactory)
+    public AdventOfCodeService(SolutionFactory solutionFactory, ILoggerFactory loggerFactory)
     {
-        _inputReader = inputReader;
-        _lifetimeScope = lifetimeScope;
+        _solutionFactory = solutionFactory;
         _logger = loggerFactory.CreateLogger<AdventOfCodeService>();
     }
 
@@ -45,7 +44,7 @@ internal class AdventOfCodeService
         ISolution solution;
         try
         {
-            solution = _lifetimeScope.ResolveKeyed<ISolution>((puzzleSelection.Year, puzzleSelection.Day, puzzleSelection.Puzzle));
+            solution = _solutionFactory(puzzleSelection);
         }
         catch (ComponentNotRegisteredException)
         {
@@ -53,19 +52,7 @@ internal class AdventOfCodeService
             return;
         }
 
-        IEnumerable<string> input;
-        try
-        {
-            input = await _inputReader.GetInputAsync(puzzleSelection.Year, puzzleSelection.Day).ConfigureAwait(false);
-        }
-        catch (FileNotFoundException ex)
-        {
-            _logger.LogError("Could not get input file for {PuzzleSelectionYear:0000}/{PuzzleSelectionDay:00}/{PuzzleSelectionPuzzle:00}: \'{TargetFileName}\'", puzzleSelection.Year, puzzleSelection.Day, puzzleSelection.Puzzle, ex.FileName);
-            return;
-        }
-        var result = await solution.SolveAsync(input).ConfigureAwait(false);
-
-        _logger.LogInformation("{Result}", result);
+        await solution.SolveAsync().ConfigureAwait(false);
     }
 
     private void PrintUsage()

@@ -2,14 +2,18 @@
 
 using AdventOfCode2021.Day02.Models;
 
-internal class Solution02 : AbstractSolution<SubmarineInstruction>
-{
-    public Solution02(IInputProcessor<SubmarineInstruction> inputProcessor) : base(inputProcessor) { }
+using Microsoft.Extensions.Logging;
 
-    public override Task<string> ComputeSolutionAsync(IEnumerable<SubmarineInstruction> instructions)
+internal class Solution02 : AbstractSolution<SubmarineInstruction, int>
+{
+    public Solution02(IInputReader inputReader, IInputProcessor<SubmarineInstruction> inputProcessor, ILoggerFactory loggerFactory)
+        : base(inputReader, inputProcessor, loggerFactory)
+    { }
+
+    public override Task<int> ComputeSolutionAsync(IEnumerable<SubmarineInstruction> instructions)
     {
         var result = instructions.Aggregate(new SubmarinePosition(), ExecuteInstruction);
-        return Task.FromResult((result.X * result.Y).ToString());
+        return Task.FromResult(result.X * result.Y);
     }
 
     private static SubmarinePosition ExecuteInstruction(SubmarinePosition position, SubmarineInstruction instruction) => instruction.Movement switch

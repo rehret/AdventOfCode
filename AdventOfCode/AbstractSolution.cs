@@ -1,19 +1,27 @@
 ﻿namespace AdventOfCode;
 
-public abstract class AbstractSolution<T> : ISolution
+using Microsoft.Extensions.Logging;
+
+public abstract class AbstractSolution<TInput, TResult> : ISolution
 {
-    private readonly IInputProcessor<T> _inputProcessor;
+    private readonly IInputReader _inputReader;
+    private readonly IInputProcessor<TInput> _inputProcessor;
+    private readonly ILogger _logger;
 
-    protected AbstractSolution(IInputProcessor<T> inputProcessor)
+    protected AbstractSolution(IInputReader inputReader, IInputProcessor<TInput> inputProcessor, ILoggerFactory loggerFactory)
     {
+        _inputReader = inputReader;
         _inputProcessor = inputProcessor;
+        _logger = loggerFactory.CreateLogger(GetType());
     }
 
-    public Task<string> SolveAsync(IEnumerable<string> input)
+    public async Task SolveAsync()
     {
+        var input = await _inputReader.GetInputAsync().ConfigureAwait(false);
         var processedInput = _inputProcessor.Process(input);
-        return ComputeSolutionAsync(processedInput);
+        var result = await ComputeSolutionAsync(processedInput).ConfigureAwait(false);
+        _logger.LogInformation("{Result}", result);
     }
 
-    public abstract Task<string> ComputeSolutionAsync(IEnumerable<T> input);
+    public abstract Task<TResult> ComputeSolutionAsync(IEnumerable<TInput> input);
 }
