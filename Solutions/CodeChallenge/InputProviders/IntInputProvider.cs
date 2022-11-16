@@ -2,10 +2,10 @@
 
 using CodeChallenge;
 
-internal class IntInputProvider<T> : InputProvider<T, int>
-    where T : ChallengeSelection
+internal class IntInputProvider<TChallengeSelection> : InputProvider<TChallengeSelection, int>
+    where TChallengeSelection : ChallengeSelection
 {
-    public IntInputProvider(IInputReader<T> inputReader) : base(inputReader) { }
+    public IntInputProvider(IInputReader<TChallengeSelection> inputReader) : base(inputReader) { }
 
     protected override int ProcessLine(string line)
     {

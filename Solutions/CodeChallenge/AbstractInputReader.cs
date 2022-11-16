@@ -2,10 +2,10 @@
 
 using System.Text;
 
-public abstract class AbstractInputReader<T> : IInputReader<T>
-    where T : ChallengeSelection
+public abstract class AbstractInputReader<TChallengeSelection> : IInputReader<TChallengeSelection>
+    where TChallengeSelection : ChallengeSelection
 {
-    public async Task<IEnumerable<string>> GetInputAsync(T challengeSelection)
+    public async Task<IEnumerable<string>> GetInputAsync(TChallengeSelection challengeSelection)
     {
         var filepath = GetInputFilePath(challengeSelection);
         using var streamReader = new StreamReader(filepath, Encoding.UTF8);
@@ -15,5 +15,5 @@ public abstract class AbstractInputReader<T> : IInputReader<T>
             .Select(line => line.Trim());
     }
 
-    protected abstract string GetInputFilePath(T challengeSelection);
+    protected abstract string GetInputFilePath(TChallengeSelection challengeSelection);
 }

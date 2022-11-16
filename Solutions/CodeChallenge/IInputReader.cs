@@ -1,7 +1,7 @@
 namespace CodeChallenge;
 
-public interface IInputReader<in T>
-    where T : ChallengeSelection
+public interface IInputReader<in TChallengeSelection>
+    where TChallengeSelection : ChallengeSelection
 {
-    Task<IEnumerable<string>> GetInputAsync(T challengeSelection);
+    Task<IEnumerable<string>> GetInputAsync(TChallengeSelection challengeSelection);
 }

@@ -1,9 +1,9 @@
 ﻿namespace CodeChallenge.InputProviders;
 
-internal class StringInputProvider<T> : InputProvider<T, string>
-    where T : ChallengeSelection
+internal class StringInputProvider<TChallengeSelection> : InputProvider<TChallengeSelection, string>
+    where TChallengeSelection : ChallengeSelection
 {
-    public StringInputProvider(IInputReader<T> inputReader) : base(inputReader) { }
+    public StringInputProvider(IInputReader<TChallengeSelection> inputReader) : base(inputReader) { }
 
     protected override string ProcessLine(string line) => line;
 }

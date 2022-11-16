@@ -1,6 +1,6 @@
 ﻿namespace CodeChallenge;
 
-public interface IInputProvider<in TPuzzle, TOutput>
+public interface IInputProvider<in TChallengeSelection, TOutput>
 {
-    Task<IEnumerable<TOutput>> GetInputAsync(TPuzzle challengeSelection);
+    Task<IEnumerable<TOutput>> GetInputAsync(TChallengeSelection challengeSelection);
 }
