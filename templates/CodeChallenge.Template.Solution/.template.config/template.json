@@ -1,0 +1,25 @@
+﻿{
+  "$schema": "https://json.schemastore.org/template",
+  "author": "https://github.com/rehret",
+  "classifications": [ "Common", "Library" ],
+  "identity": "CodeChallenge.Solution",
+  "name": "Solution for rehret/code-challenges",
+  "shortName": "codechallenge.solution",
+  "sourceName": "CodeChallenge.Template.Solution",
+  "tags": {
+    "language": "C#",
+    "type": "project"
+  },
+  "preferNameDirectory": true,
+  "symbols": {
+    "shortName": {
+      "description": "Solution short name",
+      "type": "parameter",
+      "datatype": "string",
+      "defaultValue": "SolutionTemplate",
+      "defaultIfOptionWithoutValue": "SolutionTemplate",
+      "fileRename": "SolutionTemplate",
+      "replaces": "SolutionTemplate"
+    }
+  }
+}

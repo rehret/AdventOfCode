@@ -17,6 +17,29 @@ powershell / cmd.exe:
 Run the above commands without any arguments to see the support challenges. The first segment of the challenge selector is case-insensitive.
 
 ## Adding a New Challenge
+### The easy way
+1. Install the project template
+    ```bash
+    dotnet new install ./templates/CodeChallenge.Template.Solution/
+    ```
+   - The template can be reinstalled to pick up changes by running
+       ```bash
+       dotnet new install --force ./templates/CodeChallenge.Template.Solution/
+       ```
+2. Create the template
+    ```bash
+    # From inside the target C# project folder (such as ./Solutions/AdventOfCode/AdventOfCode2021/)
+    dotnet new codechallenge.solution --shortName <Project Shortname>
+   
+    # From inside the Solution Folder (such as ./Solutions/AdventOfCode/)
+    dotnet new codechallenge.solution -n <Full Project Name> --shortName <Project Shortname>
+   
+    # From anywhere
+    dotnet new codechallenge.solution -n <Full Project Name> --shortName <Project Shortname> -o <Path to C# project folder>
+    ```
+3. Implement the top-level types as needed
+
+### The hard way
 1. Create the project at the path `Solutions/<Challenge Name>/<Project Folder>/<Project>.csproj`
 2. Extend `IInputReader<TChallengeSelection>` as needed
     - This type is used for getting input from files
@@ -32,23 +55,23 @@ Run the above commands without any arguments to see the support challenges. The 
     - Register any implementations of `IInputProvider<TChallengeSelection, TOutput>` in Autofac
         - The abstract Autofac module `InputProviderAutoRegisteringModule` can be extended to automatically register implementations in the challenge space's assembly automatically.
 4. Extend `ChallengeSelection` as a way to indicate a particular problem & solution within the challenge space.
-   - It is recommended to override `ToString()` as this is used when a requested solution isn't found.
+    - It is recommended to override `ToString()` as this is used when a requested solution isn't found.
 5. Extend `AbstractChallengeArgumentParser` to provide functionality for parsing command-line arguments into the `ChallengeSelection` created in step 4.
-   - Extending this automatically adds support for the challenge type to `CodeChallenge.Runner`
-   - The implementation defines the argument parsing and usage message
+    - Extending this automatically adds support for the challenge type to `CodeChallenge.Runner`
+    - The implementation defines the argument parsing and usage message
 6. Extend `SolutionAttribute` for flagging the solution classes
     - Take any indicators (such as year, day, and puzzle in the case of Advent of Code) via the constructor and set them in public properties.
     - The implementation of the abstract method `ToPuzzleSelection()` should return an instance of the type created in step 4.
 7. It is recommended to create an abstract `Solution` base class for all solutions within a challenge space.
-   - At a minimum, each solution must implement `ISolution`, but if each problem must be executed in a different way, then the abstract base is not needed.
-   - There is an `AbstractSolution<TSolutionAttribute, TChallengeSelection>` which can be extended to provide some helper methods in the solution implementation.
-       - In particular, it provides a method for getting the current `ChallengeSelection` via reflection of the `SolutionAttribute`.
-       - This is most useful when creating another abstract base Solution type for an entire challenge space. Stand-alone Solution implementations may not need this functionality.
+    - At a minimum, each solution must implement `ISolution`, but if each problem must be executed in a different way, then the abstract base is not needed.
+    - There is an `AbstractSolution<TSolutionAttribute, TChallengeSelection>` which can be extended to provide some helper methods in the solution implementation.
+        - In particular, it provides a method for getting the current `ChallengeSelection` via reflection of the `SolutionAttribute`.
+        - This is most useful when creating another abstract base Solution type for an entire challenge space. Stand-alone Solution implementations may not need this functionality.
 8. Create Solution implementations
-   - There are only two requirements here:
-       1. Must implement `ISolution`
-       2. Must annotate the class with an attribute derived from `SolutionAttribute`
+    - There are only two requirements here:
+        1. Must implement `ISolution`
+        2. Must annotate the class with an attribute derived from `SolutionAttribute`
 9. Register Solutions in Autofac
-   - The abstract Autofac module `SolutionAutoRegisteringModule` can be extended to automatically register implementations in the challenge space's assembly automatically.
+    - The abstract Autofac module `SolutionAutoRegisteringModule` can be extended to automatically register implementations in the challenge space's assembly automatically.
 10. Add input files to `Resources/<Challenge Name>/`, with the nested folder structure left up to the solution to organize as it makes sense.
 11. Add a reference to the new csproj from `CodeChallenge.Runner` to ensure the new DLL is copied to the output folder.
