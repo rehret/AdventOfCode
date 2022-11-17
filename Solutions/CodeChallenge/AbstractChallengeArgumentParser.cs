@@ -1,5 +1,6 @@
 ﻿namespace CodeChallenge;
 
+/// <inheritdoc cref="IChallengeArgumentParser" />
 public abstract class AbstractChallengeArgumentParser : IChallengeArgumentParser
 {
     public abstract string[] Aliases { get; }

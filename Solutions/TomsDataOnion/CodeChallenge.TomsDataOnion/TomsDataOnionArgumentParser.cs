@@ -1,5 +1,6 @@
 ﻿namespace CodeChallenge.TomsDataOnion;
 
+/// <inheritdoc cref="AbstractChallengeArgumentParser" />
 internal class TomsDataOnionArgumentParser : AbstractChallengeArgumentParser
 {
     private static readonly string[] StaticAliases = { "TomsDataOnion", "Toms", "DataOnion" };

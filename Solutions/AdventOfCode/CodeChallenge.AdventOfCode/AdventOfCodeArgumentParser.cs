@@ -2,6 +2,7 @@
 
 using System.Text.RegularExpressions;
 
+/// <inheritdoc cref="AbstractChallengeArgumentParser" />
 internal class AdventOfCodeArgumentParser : AbstractChallengeArgumentParser
 {
     private static readonly Regex ArgumentRegex = new(@"^(?<year>\d{4})/(?<day>\d{1,2})/(?<puzzle>\d{1,2}$)", RegexOptions.Compiled);
