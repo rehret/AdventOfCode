@@ -37,6 +37,8 @@ Run the above commands without any arguments to see the support challenges. The 
     # From anywhere
     dotnet new codechallenge.solution -n <Full Project Name> --shortName <Project Shortname> -o <Path to C# project folder>
     ```
+   - The project short name is used to name the classes in the template
+     - For example, if `--shortName DemoChallenge` was passed, one class name might be `AbstractDemoChallengeSolution`
 3. Add the project to the solution
 4. Implement the top-level types as needed
 
