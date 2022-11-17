@@ -3,7 +3,6 @@
 using Autofac.Core.Registration;
 
 using CodeChallenge;
-using CodeChallenge.Runner.IoC;
 
 using Microsoft.Extensions.Logging;
 
