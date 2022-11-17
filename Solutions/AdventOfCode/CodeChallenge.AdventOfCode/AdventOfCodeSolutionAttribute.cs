@@ -18,7 +18,7 @@ public class AdventOfCodeSolutionAttribute : SolutionAttribute
         Puzzle = puzzle;
     }
 
-    public override ChallengeSelection ToPuzzleSelection()
+    public override ChallengeSelection ToChallengeSelection()
     {
         return new AdventOfCodeChallengeSelection(Year, Day, Puzzle);
     }

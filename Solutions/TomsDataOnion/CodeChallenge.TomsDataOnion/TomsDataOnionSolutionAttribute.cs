@@ -12,7 +12,7 @@ public class TomsDataOnionSolutionAttribute : SolutionAttribute
         Layer = layer;
     }
 
-    public override ChallengeSelection ToPuzzleSelection()
+    public override ChallengeSelection ToChallengeSelection()
     {
         return new TomsDataOnionChallengeSelection(Layer);
     }

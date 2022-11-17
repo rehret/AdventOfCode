@@ -13,7 +13,7 @@ public abstract class SolutionAutoRegisteringModule<T> : Module
     {
         builder.RegisterAssemblyTypes(GetAssembly())
             .Where(type => type.GetCustomAttribute<T>(true) != null)
-            .Keyed<ISolution>(type => type.GetCustomAttribute<T>()!.ToPuzzleSelection());
+            .Keyed<ISolution>(type => type.GetCustomAttribute<T>()!.ToChallengeSelection());
     }
 
     protected abstract Assembly GetAssembly();
