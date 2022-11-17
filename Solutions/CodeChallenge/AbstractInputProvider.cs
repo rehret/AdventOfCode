@@ -1,11 +1,11 @@
 ﻿namespace CodeChallenge;
 
-public abstract class InputProvider<TChallengeSelection, TOutput> : IInputProvider<TChallengeSelection, TOutput>
+public abstract class AbstractInputProvider<TChallengeSelection, TOutput> : IInputProvider<TChallengeSelection, TOutput>
     where TChallengeSelection : ChallengeSelection
 {
     private readonly IInputReader<TChallengeSelection> _inputReader;
 
-    protected InputProvider(IInputReader<TChallengeSelection> inputReader)
+    protected AbstractInputProvider(IInputReader<TChallengeSelection> inputReader)
     {
         _inputReader = inputReader;
     }

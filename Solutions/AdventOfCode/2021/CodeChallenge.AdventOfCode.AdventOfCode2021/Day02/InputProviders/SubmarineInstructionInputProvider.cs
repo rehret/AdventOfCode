@@ -4,7 +4,7 @@ using System.Text.RegularExpressions;
 
 using CodeChallenge;
 
-internal class SubmarineInstructionInputProvider : InputProvider<AdventOfCodeChallengeSelection, SubmarineInstruction>
+internal class SubmarineInstructionInputProvider : AbstractInputProvider<AdventOfCodeChallengeSelection, SubmarineInstruction>
 {
     private static readonly Regex WhitespaceRegex = new(@"\s+", RegexOptions.Compiled);
 

@@ -2,7 +2,7 @@
 
 using CodeChallenge;
 
-internal class IntInputProvider<TChallengeSelection> : InputProvider<TChallengeSelection, int>
+internal class IntInputProvider<TChallengeSelection> : AbstractInputProvider<TChallengeSelection, int>
     where TChallengeSelection : ChallengeSelection
 {
     public IntInputProvider(IInputReader<TChallengeSelection> inputReader) : base(inputReader) { }

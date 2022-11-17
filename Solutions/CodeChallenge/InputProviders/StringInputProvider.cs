@@ -1,6 +1,6 @@
 ﻿namespace CodeChallenge.InputProviders;
 
-internal class StringInputProvider<TChallengeSelection> : InputProvider<TChallengeSelection, string>
+internal class StringInputProvider<TChallengeSelection> : AbstractInputProvider<TChallengeSelection, string>
     where TChallengeSelection : ChallengeSelection
 {
     public StringInputProvider(IInputReader<TChallengeSelection> inputReader) : base(inputReader) { }
