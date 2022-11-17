@@ -9,11 +9,13 @@ using Microsoft.Extensions.Logging;
 internal class CodeChallengeService
     : ICodeChallengeService
 {
+    private readonly IChallengeSelectionParser _parser;
     private readonly SolutionFactory _solutionFactory;
     private readonly ILogger _logger;
 
-    public CodeChallengeService(SolutionFactory solutionFactory, ILoggerFactory loggerFactory)
+    public CodeChallengeService(IChallengeSelectionParser parser, SolutionFactory solutionFactory, ILoggerFactory loggerFactory)
     {
+        _parser = parser;
         _solutionFactory = solutionFactory;
         _logger = loggerFactory.CreateLogger<CodeChallengeService>();
     }
@@ -22,7 +24,7 @@ internal class CodeChallengeService
     {
         var args = Environment.GetCommandLineArgs();
 
-        if (!ChallengeSelectionParser.TryParse(args, out var puzzleSelection))
+        if (!_parser.TryParse(args, out var puzzleSelection))
         {
             PrintUsage();
             return;
@@ -50,15 +52,58 @@ internal class CodeChallengeService
         }
     }
 
-    private static void PrintUsage()
+    private void PrintUsage()
     {
+        const int sizeOfIndent = 2;
+        const int sizeOfGapBetweenColumns = 2;
+
+        const string challengeTypeHeader = "Challenge Type";
+        const string selectorHeader = "Selector";
+        const string aliasHeader = "Alias";
+
+        const string aliasSeparator = ", ";
+        const string singleSpace = " ";
+
+        var usages = _parser.GetAllChallengeUsages().ToArray();
+        var maxChallengeNameLength = usages.Select(x => x.ChallengeName.Length).Append(challengeTypeHeader.Length).Max();
+        var maxSelectorLength = usages.Select(x => x.Usage.Length).Append(selectorHeader.Length).Max();
+        var maxAliasLength = usages.Select(x => x.Aliases.Select(alias => alias.Length).Sum() + x.Aliases.Length - 1).Append(aliasHeader.Length).Max();
+
+        var header = string.Join("", Enumerable.Repeat(singleSpace, sizeOfIndent)
+            .Append(challengeTypeHeader)
+            .Concat(Enumerable.Repeat(singleSpace, maxChallengeNameLength - challengeTypeHeader.Length))
+            .Concat(Enumerable.Repeat(singleSpace, sizeOfGapBetweenColumns))
+            .Append(selectorHeader)
+            .Concat(Enumerable.Repeat(singleSpace, maxSelectorLength - selectorHeader.Length))
+            .Concat(Enumerable.Repeat(singleSpace, sizeOfGapBetweenColumns))
+            .Append(aliasHeader));
+
+        var divider = string.Join("", Enumerable.Repeat(singleSpace, sizeOfIndent)
+            .Concat(Enumerable.Repeat("-", maxChallengeNameLength))
+            .Concat(Enumerable.Repeat(singleSpace, sizeOfGapBetweenColumns))
+            .Concat(Enumerable.Repeat("-", maxSelectorLength))
+            .Concat(Enumerable.Repeat(singleSpace, sizeOfGapBetweenColumns))
+            .Concat(Enumerable.Repeat("-", maxAliasLength)));
+
+        var usageLines = usages.Select(x =>
+            string.Join("", Enumerable.Repeat(singleSpace, sizeOfIndent)
+                .Append(x.ChallengeName)
+                .Concat(Enumerable.Repeat(singleSpace, maxChallengeNameLength - x.ChallengeName.Length))
+                .Concat(Enumerable.Repeat(singleSpace, sizeOfGapBetweenColumns))
+                .Append(x.Usage)
+                .Concat(Enumerable.Repeat(singleSpace, maxSelectorLength - x.Usage.Length))
+                .Concat(Enumerable.Repeat(singleSpace, sizeOfGapBetweenColumns))
+                .Append(string.Join(aliasSeparator, x.Aliases))));
+
         Console.WriteLine();
         Console.WriteLine("Usage: ./run <puzzle selector>");
         Console.WriteLine();
-        Console.WriteLine("  Puzzle Type         Selector");
-        Console.WriteLine("  ----------------    -------------------------------------------");
-        Console.WriteLine("  Advent Of Code      <AdventOfCode|advent>/<year>/<day>/<puzzle>");
-        Console.WriteLine("  Tom's Data Onion    <CodeChallenge.TomsDataOnion|Toms|DataOnion>/<layer>");
+        Console.WriteLine(header);
+        Console.WriteLine(divider);
+        foreach (var usageLine in usageLines)
+        {
+            Console.WriteLine(usageLine);
+        }
         Console.WriteLine();
     }
 }

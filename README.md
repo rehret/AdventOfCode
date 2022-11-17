@@ -14,12 +14,7 @@ powershell / cmd.exe:
 
 ### Current Challenge Selectors
 
-| Challenge        | Challenge Selector                   | Aliases (Can be used instead of the first segment) |
-|------------------|--------------------------------------|----------------------------------------------------|
-| Advent Of Code   | `AdventOfCode/<Year>/<Day>/<Puzzle>` | `AdventOfCode`, `Advent`                           |
-| Tom's Data Onion | `TomsDataOnion/<Layer>`              | `TomsDataOnion`, `Toms`, `DataOnion`               |
-
-The first segment of the challenge selector is case-insensitive.
+Run the above commands without any arguments to see the support challenges. The first segment of the challenge selector is case-insensitive.
 
 ## Adding a New Challenge
 1. Create the project at the path `Solutions/<Challenge Name>/<Project Folder>/<Project>.csproj`
@@ -37,22 +32,22 @@ The first segment of the challenge selector is case-insensitive.
     - Register any implementations of `IInputProvider<TChallengeSelection, TOutput>` in Autofac
         - The abstract Autofac module `InputProviderAutoRegisteringModule` can be extended to automatically register implementations in the challenge space's assembly automatically.
 4. Extend `ChallengeSelection` as a way to indicate a particular problem & solution within the challenge space.
-   - It is recommended to implement `public static bool TryParse(string input, out ChallengeSelection challengeSelection)` on this type to make it easier to determine the target solution from CLI input.
-5. Extend `SolutionAttribute` for flagging the solution classes
+   - It is recommended to override `ToString()` as this is used when a requested solution isn't found.
+5. Extend `AbstractChallengeArgumentParser` to provide functionality for parsing command-line arguments into the `ChallengeSelection` created in step 4.
+   - Extending this automatically adds support for the challenge type to `CodeChallenge.Runner`
+   - The implementation defines the argument parsing and usage message
+6. Extend `SolutionAttribute` for flagging the solution classes
     - Take any indicators (such as year, day, and puzzle in the case of Advent of Code) via the constructor and set them in public properties.
     - The implementation of the abstract method `ToPuzzleSelection()` should return an instance of the type created in step 4.
-6. It is recommended to create an abstract `Solution` base class for all solutions within a challenge space.
+7. It is recommended to create an abstract `Solution` base class for all solutions within a challenge space.
    - At a minimum, each solution must implement `ISolution`, but if each problem must be executed in a different way, then the abstract base is not needed.
    - There is an `AbstractSolution<TSolutionAttribute, TChallengeSelection>` which can be extended to provide some helper methods in the solution implementation.
        - In particular, it provides a method for getting the current `ChallengeSelection` via reflection of the `SolutionAttribute`.
        - This is most useful when creating another abstract base Solution type for an entire challenge space. Stand-alone Solution implementations may not need this functionality.
-7. Create Solution implementations
+8. Create Solution implementations
    - There are only two requirements here:
        1. Must implement `ISolution`
        2. Must annotate the class with an attribute derived from `SolutionAttribute`
-8. Register Solutions in Autofac
+9. Register Solutions in Autofac
    - The abstract Autofac module `SolutionAutoRegisteringModule` can be extended to automatically register implementations in the challenge space's assembly automatically.
-9. Add input files to `Resources/<Challenge Name>/`, with the nested folder structure left up to the solution to organize as it makes sense.
-10. Update `CodeChallenge.Runner.ChallengeSelectionParser` to know how to find the new challenge
-    - `TryParsePuzzleType()` takes a string and returns a `ChallengeType` enum
-    - `TryParse()` switches on the returned `ChallengeType` enum
+10. Add input files to `Resources/<Challenge Name>/`, with the nested folder structure left up to the solution to organize as it makes sense.

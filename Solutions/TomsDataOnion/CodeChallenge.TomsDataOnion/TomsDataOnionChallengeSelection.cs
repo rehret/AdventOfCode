@@ -4,15 +4,8 @@ using CodeChallenge;
 
 public record TomsDataOnionChallengeSelection(int Layer) : ChallengeSelection
 {
-    public static bool TryParse(string input, out ChallengeSelection challengeSelection)
+    public override string ToString()
     {
-        if (int.TryParse(input, out var layer))
-        {
-            challengeSelection = new TomsDataOnionChallengeSelection(layer);
-            return true;
-        }
-
-        challengeSelection = new TomsDataOnionChallengeSelection(-1);
-        return false;
+        return $"TomsDataOnion/{Layer:0}";
     }
 }
