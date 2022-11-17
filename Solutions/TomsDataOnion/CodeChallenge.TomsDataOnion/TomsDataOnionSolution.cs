@@ -21,8 +21,7 @@ internal abstract class TomsDataOnionSolution : AbstractSolution<TomsDataOnionSo
         var input = await _inputProvider.GetInputAsync(GetChallengeSelection()).ConfigureAwait(false);
 
         // Process the layer
-        var result = Decode(input);
-        var stringResult = Encoding.UTF8.GetString(result.ToArray());
+        var stringResult = Encoding.UTF8.GetString(Decode(input).ToArray());
 
         // Write output
         var challengeSelection = GetChallengeSelection();
