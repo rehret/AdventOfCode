@@ -29,9 +29,9 @@ public static class ChallengeSelectionParser
         challengeSelection = new ChallengeSelection();
         return type switch
         {
-            ChallengeType.AdventOfCode => AdventOfCodeChallengeSelection.TryParse(match.Groups["Selection"].Value, out challengeSelection),
+            ChallengeType.AdventOfCode  => AdventOfCodeChallengeSelection.TryParse(match.Groups["Selection"].Value, out challengeSelection),
             ChallengeType.TomsDataOnion => TomsDataOnionChallengeSelection.TryParse(match.Groups["Selection"].Value, out challengeSelection),
-            _                       => false
+            _                           => false
         };
     }
 
