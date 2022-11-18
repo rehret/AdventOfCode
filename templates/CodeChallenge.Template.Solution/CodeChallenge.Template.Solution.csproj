@@ -3,5 +3,10 @@
   <ItemGroup>
     <ProjectReference Include="..\..\Solutions\CodeChallenge\CodeChallenge.csproj" />
   </ItemGroup>
+  <!--#if (false) -->
+  <ItemGroup>
+    <Content Include=".template.config\template.json" />
+  </ItemGroup>
+  <!--#endif -->
 
 </Project>

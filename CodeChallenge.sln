@@ -10,6 +10,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		InternalsVisibleTo.targets = InternalsVisibleTo.targets
 	EndProjectSection
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Templates", "Templates", "{40788622-B55E-40E7-B534-B032BD546D77}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CodeChallenge.Template.Solution", "templates\CodeChallenge.Template.Solution\CodeChallenge.Template.Solution.csproj", "{9D4683E3-C2A9-4252-B3C6-37C58F5D966C}"
+EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CodeChallenge.Runner", "CodeChallenge.Runner\CodeChallenge.Runner.csproj", "{2D4B7D8F-7DDE-43FC-8742-3C7CEFAE9D42}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solutions", "Solutions", "{F859A877-0031-4110-AB67-6AAD630AB694}"
@@ -50,6 +54,10 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{9D4683E3-C2A9-4252-B3C6-37C58F5D966C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9D4683E3-C2A9-4252-B3C6-37C58F5D966C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9D4683E3-C2A9-4252-B3C6-37C58F5D966C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9D4683E3-C2A9-4252-B3C6-37C58F5D966C}.Release|Any CPU.Build.0 = Release|Any CPU
 		{728FB653-9DCC-48AA-90EA-086461461AB3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{728FB653-9DCC-48AA-90EA-086461461AB3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{728FB653-9DCC-48AA-90EA-086461461AB3}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -88,6 +96,7 @@ Global
 		{041FBE69-1075-4B8D-985A-46D7CA6B00EC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
+		{9D4683E3-C2A9-4252-B3C6-37C58F5D966C} = {40788622-B55E-40E7-B534-B032BD546D77}
 		{728FB653-9DCC-48AA-90EA-086461461AB3} = {F859A877-0031-4110-AB67-6AAD630AB694}
 		{5401F155-7ED1-4A69-9E7A-6CC563829813} = {F859A877-0031-4110-AB67-6AAD630AB694}
 		{3C5E0911-85A3-4915-906F-E15209106FBD} = {F859A877-0031-4110-AB67-6AAD630AB694}
