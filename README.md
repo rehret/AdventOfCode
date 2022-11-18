@@ -20,11 +20,11 @@ Run the above commands without any arguments to see the support challenges. The 
 ### The easy way
 1. Install the project template
     ```bash
-    dotnet new install ./templates/CodeChallenge.Template.Solution/
+    dotnet new install ./Templates/CodeChallenge.Template.Solution/
     ```
    - The template can be reinstalled to pick up changes by running
        ```bash
-       dotnet new install --force ./templates/CodeChallenge.Template.Solution/
+       dotnet new install --force ./Templates/CodeChallenge.Template.Solution/
        ```
 2. Create the template
     ```bash

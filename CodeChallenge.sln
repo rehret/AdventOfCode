@@ -12,7 +12,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Templates", "Templates", "{40788622-B55E-40E7-B534-B032BD546D77}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CodeChallenge.Template.Solution", "templates\CodeChallenge.Template.Solution\CodeChallenge.Template.Solution.csproj", "{9D4683E3-C2A9-4252-B3C6-37C58F5D966C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CodeChallenge.Template.Solution", "Templates\CodeChallenge.Template.Solution\CodeChallenge.Template.Solution.csproj", "{9D4683E3-C2A9-4252-B3C6-37C58F5D966C}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CodeChallenge.Runner", "CodeChallenge.Runner\CodeChallenge.Runner.csproj", "{2D4B7D8F-7DDE-43FC-8742-3C7CEFAE9D42}"
 EndProject
