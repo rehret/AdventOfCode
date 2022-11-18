@@ -1,0 +1,7 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <ItemGroup>
+    <ProjectReference Include="..\CodeChallenge.TomsDataOnion\CodeChallenge.TomsDataOnion.csproj" />
+  </ItemGroup>
+
+</Project>

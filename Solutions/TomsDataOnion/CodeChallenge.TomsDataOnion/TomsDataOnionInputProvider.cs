@@ -6,6 +6,13 @@ using CodeChallenge;
 
 internal class TomsDataOnionInputProvider : IInputProvider<TomsDataOnionChallengeSelection, byte>
 {
+    private readonly IAscii85Decoder _ascii85Decoder;
+
+    public TomsDataOnionInputProvider(IAscii85Decoder ascii85Decoder)
+    {
+        _ascii85Decoder = ascii85Decoder;
+    }
+
     public async Task<IEnumerable<byte>> GetInputAsync(TomsDataOnionChallengeSelection challengeSelection)
     {
         // Get input
@@ -28,17 +35,12 @@ internal class TomsDataOnionInputProvider : IInputProvider<TomsDataOnionChalleng
             rawInput = rawInput[Constants.DatagramStart.Length..];
         if (rawInput.EndsWith(Constants.DatagramEnd))
             rawInput = rawInput[..^Constants.DatagramEnd.Length];
-        rawInput = rawInput
-            .Replace("\r", string.Empty)
-            .Replace("\n", string.Empty);
 
         // Ascii85-decode the input
-        using (var decodeStream = new MemoryStream())
-        using (var textReader = new StringReader(rawInput))
-        {
-            await SimpleBase.Base85.Ascii85.DecodeAsync(textReader, decodeStream).ConfigureAwait(false);
-            return decodeStream.ToArray();
-        }
+        using var decodeStream = new MemoryStream();
+        using var inputStream = new MemoryStream(rawInput.Select(x => (byte)x).ToArray());
+        await _ascii85Decoder.DecodeAsync(inputStream, decodeStream).ConfigureAwait(false);
+        return decodeStream.ToArray();
     }
 
     private static string GetInputFilePath(TomsDataOnionChallengeSelection challengeSelection) =>
