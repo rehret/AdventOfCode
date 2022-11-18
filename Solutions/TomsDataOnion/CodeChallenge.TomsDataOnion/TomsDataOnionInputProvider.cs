@@ -6,6 +6,9 @@ using CodeChallenge;
 
 internal class TomsDataOnionInputProvider : IInputProvider<TomsDataOnionChallengeSelection, byte>
 {
+    private const string DatagramStart = "<~";
+    private const string DatagramEnd = "~>";
+
     private readonly IAscii85Decoder _ascii85Decoder;
 
     public TomsDataOnionInputProvider(IAscii85Decoder ascii85Decoder)
@@ -23,18 +26,18 @@ internal class TomsDataOnionInputProvider : IInputProvider<TomsDataOnionChalleng
         }
 
         // Grab the content between <~ and ~>
-        var payloadStart = rawInput.IndexOf(Constants.DatagramStart, StringComparison.Ordinal);
-        var payloadEnd = rawInput.LastIndexOf(Constants.DatagramEnd, StringComparison.Ordinal);
-        rawInput = rawInput[payloadStart..(payloadEnd + Constants.DatagramEnd.Length)];
+        var payloadStart = rawInput.IndexOf(DatagramStart, StringComparison.Ordinal);
+        var payloadEnd = rawInput.LastIndexOf(DatagramEnd, StringComparison.Ordinal);
+        rawInput = rawInput[payloadStart..(payloadEnd + DatagramEnd.Length)];
 
         // Prepare the input for Ascii85 decoding
         // The Adobe spec says that the data is contained between <~ and ~>
         // and that newlines should be ignored
         rawInput = rawInput.Trim();
-        if (rawInput.StartsWith(Constants.DatagramStart))
-            rawInput = rawInput[Constants.DatagramStart.Length..];
-        if (rawInput.EndsWith(Constants.DatagramEnd))
-            rawInput = rawInput[..^Constants.DatagramEnd.Length];
+        if (rawInput.StartsWith(DatagramStart))
+            rawInput = rawInput[DatagramStart.Length..];
+        if (rawInput.EndsWith(DatagramEnd))
+            rawInput = rawInput[..^DatagramEnd.Length];
 
         // Ascii85-decode the input
         using var decodeStream = new MemoryStream();
