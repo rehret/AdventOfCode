@@ -6,7 +6,7 @@
 
   <ItemGroup>
     <!-- Explicit reference to CodeChallenge.csproj because we use its types in this project -->
-    <ProjectReference Include="..\Solutions\CodeChallenge\CodeChallenge.csproj" />
+    <ProjectReference Include="..\Solutions\CodeChallenge.Core\CodeChallenge.Core.csproj" />
 
     <!-- Include all projects in the Solutions directory to automatically include them in the output -->
     <ProjectReference Include="..\Solutions\**\*.csproj" Exclude="..\Solutions\**\*.Tests.csproj" />

@@ -1,7 +1,7 @@
-﻿namespace CodeChallenge.Tests.InputProviders;
+﻿namespace CodeChallenge.Core.Tests.InputProviders;
 
-using CodeChallenge;
-using CodeChallenge.InputProviders;
+using CodeChallenge.Core;
+using CodeChallenge.Core.InputProviders;
 
 public class IntInputProviderTests
 {

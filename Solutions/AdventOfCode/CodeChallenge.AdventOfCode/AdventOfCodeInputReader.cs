@@ -1,6 +1,6 @@
 ﻿namespace CodeChallenge.AdventOfCode;
 
-using CodeChallenge;
+using CodeChallenge.Core;
 
 internal class AdventOfCodeInputReader : AbstractInputReader<AdventOfCodeChallengeSelection>
 {

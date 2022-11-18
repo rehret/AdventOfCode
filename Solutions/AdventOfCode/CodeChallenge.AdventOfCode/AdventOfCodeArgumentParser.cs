@@ -2,6 +2,8 @@
 
 using System.Text.RegularExpressions;
 
+using CodeChallenge.Core;
+
 /// <inheritdoc cref="AbstractChallengeArgumentParser" />
 internal class AdventOfCodeArgumentParser : AbstractChallengeArgumentParser
 {

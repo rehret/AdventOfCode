@@ -1,5 +1,7 @@
 ﻿namespace CodeChallenge.TomsDataOnion.Solutions.Layer5;
 
+using CodeChallenge.Core;
+
 using Org.BouncyCastle.Crypto.Engines;
 using Org.BouncyCastle.Crypto.Parameters;
 using Org.BouncyCastle.Security;

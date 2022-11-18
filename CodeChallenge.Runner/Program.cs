@@ -7,9 +7,8 @@ using Autofac;
 using Autofac.Configuration;
 using Autofac.Extensions.DependencyInjection;
 
-using CodeChallenge.Configuration;
+using CodeChallenge.Core.Configuration;
 using CodeChallenge.Runner.Helpers;
-using CodeChallenge.TomsDataOnion.Configuration;
 
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;

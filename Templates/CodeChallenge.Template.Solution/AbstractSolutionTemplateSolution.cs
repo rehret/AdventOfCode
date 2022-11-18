@@ -1,6 +1,6 @@
 ﻿namespace CodeChallenge.Template.Solution;
 
-using CodeChallenge;
+using CodeChallenge.Core;
 
 internal abstract class AbstractSolutionTemplateSolution<TInput, TResult> : AbstractSolution<SolutionTemplateSolutionAttribute, SolutionTemplateChallengeSelection>
 {

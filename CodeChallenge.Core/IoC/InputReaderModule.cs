@@ -1,4 +1,4 @@
-﻿namespace CodeChallenge.IoC;
+﻿namespace CodeChallenge.Core.IoC;
 
 using System.Reflection;
 

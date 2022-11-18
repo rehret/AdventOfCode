@@ -2,7 +2,7 @@
 
 using System.Text;
 
-using CodeChallenge;
+using CodeChallenge.Core;
 
 internal class TomsDataOnionInputProvider : IInputProvider<TomsDataOnionChallengeSelection, byte>
 {

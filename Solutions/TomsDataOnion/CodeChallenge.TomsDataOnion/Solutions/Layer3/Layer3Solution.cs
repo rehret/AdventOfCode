@@ -2,6 +2,8 @@
 
 using System.Text;
 
+using CodeChallenge.Core;
+
 [TomsDataOnionSolution(3)]
 internal class Layer3Solution : TomsDataOnionSolution
 {

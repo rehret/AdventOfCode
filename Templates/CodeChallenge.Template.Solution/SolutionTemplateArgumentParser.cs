@@ -1,6 +1,6 @@
 ﻿namespace CodeChallenge.Template.Solution;
 
-using CodeChallenge;
+using CodeChallenge.Core;
 
 /// <inheritdoc cref="AbstractChallengeArgumentParser" />
 internal class SolutionTemplateArgumentParser : AbstractChallengeArgumentParser

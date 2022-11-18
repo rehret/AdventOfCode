@@ -2,7 +2,7 @@
 
 using Autofac.Core.Registration;
 
-using CodeChallenge;
+using CodeChallenge.Core;
 
 using Microsoft.Extensions.Logging;
 

@@ -2,7 +2,7 @@
 
 using System.Text.RegularExpressions;
 
-using CodeChallenge;
+using CodeChallenge.Core;
 
 internal class ChallengeSelectionParser
     : IChallengeSelectionParser

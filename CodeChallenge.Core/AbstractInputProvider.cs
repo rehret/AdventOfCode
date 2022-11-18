@@ -1,4 +1,4 @@
-﻿namespace CodeChallenge;
+﻿namespace CodeChallenge.Core;
 
 public abstract class AbstractInputProvider<TChallengeSelection, TOutput> : IInputProvider<TChallengeSelection, TOutput>
     where TChallengeSelection : ChallengeSelection

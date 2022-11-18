@@ -1,6 +1,8 @@
 ﻿namespace CodeChallenge.AdventOfCode.AdventOfCode2021.Tests.Day02;
 
 using CodeChallenge.AdventOfCode.AdventOfCode2021.Day02;
+using CodeChallenge.AdventOfCode.AdventOfCode2021.Day02.Models;
+using CodeChallenge.Core;
 
 public class Solution02Tests
 {

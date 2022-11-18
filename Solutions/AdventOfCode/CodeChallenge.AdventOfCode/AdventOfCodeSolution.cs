@@ -1,6 +1,6 @@
 ﻿namespace CodeChallenge.AdventOfCode;
 
-using CodeChallenge;
+using CodeChallenge.Core;
 
 internal abstract class AdventOfCodeSolution<TInput, TResult> : AbstractSolution<AdventOfCodeSolutionAttribute, AdventOfCodeChallengeSelection>
 {

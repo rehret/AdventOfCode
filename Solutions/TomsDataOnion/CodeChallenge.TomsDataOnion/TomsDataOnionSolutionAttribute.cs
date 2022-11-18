@@ -1,6 +1,6 @@
 ﻿namespace CodeChallenge.TomsDataOnion;
 
-using CodeChallenge;
+using CodeChallenge.Core;
 
 [AttributeUsage(AttributeTargets.Class)]
 public class TomsDataOnionSolutionAttribute : SolutionAttribute

@@ -1,8 +1,8 @@
-﻿namespace CodeChallenge.Template.Solution;
+﻿namespace CodeChallenge.Template.Solution.IoC;
 
 using System.Reflection;
 
-using CodeChallenge.IoC;
+using CodeChallenge.Core.IoC;
 
 internal class SolutionModule : SolutionAutoRegisteringModule<SolutionTemplateSolutionAttribute>
 {

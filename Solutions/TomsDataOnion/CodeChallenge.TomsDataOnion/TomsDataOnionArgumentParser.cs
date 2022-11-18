@@ -1,5 +1,7 @@
 ﻿namespace CodeChallenge.TomsDataOnion;
 
+using CodeChallenge.Core;
+
 /// <inheritdoc cref="AbstractChallengeArgumentParser" />
 internal class TomsDataOnionArgumentParser : AbstractChallengeArgumentParser
 {

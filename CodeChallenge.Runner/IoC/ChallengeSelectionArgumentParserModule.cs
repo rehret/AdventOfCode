@@ -2,6 +2,7 @@
 
 using Autofac;
 
+using CodeChallenge.Core;
 using CodeChallenge.Runner.Helpers;
 
 internal class ChallengeSelectionArgumentParserModule : Module

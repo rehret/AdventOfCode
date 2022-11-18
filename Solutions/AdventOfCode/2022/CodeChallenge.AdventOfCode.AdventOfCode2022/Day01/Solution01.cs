@@ -2,7 +2,7 @@
 
 using AdventOfCode;
 
-using CodeChallenge;
+using CodeChallenge.Core;
 
 [AdventOfCodeSolution(2022, 1, 1)]
 internal class Solution01 : AdventOfCodeSolution<string, int>

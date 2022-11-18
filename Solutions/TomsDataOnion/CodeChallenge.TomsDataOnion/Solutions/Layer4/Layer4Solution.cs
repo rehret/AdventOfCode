@@ -1,5 +1,6 @@
 ﻿namespace CodeChallenge.TomsDataOnion.Solutions.Layer4;
 
+using CodeChallenge.Core;
 using CodeChallenge.TomsDataOnion.Solutions.Layer4.Helpers;
 using CodeChallenge.TomsDataOnion.Solutions.Layer4.Models;
 

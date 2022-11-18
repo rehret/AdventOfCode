@@ -2,7 +2,8 @@
 
 using System.Text.RegularExpressions;
 
-using CodeChallenge;
+using CodeChallenge.AdventOfCode.AdventOfCode2021.Day02.Models;
+using CodeChallenge.Core;
 
 internal class SubmarineInstructionInputProvider : AbstractInputProvider<AdventOfCodeChallengeSelection, SubmarineInstruction>
 {

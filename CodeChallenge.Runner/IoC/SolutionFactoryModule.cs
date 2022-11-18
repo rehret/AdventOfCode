@@ -2,6 +2,8 @@
 
 using Autofac;
 
+using CodeChallenge.Core;
+
 internal class SolutionFactoryModule : Module
 {
     protected override void Load(ContainerBuilder builder)

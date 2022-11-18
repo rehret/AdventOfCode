@@ -1,6 +1,6 @@
 ﻿namespace CodeChallenge.TomsDataOnion.Configuration;
 
-using CodeChallenge.Configuration;
+using CodeChallenge.Core.Configuration;
 
 internal class TomsDataOnionConfiguration : ICodeChallengeConfiguration
 {

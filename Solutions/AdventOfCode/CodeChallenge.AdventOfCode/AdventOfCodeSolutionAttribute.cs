@@ -1,6 +1,6 @@
 ﻿namespace CodeChallenge.AdventOfCode;
 
-using CodeChallenge;
+using CodeChallenge.Core;
 
 [AttributeUsage(AttributeTargets.Class)]
 public class AdventOfCodeSolutionAttribute : SolutionAttribute

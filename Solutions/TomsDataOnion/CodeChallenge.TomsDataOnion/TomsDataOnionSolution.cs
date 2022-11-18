@@ -2,7 +2,7 @@
 
 using System.Text;
 
-using CodeChallenge;
+using CodeChallenge.Core;
 
 internal abstract class TomsDataOnionSolution : AbstractSolution<TomsDataOnionSolutionAttribute, TomsDataOnionChallengeSelection>
 {

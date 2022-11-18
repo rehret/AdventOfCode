@@ -1,6 +1,6 @@
 ﻿namespace CodeChallenge.Template.Solution;
 
-using CodeChallenge;
+using CodeChallenge.Core;
 
 internal class SolutionTemplateInputReader : AbstractInputReader<SolutionTemplateChallengeSelection>
 {

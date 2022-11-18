@@ -1,6 +1,6 @@
 ﻿namespace CodeChallenge.TomsDataOnion.Solutions.Layer0;
 
-using CodeChallenge;
+using CodeChallenge.Core;
 
 [TomsDataOnionSolution(0)]
 internal class Layer0Solution : TomsDataOnionSolution

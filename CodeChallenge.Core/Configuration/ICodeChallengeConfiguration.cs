@@ -1,3 +1,3 @@
-﻿namespace CodeChallenge.Configuration;
+﻿namespace CodeChallenge.Core.Configuration;
 
 public interface ICodeChallengeConfiguration { }

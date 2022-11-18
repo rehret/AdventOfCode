@@ -2,7 +2,7 @@
 
 using AdventOfCode2021.Day01.Models;
 
-using CodeChallenge;
+using CodeChallenge.Core;
 
 [AdventOfCodeSolution(2021, 1, 1)]
 internal class Solution01 : AdventOfCodeSolution<int, int>

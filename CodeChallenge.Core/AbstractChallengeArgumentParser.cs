@@ -1,4 +1,4 @@
-﻿namespace CodeChallenge;
+﻿namespace CodeChallenge.Core;
 
 /// <inheritdoc cref="IChallengeArgumentParser" />
 public abstract class AbstractChallengeArgumentParser : IChallengeArgumentParser

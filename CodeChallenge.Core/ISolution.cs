@@ -1,5 +1,4 @@
-﻿namespace
-    CodeChallenge;
+﻿namespace CodeChallenge.Core;
 
 public interface ISolution
 {

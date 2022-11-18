@@ -1,4 +1,4 @@
-﻿namespace CodeChallenge.InputProviders;
+﻿namespace CodeChallenge.Core.InputProviders;
 
 internal class StringInputProvider<TChallengeSelection> : AbstractInputProvider<TChallengeSelection, string>
     where TChallengeSelection : ChallengeSelection

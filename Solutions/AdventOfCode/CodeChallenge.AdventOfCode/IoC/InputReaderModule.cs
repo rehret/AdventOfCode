@@ -2,7 +2,7 @@
 
 using System.Reflection;
 
-using CodeChallenge.IoC;
+using CodeChallenge.Core.IoC;
 
 internal class InputReaderModule : InputReaderAutoRegisteringModule
 {

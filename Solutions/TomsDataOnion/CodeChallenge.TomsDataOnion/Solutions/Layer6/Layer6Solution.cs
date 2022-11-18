@@ -1,5 +1,7 @@
 ﻿namespace CodeChallenge.TomsDataOnion.Solutions.Layer6;
 
+using CodeChallenge.Core;
+
 [TomsDataOnionSolution(6)]
 internal class Layer6Solution : TomsDataOnionSolution
 {

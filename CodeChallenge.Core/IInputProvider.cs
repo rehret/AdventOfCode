@@ -1,4 +1,4 @@
-﻿namespace CodeChallenge;
+﻿namespace CodeChallenge.Core;
 
 public interface IInputProvider<in TChallengeSelection, TOutput>
 {
