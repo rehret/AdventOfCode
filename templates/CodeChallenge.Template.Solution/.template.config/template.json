@@ -12,7 +12,7 @@
   },
   "preferNameDirectory": true,
   "symbols": {
-    "shortName": {
+    "ShortName": {
       "description": "Solution short name",
       "type": "parameter",
       "datatype": "string",
