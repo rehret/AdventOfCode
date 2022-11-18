@@ -1,6 +1,8 @@
 ﻿namespace CodeChallenge.AdventOfCode;
 
+using CodeChallenge.AdventOfCode.Attributes;
 using CodeChallenge.Core;
+using CodeChallenge.Core.IO;
 
 internal abstract class AdventOfCodeSolution<TInput, TResult> : AbstractSolution<AdventOfCodeSolutionAttribute, AdventOfCodeChallengeSelection>
 {

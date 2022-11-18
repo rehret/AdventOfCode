@@ -6,7 +6,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\CodeChallenge.Core\CodeChallenge.Core.csproj" />
+    <ProjectReference Include="..\..\..\CodeChallenge.Core\CodeChallenge.Core.csproj" />
   </ItemGroup>
 
 </Project>

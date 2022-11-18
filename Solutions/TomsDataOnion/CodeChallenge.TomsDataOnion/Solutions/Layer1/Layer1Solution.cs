@@ -1,6 +1,8 @@
 ﻿namespace CodeChallenge.TomsDataOnion.Solutions.Layer1;
 
-using CodeChallenge.Core;
+using CodeChallenge.Core.IO;
+using CodeChallenge.TomsDataOnion.Attributes;
+using CodeChallenge.TomsDataOnion.IO;
 
 [TomsDataOnionSolution(1)]
 internal class Layer1Solution : TomsDataOnionSolution

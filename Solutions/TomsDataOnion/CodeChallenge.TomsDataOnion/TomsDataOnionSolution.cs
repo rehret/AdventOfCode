@@ -3,6 +3,9 @@
 using System.Text;
 
 using CodeChallenge.Core;
+using CodeChallenge.Core.IO;
+using CodeChallenge.TomsDataOnion.Attributes;
+using CodeChallenge.TomsDataOnion.IO;
 
 internal abstract class TomsDataOnionSolution : AbstractSolution<TomsDataOnionSolutionAttribute, TomsDataOnionChallengeSelection>
 {

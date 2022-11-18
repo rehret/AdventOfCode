@@ -4,6 +4,7 @@ using System.Text.RegularExpressions;
 
 using CodeChallenge.AdventOfCode.AdventOfCode2021.Day02.Models;
 using CodeChallenge.Core;
+using CodeChallenge.Core.IO;
 
 internal class SubmarineInstructionInputProvider : AbstractInputProvider<AdventOfCodeChallengeSelection, SubmarineInstruction>
 {

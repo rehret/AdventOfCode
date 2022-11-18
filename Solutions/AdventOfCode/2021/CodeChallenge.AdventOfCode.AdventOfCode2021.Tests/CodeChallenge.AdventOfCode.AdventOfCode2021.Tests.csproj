@@ -1,6 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <ItemGroup>
+    <ProjectReference Include="..\..\..\..\CodeChallenge.Core\CodeChallenge.Core.csproj" />
     <ProjectReference Include="..\CodeChallenge.AdventOfCode.AdventOfCode2021\CodeChallenge.AdventOfCode.AdventOfCode2021.csproj" />
   </ItemGroup>
 

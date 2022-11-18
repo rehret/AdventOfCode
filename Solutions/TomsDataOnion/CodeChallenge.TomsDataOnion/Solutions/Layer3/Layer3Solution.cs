@@ -2,7 +2,9 @@
 
 using System.Text;
 
-using CodeChallenge.Core;
+using CodeChallenge.Core.IO;
+using CodeChallenge.TomsDataOnion.Attributes;
+using CodeChallenge.TomsDataOnion.IO;
 
 [TomsDataOnionSolution(3)]
 internal class Layer3Solution : TomsDataOnionSolution

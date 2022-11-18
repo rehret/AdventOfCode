@@ -3,6 +3,7 @@
 using CodeChallenge.AdventOfCode.AdventOfCode2021.Day02.InputProviders;
 using CodeChallenge.AdventOfCode.AdventOfCode2021.Day02.Models;
 using CodeChallenge.Core;
+using CodeChallenge.Core.IO;
 
 public class SubmarineInstructionInputProviderTests
 {

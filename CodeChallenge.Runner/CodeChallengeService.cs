@@ -3,6 +3,7 @@
 using Autofac.Core.Registration;
 
 using CodeChallenge.Core;
+using CodeChallenge.Runner.Console;
 
 using Microsoft.Extensions.Logging;
 
@@ -44,7 +45,7 @@ internal class CodeChallengeService
         try
         {
             var result = await solution.SolveAsync().ConfigureAwait(false);
-            Console.WriteLine(result);
+            System.Console.WriteLine(result);
         }
         catch (Exception ex) when (ex is FileNotFoundException or DirectoryNotFoundException)
         {
@@ -95,15 +96,15 @@ internal class CodeChallengeService
                 .Concat(Enumerable.Repeat(singleSpace, sizeOfGapBetweenColumns))
                 .Append(string.Join(aliasSeparator, x.Aliases))));
 
-        Console.WriteLine();
-        Console.WriteLine("Usage: ./run <puzzle selector>");
-        Console.WriteLine();
-        Console.WriteLine(header);
-        Console.WriteLine(divider);
+        System.Console.WriteLine();
+        System.Console.WriteLine("Usage: ./run <puzzle selector>");
+        System.Console.WriteLine();
+        System.Console.WriteLine(header);
+        System.Console.WriteLine(divider);
         foreach (var usageLine in usageLines)
         {
-            Console.WriteLine(usageLine);
+            System.Console.WriteLine(usageLine);
         }
-        Console.WriteLine();
+        System.Console.WriteLine();
     }
 }

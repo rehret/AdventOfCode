@@ -1,7 +1,8 @@
 ﻿namespace CodeChallenge.AdventOfCode.AdventOfCode2021.Day01;
 
 using CodeChallenge.AdventOfCode.AdventOfCode2021.Day01.Models;
-using CodeChallenge.Core;
+using CodeChallenge.AdventOfCode.Attributes;
+using CodeChallenge.Core.IO;
 
 [AdventOfCodeSolution(2021, 1, 2)]
 internal class Solution02 : AdventOfCodeSolution<int, int>
