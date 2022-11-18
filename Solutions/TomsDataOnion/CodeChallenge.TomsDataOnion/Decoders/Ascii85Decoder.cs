@@ -1,4 +1,4 @@
-﻿namespace CodeChallenge.TomsDataOnion;
+﻿namespace CodeChallenge.TomsDataOnion.Decoders;
 
 using System.Text;
 

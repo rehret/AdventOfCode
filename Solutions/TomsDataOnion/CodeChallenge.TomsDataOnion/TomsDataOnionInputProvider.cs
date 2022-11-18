@@ -3,6 +3,7 @@
 using System.Text;
 
 using CodeChallenge.Core;
+using CodeChallenge.TomsDataOnion.Decoders;
 
 internal class TomsDataOnionInputProvider : IInputProvider<TomsDataOnionChallengeSelection, byte>
 {

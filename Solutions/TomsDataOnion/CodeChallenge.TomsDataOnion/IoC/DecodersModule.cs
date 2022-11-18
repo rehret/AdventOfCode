@@ -2,7 +2,9 @@
 
 using Autofac;
 
-internal class TomsDataOnionModule : Module
+using CodeChallenge.TomsDataOnion.Decoders;
+
+internal class DecodersModule : Module
 {
     protected override void Load(ContainerBuilder builder)
     {

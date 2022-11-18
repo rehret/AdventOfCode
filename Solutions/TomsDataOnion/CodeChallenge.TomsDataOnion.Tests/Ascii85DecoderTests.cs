@@ -3,6 +3,8 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Text;
 
+using CodeChallenge.TomsDataOnion.Decoders;
+
 public class Ascii85DecoderTests
 {
     private readonly Ascii85Decoder _decoder;
