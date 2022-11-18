@@ -77,4 +77,3 @@ Run the above commands without any arguments to see the support challenges. The 
 9. Register Solutions in Autofac
     - The abstract Autofac module `SolutionAutoRegisteringModule` can be extended to automatically register implementations in the challenge space's assembly automatically.
 10. Add input files to `Resources/<Challenge Name>/`, with the nested folder structure left up to the solution to organize as it makes sense.
-11. Add a reference to the new csproj from `CodeChallenge.Runner` to ensure the new DLL is copied to the output folder.

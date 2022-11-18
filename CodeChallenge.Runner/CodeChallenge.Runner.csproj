@@ -11,11 +11,11 @@
   </ItemGroup>
 
   <ItemGroup>
+    <!-- Explicit reference to CodeChallenge.csproj because we use its types in this project -->
     <ProjectReference Include="..\Solutions\CodeChallenge\CodeChallenge.csproj" />
-    <ProjectReference Include="..\Solutions\AdventOfCode\CodeChallenge.AdventOfCode\CodeChallenge.AdventOfCode.csproj" />
-    <ProjectReference Include="..\Solutions\AdventOfCode\2021\CodeChallenge.AdventOfCode.AdventOfCode2021\CodeChallenge.AdventOfCode.AdventOfCode2021.csproj" />
-    <ProjectReference Include="..\Solutions\AdventOfCode\2022\CodeChallenge.AdventOfCode.AdventOfCode2022\CodeChallenge.AdventOfCode.AdventOfCode2022.csproj" />
-    <ProjectReference Include="..\Solutions\TomsDataOnion\CodeChallenge.TomsDataOnion\CodeChallenge.TomsDataOnion.csproj" />
+
+    <!-- Include all projects in the Solutions directory to automatically include them in the output -->
+    <ProjectReference Include="..\Solutions\**\*.csproj" Exclude="..\Solutions\**\*.Tests.csproj" />
   </ItemGroup>
 
   <ItemGroup>
