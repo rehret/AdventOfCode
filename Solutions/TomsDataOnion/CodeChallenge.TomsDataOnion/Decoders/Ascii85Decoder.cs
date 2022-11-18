@@ -1,5 +1,6 @@
 ﻿namespace CodeChallenge.TomsDataOnion.Decoders;
 
+using System.Diagnostics.Contracts;
 using System.Text;
 
 internal class Ascii85Decoder
@@ -18,82 +19,118 @@ internal class Ascii85Decoder
         var writer = new BinaryWriter(outputStream, Encoding.UTF8, true);
         await using var _ = writer.ConfigureAwait(false);
 
-        // Number of bytes we've pulled from the input stream. We grab <DecodeBlockSize> bytes before processing them.
-        byte byteCount = 0;
-
-        // 32bit value containing all the bits we've pulled from the input stream
-        uint currentByteWord = 0;
+        var state = new DecodeState(0, 0, 0);
 
         while (reader.PeekChar() != -1)
         {
-            byteCount = ProcessCharacter(ref currentByteWord, byteCount, reader.ReadChar());
+            state = ProcessAscii85Byte(state with { CurrentAscii85Byte = (byte)reader.ReadChar() });
 
             // Once we have a full 32bit value, write the bytes to the stream
-            if (byteCount == DecodeBlockSize)
+            if (state.NumProcessedAscii85Bytes == DecodeBlockSize)
             {
-                WriteBytesToStream(writer, currentByteWord);
-                byteCount = 0;
-                currentByteWord = 0;
+                WriteBytesToStream(writer, state.CurrentByteWord);
+                state = state with
+                {
+                    NumProcessedAscii85Bytes = 0,
+                    CurrentByteWord = 0
+                };
             }
         }
 
         // If the last block was truncated, add the padding and write the valid bytes
-        var numIgnoredBytes = (byte)(DecodeBlockSize - byteCount);
+        var numIgnoredBytes = (byte)(DecodeBlockSize - state.NumProcessedAscii85Bytes);
         if (numIgnoredBytes > 0)
         {
-            PadLastBlockAdWriteToStream(writer, currentByteWord, numIgnoredBytes, byteCount);
+            PadLastBlockAdWriteToStream(writer, state, numIgnoredBytes);
         }
 
         writer.Flush();
         outputStream.Seek(0, SeekOrigin.Begin);
     }
 
-    private static byte ProcessCharacter(ref uint currentByteWord, byte byteCount, char @char)
+    /// <summary>
+    /// Processes the Ascii85 byte on <paramref name="state"/>, updating <see cref="DecodeState.CurrentByteWord"/> appropriately
+    /// </summary>
+    /// <param name="state">Current <see cref="DecodeState"/> with the next Ascii85 byte to process</param>
+    /// <returns></returns>
+    /// <exception cref="Exception">Thrown when the Ascii85 'z' shortcut is found in the middle of an Ascii85 block</exception>
+    [Pure]
+    private static DecodeState ProcessAscii85Byte(DecodeState state)
     {
-        if (@char == ThirtyTwoBitZeroShortcut)
+        if (state.CurrentAscii85Byte == ThirtyTwoBitZeroShortcut)
         {
-            return HandleThirtyTwoBitZeroShortcut(ref currentByteWord, byteCount);
+            if (state.NumProcessedAscii85Bytes != 0) throw new Exception("Found the Ascii85 'z' shortcut in the middle of a block of characters");
+            return HandleThirtyTwoBitZeroShortcut(state);
         }
 
-        return !char.IsWhiteSpace(@char) ? HandleNonWhiteSpaceByte(ref currentByteWord, byteCount, @char) : byteCount;
+        return !char.IsWhiteSpace((char)state.CurrentAscii85Byte) ? HandleNonWhiteSpaceByte(state) : state;
     }
 
-    private static byte HandleThirtyTwoBitZeroShortcut(ref uint currentByteWord, byte byteCount)
+    /// <summary>
+    /// Handles the case when the 32bit zeros shortcut ('z') is found in the input
+    /// </summary>
+    /// <param name="state"></param>
+    /// <returns></returns>
+    [Pure]
+    private static DecodeState HandleThirtyTwoBitZeroShortcut(DecodeState state)
     {
-        if (byteCount != 0)
+        return state with
         {
-            throw new Exception("Found the Ascii85 'z' shortcut in the middle of a block of characters");
-        }
-        currentByteWord = 0;
-        return DecodeBlockSize;
+            CurrentByteWord = 0,
+            NumProcessedAscii85Bytes = DecodeBlockSize
+        };
     }
 
-    private static byte HandleNonWhiteSpaceByte(ref uint currentByteWord, byte byteCount, char @char)
+    /// <summary>
+    /// Handles non-whitespace bytes from the input
+    /// </summary>
+    /// <param name="state"></param>
+    /// <returns></returns>
+    [Pure]
+    private static DecodeState HandleNonWhiteSpaceByte(DecodeState state)
     {
-        currentByteWord = AddAscii85ByteToUInt(currentByteWord, (byte)@char, byteCount);
-        return ++byteCount;
+        return AddAscii85ByteToUInt(state) with
+        {
+            NumProcessedAscii85Bytes = (byte)(state.NumProcessedAscii85Bytes + 1)
+        };
     }
 
-    private static uint AddAscii85ByteToUInt(uint current, byte ascii85Byte, byte currentByteOffset)
+    /// <summary>
+    /// Decode Ascii85 byte into <see cref="DecodeState.CurrentByteWord"/>
+    /// </summary>
+    /// <param name="state"></param>
+    /// <returns></returns>
+    [Pure]
+    private static DecodeState AddAscii85ByteToUInt(DecodeState state)
     {
         const byte offset = 33;
         const byte radix = 85;
-        return current + (byte)(ascii85Byte - offset) * (uint)Math.Pow(radix, DecodeBlockSize - currentByteOffset - 1);
+
+        return state with
+        {
+            CurrentByteWord = state.CurrentByteWord + (byte)(state.CurrentAscii85Byte - offset) * (uint)Math.Pow(radix, DecodeBlockSize - state.NumProcessedAscii85Bytes - 1)
+        };
     }
 
     private static void PadLastBlockAdWriteToStream(
         BinaryWriter writer,
-        uint currentByteWord,
-        byte numIgnoredBytes,
-        byte byteCount
+        DecodeState state,
+        byte numIgnoredBytes
     )
     {
+        state = state with
+        {
+            CurrentAscii85Byte = (byte)TrailingPaddingCharacter
+        };
         for (var i = 0; i < numIgnoredBytes; i++)
         {
-            currentByteWord = AddAscii85ByteToUInt(currentByteWord, (byte)TrailingPaddingCharacter, (byte)(byteCount + i));
+            state = AddAscii85ByteToUInt(state) with
+            {
+                NumProcessedAscii85Bytes = (byte)(state.NumProcessedAscii85Bytes + 1)
+            };
         }
 
-        WriteBytesToStream(writer, currentByteWord, numIgnoredBytes);
+        WriteBytesToStream(writer, state.CurrentByteWord, numIgnoredBytes);
     }
 
     private static void WriteBytesToStream(BinaryWriter writer, uint currentByteWord, byte numIgnoredBytes = 0)
@@ -112,4 +149,6 @@ internal class Ascii85Decoder
         }
 #endif
     }
+
+    private record DecodeState(uint CurrentByteWord, byte CurrentAscii85Byte, byte NumProcessedAscii85Bytes);
 }
