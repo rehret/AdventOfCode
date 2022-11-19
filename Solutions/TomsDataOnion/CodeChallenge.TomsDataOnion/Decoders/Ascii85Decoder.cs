@@ -23,7 +23,7 @@ internal class Ascii85Decoder
 
         while (reader.PeekChar() != -1)
         {
-            state = ProcessAscii85Byte(state with { CurrentAscii85Byte = (byte)reader.ReadChar() });
+            state = DecodeAscii85Byte(state with { CurrentAscii85Byte = (byte)reader.ReadChar() });
 
             // Once we have a full 32bit value, write the bytes to the stream
             if (state.NumProcessedAscii85Bytes == DecodeBlockSize)
@@ -49,13 +49,13 @@ internal class Ascii85Decoder
     }
 
     /// <summary>
-    /// Processes the Ascii85 byte on <paramref name="state"/>, updating <see cref="DecodeState.CurrentByteWord"/> appropriately
+    /// Decodes the Ascii85 byte on <paramref name="state"/>, updating <see cref="DecodeState.CurrentByteWord"/> appropriately
     /// </summary>
     /// <param name="state">Current <see cref="DecodeState"/> with the next Ascii85 byte to process</param>
     /// <returns></returns>
     /// <exception cref="Exception">Thrown when the Ascii85 'z' shortcut is found in the middle of an Ascii85 block</exception>
     [Pure]
-    private static DecodeState ProcessAscii85Byte(DecodeState state)
+    private static DecodeState DecodeAscii85Byte(DecodeState state)
     {
         if (state.CurrentAscii85Byte == ThirtyTwoBitZeroShortcut)
         {
