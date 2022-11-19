@@ -3,6 +3,7 @@
 using CodeChallenge.Core.IO;
 using CodeChallenge.TomsDataOnion.Attributes;
 using CodeChallenge.TomsDataOnion.IO;
+using CodeChallenge.TomsDataOnion.Solutions.Layer6.TomtelCorel69Emulator;
 
 [TomsDataOnionSolution(6)]
 internal class Layer6Solution : TomsDataOnionSolution
