@@ -28,6 +28,7 @@ public static class Program
     {
         IConfiguration config = new ConfigurationBuilder()
             .AddJsonFile("appsettings.json", true)
+            .AddJsonFile("appsettings.user.json", true)
             .AddEnvironmentVariables()
             .AddCommandLine(args)
             .Build();

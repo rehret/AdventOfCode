@@ -6,3 +6,4 @@ obj/
 riderModule.iml
 /_ReSharper.Caches/
 **/*.txt
+CodeChallenge.Runner/appsettings.user.json
