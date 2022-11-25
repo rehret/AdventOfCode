@@ -36,12 +36,7 @@ public static class Program
         var serviceCollection = new ServiceCollection()
             .AddOptions()
             .ConfigureOptionsInReferencedAssemblies(config)
-            .AddLogging(cfg => cfg.AddSimpleConsole(options =>
-            {
-                options.IncludeScopes = true;
-                options.SingleLine = false;
-            }))
-            .Configure<LoggerFilterOptions>(cfg => cfg.MinLevel = LogLevel.Information);
+            .AddLogging(loggingBuilder => loggingBuilder.AddConfiguration(config.GetSection("Logging")).AddSimpleConsole());
 
         var builder = new ContainerBuilder();
         builder.Populate(serviceCollection);
