@@ -42,7 +42,12 @@ internal class AdventOfCodeInputReader : IInputReader<AdventOfCodeChallengeSelec
         var httpResponse = await httpClient.GetAsync(GetRemoteFilePath(challengeSelection)).ConfigureAwait(false);
         httpResponse.EnsureSuccessStatusCode();
 
-        var fileStream = new FileStream(GetInputFilePath(challengeSelection), FileMode.CreateNew);
+        var inputFilePath = GetInputFilePath(challengeSelection);
+        if (!Directory.Exists(Path.GetDirectoryName(inputFilePath)))
+        {
+            Directory.CreateDirectory(Path.GetDirectoryName(inputFilePath)!);
+        }
+        var fileStream = new FileStream(inputFilePath, FileMode.CreateNew);
         await using var _ = fileStream.ConfigureAwait(false);
         await httpResponse.Content.CopyToAsync(fileStream).ConfigureAwait(false);
         fileStream.Close();
