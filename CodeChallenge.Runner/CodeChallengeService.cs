@@ -1,5 +1,7 @@
 ﻿namespace CodeChallenge.Runner;
 
+using System.Diagnostics;
+
 using Autofac.Core.Registration;
 
 using CodeChallenge.Core;
@@ -44,8 +46,10 @@ internal class CodeChallengeService
 
         try
         {
-            var result = await solution.SolveAsync().ConfigureAwait(false);
+            var stopwatch = new Stopwatch();
+            var result = await solution.SolveAsync(stopwatch).ConfigureAwait(false);
             System.Console.WriteLine(result);
+            _logger.LogDebug("Solution execution took {SolutionExecutionDuration}ms", stopwatch.ElapsedMilliseconds);
         }
         catch (Exception ex) when (ex is FileNotFoundException or DirectoryNotFoundException)
         {

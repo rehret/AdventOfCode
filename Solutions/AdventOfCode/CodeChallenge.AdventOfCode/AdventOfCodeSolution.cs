@@ -1,5 +1,7 @@
 ﻿namespace CodeChallenge.AdventOfCode;
 
+using System.Diagnostics;
+
 using CodeChallenge.AdventOfCode.Attributes;
 using CodeChallenge.Core;
 using CodeChallenge.Core.IO;
@@ -13,10 +15,12 @@ internal abstract class AdventOfCodeSolution<TInput, TResult> : AbstractSolution
         _inputProvider = inputProvider;
     }
 
-    public override async Task<string> SolveAsync()
+    public override async Task<string> SolveAsync(Stopwatch? stopwatch = null)
     {
         var input = await _inputProvider.GetInputAsync(GetChallengeSelection()).ConfigureAwait(false);
+        stopwatch?.Start();
         var result = await ComputeSolutionAsync(input).ConfigureAwait(false);
+        stopwatch?.Stop();
         return GetStringFromResult(result);
     }
 

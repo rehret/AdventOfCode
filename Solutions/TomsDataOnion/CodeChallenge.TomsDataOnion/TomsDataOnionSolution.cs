@@ -1,5 +1,6 @@
 ﻿namespace CodeChallenge.TomsDataOnion;
 
+using System.Diagnostics;
 using System.Text;
 
 using CodeChallenge.Core;
@@ -18,13 +19,15 @@ internal abstract class TomsDataOnionSolution : AbstractSolution<TomsDataOnionSo
         _outputWriter = outputWriter;
     }
 
-    public override async Task<string> SolveAsync()
+    public override async Task<string> SolveAsync(Stopwatch? stopwatch = null)
     {
         // Get input
         var input = await _inputProvider.GetInputAsync(GetChallengeSelection()).ConfigureAwait(false);
 
         // Process the layer
+        stopwatch?.Start();
         var stringResult = Encoding.UTF8.GetString(Decode(input).ToArray());
+        stopwatch?.Stop();
 
         // Write output
         var challengeSelection = GetChallengeSelection();

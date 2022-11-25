@@ -1,11 +1,12 @@
 ﻿namespace CodeChallenge.Core;
 
+using System.Diagnostics;
 using System.Reflection;
 
 public abstract class AbstractSolution<TSolutionAttribute, TChallengeSelection> : ISolution
     where TSolutionAttribute : Attribute
 {
-    public abstract Task<string> SolveAsync();
+    public abstract Task<string> SolveAsync(Stopwatch? stopwatch = null);
 
     protected TChallengeSelection GetChallengeSelection()
     {
