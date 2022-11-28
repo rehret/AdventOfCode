@@ -59,9 +59,9 @@ Run the above commands without any arguments to see the support challenges. The 
         - The abstract Autofac module `InputProviderAutoRegisteringModule` can be extended to automatically register implementations in the challenge space's assembly automatically.
 4. Extend `ChallengeSelection` as a way to indicate a particular problem & solution within the challenge space.
     - It is recommended to override `ToString()` as this is used when a requested solution isn't found.
-5. Extend `AbstractChallengeArgumentParser` to provide functionality for parsing command-line arguments into the `ChallengeSelection` created in step 4.
-    - Extending this automatically adds support for the challenge type to `CodeChallenge.Runner`
-    - The implementation defines the argument parsing and usage message
+5. Implement an `ICommandBuilder` to build a `System.CommandLine.Command` and a `BaseBinder<TChallengeSelection>`
+    - The command should take the challenge selection and run the appropriate solution, printing the output to the console. To facilitate this, `AbstractCommandBuilder` may be extended.
+    - Subcommands may be added as appropriate.
 6. Extend `SolutionAttribute` for flagging the solution classes
     - Take any indicators (such as year, day, and puzzle in the case of Advent of Code) via the constructor and set them in public properties.
     - The implementation of the abstract method `ToPuzzleSelection()` should return an instance of the type created in step 4.

@@ -1,6 +1,7 @@
 ﻿namespace CodeChallenge.Runner;
 
 using System.Collections.Immutable;
+using System.CommandLine;
 using System.Reflection;
 
 using Autofac;
@@ -20,8 +21,8 @@ public static class Program
     {
         var serviceProvider = BuildServiceProvider(args);
         await using var _ = serviceProvider.ConfigureAwait(false);
-        var service = serviceProvider.GetRequiredService<ICodeChallengeService>();
-        await service.ExecuteAsync(CancellationToken.None).ConfigureAwait(false);
+        var rootCommand = serviceProvider.GetRequiredService<RootCommand>();
+        await rootCommand.InvokeAsync(args).ConfigureAwait(false);
     }
 
     private static AutofacServiceProvider BuildServiceProvider(string[] args)
@@ -30,7 +31,10 @@ public static class Program
             .AddJsonFile("appsettings.json", true)
             .AddJsonFile("appsettings.user.json", true)
             .AddEnvironmentVariables()
-            .AddCommandLine(args)
+            .AddCommandLine(args, new Dictionary<string, string>
+            {
+                { "--logLevel", "Logging:LogLevel:Default" }
+            })
             .Build();
 
         var serviceCollection = new ServiceCollection()

@@ -13,7 +13,8 @@ public abstract class InputReaderAutoRegisteringModule : Module
     protected override void Load(ContainerBuilder builder)
     {
         builder.RegisterAssemblyTypes(GetAssembly())
-            .AsClosedTypesOf(typeof(IInputReader<>));
+            .AsClosedTypesOf(typeof(IInputReader<>))
+            .AsSelf();
     }
 
     protected abstract Assembly GetAssembly();

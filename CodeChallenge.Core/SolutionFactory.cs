@@ -1,5 +1,3 @@
-﻿namespace CodeChallenge.Runner;
-
-using CodeChallenge.Core;
+﻿namespace CodeChallenge.Core;
 
 public delegate ISolution SolutionFactory(ChallengeSelection challengeSelection);

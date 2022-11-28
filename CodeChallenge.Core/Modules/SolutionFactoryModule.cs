@@ -1,4 +1,4 @@
-﻿namespace CodeChallenge.Runner.Modules;
+﻿namespace CodeChallenge.Core.Modules;
 
 using Autofac;
 

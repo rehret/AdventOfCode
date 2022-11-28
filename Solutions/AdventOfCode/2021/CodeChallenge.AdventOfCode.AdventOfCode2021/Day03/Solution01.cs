@@ -1,0 +1,15 @@
+﻿namespace CodeChallenge.AdventOfCode.AdventOfCode2021.Day03;
+
+using CodeChallenge.AdventOfCode.Attributes;
+using CodeChallenge.Core.IO;
+
+[AdventOfCodeSolution(2021, 3, 1)]
+internal class Solution01 : AdventOfCodeSolution<string, string>
+{
+    public Solution01(IInputProvider<AdventOfCodeChallengeSelection, string> inputProvider) : base(inputProvider) { }
+
+    public override Task<string> ComputeSolutionAsync(IEnumerable<string> input)
+    {
+        throw new NotImplementedException();
+    }
+}
