@@ -2,6 +2,7 @@
 
 using System.CommandLine;
 using System.CommandLine.Binding;
+using System.Diagnostics;
 
 using Autofac;
 
@@ -31,7 +32,6 @@ internal sealed class AdventOfCodeCommandBuilder : AbstractCommandBuilder<Advent
         Command.AddArgument(puzzleArgument);
 
         var downloadCommand = new Command("fetch", "Fetch puzzle input for the given year and day");
-
         Command.AddCommand(downloadCommand);
 
         downloadCommand.SetHandler(async challengeSelection =>
@@ -40,8 +40,19 @@ internal sealed class AdventOfCodeCommandBuilder : AbstractCommandBuilder<Advent
             await inputWriter.FetchRemoteInputAsync(challengeSelection).ConfigureAwait(false);
         }, new AdventOfCodeChallengeSelectionBinder(yearArgument, dayArgument));
 
+        var openWebBrowserCommand = new Command("open", "Open the webpage for the given year and day in the default browser");
+        Command.AddCommand(openWebBrowserCommand);
+
+        openWebBrowserCommand.SetHandler(challengeSelection =>
+        {
+            Process.Start(new ProcessStartInfo(GetUriFromChallengeSelection(challengeSelection).ToString()) { UseShellExecute = true });
+        }, new AdventOfCodeChallengeSelectionBinder(yearArgument, dayArgument));
+
         Binder = new AdventOfCodeChallengeSelectionBinder(yearArgument, dayArgument, puzzleArgument);
     }
+
+    private static Uri GetUriFromChallengeSelection(AdventOfCodeChallengeSelection challengeSelection) =>
+        new($"https://adventofcode.com/{challengeSelection.Year:0000}/day/{challengeSelection.Day:0}");
 
     private class AdventOfCodeChallengeSelectionBinder : BinderBase<AdventOfCodeChallengeSelection>
     {
