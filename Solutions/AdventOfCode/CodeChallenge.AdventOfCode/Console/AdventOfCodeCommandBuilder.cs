@@ -45,14 +45,11 @@ internal sealed class AdventOfCodeCommandBuilder : AbstractCommandBuilder<Advent
 
         openWebBrowserCommand.SetHandler(challengeSelection =>
         {
-            Process.Start(new ProcessStartInfo(GetUriFromChallengeSelection(challengeSelection).ToString()) { UseShellExecute = true });
+            Process.Start(new ProcessStartInfo(AdventOfCodeResourcePathBuilder.GetWebPageUri(challengeSelection).ToString()) { UseShellExecute = true });
         }, new AdventOfCodeChallengeSelectionBinder(yearArgument, dayArgument));
 
         Binder = new AdventOfCodeChallengeSelectionBinder(yearArgument, dayArgument, puzzleArgument);
     }
-
-    private static Uri GetUriFromChallengeSelection(AdventOfCodeChallengeSelection challengeSelection) =>
-        new($"https://adventofcode.com/{challengeSelection.Year:0000}/day/{challengeSelection.Day:0}");
 
     private class AdventOfCodeChallengeSelectionBinder : BinderBase<AdventOfCodeChallengeSelection>
     {

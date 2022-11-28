@@ -19,7 +19,7 @@ internal class AdventOfCodeInputWriter
 
     public async Task FetchRemoteInputAsync(AdventOfCodeChallengeSelection challengeSelection)
     {
-        var filepath = FilePathHelpers.GetInputFilePath(challengeSelection);
+        var filepath = AdventOfCodeResourcePathBuilder.GetInputFilePath(challengeSelection);
         if (!Directory.Exists(Path.GetDirectoryName(filepath)))
         {
             Directory.CreateDirectory(Path.GetDirectoryName(filepath)!);
@@ -34,14 +34,12 @@ internal class AdventOfCodeInputWriter
     {
         using var httpClientHandler = new HttpClientHandler { CookieContainer = new CookieContainer() };
         using var httpClient = new HttpClient(httpClientHandler);
-        httpClientHandler.CookieContainer.Add(new Cookie("session", _configuration.Session, string.Empty, GetRemoteFilePath(challengeSelection).Host));
+        var remoteFilePath = AdventOfCodeResourcePathBuilder.GetRemoteFilePath(challengeSelection);
+        httpClientHandler.CookieContainer.Add(new Cookie("session", _configuration.Session, string.Empty, remoteFilePath.Host));
 
-        var httpResponse = await httpClient.GetAsync(GetRemoteFilePath(challengeSelection)).ConfigureAwait(false);
+        var httpResponse = await httpClient.GetAsync(remoteFilePath).ConfigureAwait(false);
         httpResponse.EnsureSuccessStatusCode();
 
         return await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
     }
-
-    private static Uri GetRemoteFilePath(AdventOfCodeChallengeSelection challengeSelection) =>
-        new($"https://adventofcode.com/{challengeSelection.Year:0000}/day/{challengeSelection.Day:0}/input");
 }

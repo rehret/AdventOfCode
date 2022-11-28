@@ -8,7 +8,7 @@ internal class AdventOfCodeInputReader : IInputReader<AdventOfCodeChallengeSelec
 {
     public async Task<IEnumerable<string>> GetInputAsync(AdventOfCodeChallengeSelection challengeSelection)
     {
-        var filepath = FilePathHelpers.GetInputFilePath(challengeSelection);
+        var filepath = AdventOfCodeResourcePathBuilder.GetInputFilePath(challengeSelection);
         using var streamReader = new StreamReader(filepath, Encoding.UTF8);
         var fileContent = await streamReader.ReadToEndAsync().ConfigureAwait(false);
         return fileContent.Split('\n', StringSplitOptions.TrimEntries | StringSplitOptions.RemoveEmptyEntries);
