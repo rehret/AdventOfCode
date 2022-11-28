@@ -2,5 +2,5 @@
 
 public interface IInputProvider<in TChallengeSelection, TOutput>
 {
-    Task<IEnumerable<TOutput>> GetInputAsync(TChallengeSelection challengeSelection);
+    Task<TOutput> GetInputAsync(TChallengeSelection challengeSelection);
 }

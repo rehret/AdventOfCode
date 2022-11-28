@@ -9,7 +9,7 @@ public class Solution02Tests
 
     public Solution02Tests()
     {
-        _solution = new Solution02(new Mock<IInputProvider<AdventOfCodeChallengeSelection, int>>().Object);
+        _solution = new Solution02(new Mock<IInputProvider<AdventOfCodeChallengeSelection, IEnumerable<int>>>().Object);
     }
 
     [Fact]

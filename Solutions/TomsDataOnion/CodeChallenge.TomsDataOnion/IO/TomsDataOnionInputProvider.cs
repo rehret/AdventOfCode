@@ -5,7 +5,7 @@ using System.Text;
 using CodeChallenge.Core.IO;
 using CodeChallenge.TomsDataOnion.Decoders;
 
-internal class TomsDataOnionInputProvider : IInputProvider<TomsDataOnionChallengeSelection, byte>
+internal class TomsDataOnionInputProvider : IInputProvider<TomsDataOnionChallengeSelection, IEnumerable<byte>>
 {
     private const string DatagramStart = "<~";
     private const string DatagramEnd = "~>";

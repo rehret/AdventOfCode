@@ -13,7 +13,7 @@ internal class Layer4Solution : TomsDataOnionSolution
     private static readonly InternetProtocolV4Address AcceptedDestinationIpAddress = new("10.1.1.200");
     private static readonly ushort AcceptedDestinationPort = 42069;
 
-    public Layer4Solution(IInputProvider<TomsDataOnionChallengeSelection, byte> inputProvider, ITomsDataOnionOutputWriter outputWriter)
+    public Layer4Solution(IInputProvider<TomsDataOnionChallengeSelection, IEnumerable<byte>> inputProvider, ITomsDataOnionOutputWriter outputWriter)
         : base(inputProvider, outputWriter)
     { }
 

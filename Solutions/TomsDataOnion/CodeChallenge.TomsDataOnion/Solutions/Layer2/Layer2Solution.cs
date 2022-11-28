@@ -9,7 +9,7 @@ internal class Layer2Solution : TomsDataOnionSolution
 {
     private const byte ParityBitMask = 0x01;
 
-    public Layer2Solution(IInputProvider<TomsDataOnionChallengeSelection, byte> inputProvider, ITomsDataOnionOutputWriter outputWriter)
+    public Layer2Solution(IInputProvider<TomsDataOnionChallengeSelection, IEnumerable<byte>> inputProvider, ITomsDataOnionOutputWriter outputWriter)
         : base(inputProvider, outputWriter)
     { }
 

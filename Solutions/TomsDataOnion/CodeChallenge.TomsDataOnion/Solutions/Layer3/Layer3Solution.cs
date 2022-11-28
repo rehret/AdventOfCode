@@ -22,7 +22,7 @@ internal class Layer3Solution : TomsDataOnionSolution
 
     private const int KeyLength = 32;
 
-    public Layer3Solution(IInputProvider<TomsDataOnionChallengeSelection, byte> inputProvider, ITomsDataOnionOutputWriter outputWriter)
+    public Layer3Solution(IInputProvider<TomsDataOnionChallengeSelection, IEnumerable<byte>> inputProvider, ITomsDataOnionOutputWriter outputWriter)
         : base(inputProvider, outputWriter)
     { }
 

@@ -53,8 +53,6 @@ Run the above commands without any arguments to see the support challenges. The 
 3. Extend `IInputProvider<TChallengeSelection, TOutput>` as needed
     - This type is used for getting input (typically via an instance of `IInputProvider<TChallengeSelection>`, but not always) and modifying it to prepare it for the individual solution implementations. This can be as simple as parsing each line as an `int`, but anything can be returned.
     - General-use implementations should be put in `CodeChallenge.InputProviders` for re-use across challenges.
-    - There is an `AbstractInputProvider<TChallengeSelection>` which can be used in most cases. It takes an instance of `IInputReader<TChallengeSelection, TOutput>` via the constructor for reading from a file. Classes extending this provide an implementation for `protected abstract TOutput ProcessLine(string line)` to change one line of input into the desired output type.
-        - If the input should not be processed line-by-line, this abstract base class should not be used.
     - Register any implementations of `IInputProvider<TChallengeSelection, TOutput>` in Autofac
         - The abstract Autofac module `InputProviderAutoRegisteringModule` can be extended to automatically register implementations in the challenge space's assembly automatically.
 4. Extend `ChallengeSelection` as a way to indicate a particular problem & solution within the challenge space.

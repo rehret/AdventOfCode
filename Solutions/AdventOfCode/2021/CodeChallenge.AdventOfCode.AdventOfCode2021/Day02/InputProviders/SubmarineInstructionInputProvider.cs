@@ -3,16 +3,26 @@
 using System.Text.RegularExpressions;
 
 using CodeChallenge.AdventOfCode.AdventOfCode2021.Day02.Models;
-using CodeChallenge.Core;
 using CodeChallenge.Core.IO;
 
-internal class SubmarineInstructionInputProvider : AbstractInputProvider<AdventOfCodeChallengeSelection, SubmarineInstruction>
+internal class SubmarineInstructionInputProvider : IInputProvider<AdventOfCodeChallengeSelection, IEnumerable<SubmarineInstruction>>
 {
     private static readonly Regex WhitespaceRegex = new(@"\s+", RegexOptions.Compiled);
 
-    public SubmarineInstructionInputProvider(IInputReader<AdventOfCodeChallengeSelection> inputReader) : base(inputReader) { }
+    private readonly IInputReader<AdventOfCodeChallengeSelection> _inputReader;
 
-    protected override SubmarineInstruction ProcessLine(string line)
+    public SubmarineInstructionInputProvider(IInputReader<AdventOfCodeChallengeSelection> inputReader)
+    {
+        _inputReader = inputReader;
+    }
+
+    public async Task<IEnumerable<SubmarineInstruction>> GetInputAsync(AdventOfCodeChallengeSelection challengeSelection)
+    {
+        return (await _inputReader.GetInputAsync(challengeSelection).ConfigureAwait(false))
+            .Select(ProcessLine);
+    }
+
+    private static SubmarineInstruction ProcessLine(string line)
     {
         var values = WhitespaceRegex.Split(line).Select(value => value.Trim()).ToArray();
         if (values.Length > 2)

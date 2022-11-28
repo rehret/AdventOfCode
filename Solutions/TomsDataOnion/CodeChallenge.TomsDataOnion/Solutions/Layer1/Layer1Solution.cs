@@ -10,7 +10,7 @@ internal class Layer1Solution : TomsDataOnionSolution
     private const int FlipBitsMask = 0b01010101;
     private const int RightmostBitMask = 0b00000001;
 
-    public Layer1Solution(IInputProvider<TomsDataOnionChallengeSelection, byte> inputProvider, ITomsDataOnionOutputWriter outputWriter)
+    public Layer1Solution(IInputProvider<TomsDataOnionChallengeSelection, IEnumerable<byte>> inputProvider, ITomsDataOnionOutputWriter outputWriter)
         : base(inputProvider, outputWriter)
     { }
 

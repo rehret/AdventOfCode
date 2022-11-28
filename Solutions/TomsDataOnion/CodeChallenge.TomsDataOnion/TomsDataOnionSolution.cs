@@ -10,10 +10,10 @@ using CodeChallenge.TomsDataOnion.IO;
 
 internal abstract class TomsDataOnionSolution : AbstractSolution<TomsDataOnionSolutionAttribute, TomsDataOnionChallengeSelection>
 {
-    private readonly IInputProvider<TomsDataOnionChallengeSelection, byte> _inputProvider;
+    private readonly IInputProvider<TomsDataOnionChallengeSelection, IEnumerable<byte>> _inputProvider;
     private readonly ITomsDataOnionOutputWriter _outputWriter;
 
-    protected TomsDataOnionSolution(IInputProvider<TomsDataOnionChallengeSelection, byte> inputProvider, ITomsDataOnionOutputWriter outputWriter)
+    protected TomsDataOnionSolution(IInputProvider<TomsDataOnionChallengeSelection, IEnumerable<byte>> inputProvider, ITomsDataOnionOutputWriter outputWriter)
     {
         _inputProvider = inputProvider;
         _outputWriter = outputWriter;

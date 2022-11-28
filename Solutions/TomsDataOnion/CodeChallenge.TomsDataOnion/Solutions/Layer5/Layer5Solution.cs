@@ -11,7 +11,7 @@ using Org.BouncyCastle.Security;
 [TomsDataOnionSolution(5)]
 internal class Layer5Solution : TomsDataOnionSolution
 {
-    public Layer5Solution(IInputProvider<TomsDataOnionChallengeSelection, byte> inputProvider, ITomsDataOnionOutputWriter outputWriter)
+    public Layer5Solution(IInputProvider<TomsDataOnionChallengeSelection, IEnumerable<byte>> inputProvider, ITomsDataOnionOutputWriter outputWriter)
         : base(inputProvider, outputWriter)
     { }
 

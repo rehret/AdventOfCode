@@ -7,7 +7,7 @@ using CodeChallenge.TomsDataOnion.IO;
 [TomsDataOnionSolution(0)]
 internal class Layer0Solution : TomsDataOnionSolution
 {
-    public Layer0Solution(IInputProvider<TomsDataOnionChallengeSelection, byte> inputProvider, ITomsDataOnionOutputWriter outputWriter)
+    public Layer0Solution(IInputProvider<TomsDataOnionChallengeSelection, IEnumerable<byte>> inputProvider, ITomsDataOnionOutputWriter outputWriter)
         : base(inputProvider, outputWriter)
     { }
 

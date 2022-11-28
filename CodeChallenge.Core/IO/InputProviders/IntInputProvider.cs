@@ -3,12 +3,23 @@
 using CodeChallenge.Core;
 using CodeChallenge.Core.IO;
 
-internal class IntInputProvider<TChallengeSelection> : AbstractInputProvider<TChallengeSelection, int>
+internal class IntInputProvider<TChallengeSelection> : IInputProvider<TChallengeSelection, IEnumerable<int>>
     where TChallengeSelection : ChallengeSelection
 {
-    public IntInputProvider(IInputReader<TChallengeSelection> inputReader) : base(inputReader) { }
+    private readonly IInputReader<TChallengeSelection> _inputReader;
 
-    protected override int ProcessLine(string line)
+    public IntInputProvider(IInputReader<TChallengeSelection> inputReader)
+    {
+        _inputReader = inputReader;
+    }
+
+    public async Task<IEnumerable<int>> GetInputAsync(TChallengeSelection challengeSelection)
+    {
+        return (await _inputReader.GetInputAsync(challengeSelection).ConfigureAwait(false))
+            .Select(ProcessLine);
+    }
+
+    private static int ProcessLine(string line)
     {
         if (!int.TryParse(line, out var parsedInt))
         {

@@ -8,7 +8,7 @@ using CodeChallenge.TomsDataOnion.Solutions.Layer6.TomtelCorel69Emulator;
 [TomsDataOnionSolution(6)]
 internal class Layer6Solution : TomsDataOnionSolution
 {
-    public Layer6Solution(IInputProvider<TomsDataOnionChallengeSelection, byte> inputProvider, ITomsDataOnionOutputWriter outputWriter)
+    public Layer6Solution(IInputProvider<TomsDataOnionChallengeSelection, IEnumerable<byte>> inputProvider, ITomsDataOnionOutputWriter outputWriter)
         : base(inputProvider, outputWriter)
     { }
 

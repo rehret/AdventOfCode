@@ -6,9 +6,9 @@ using CodeChallenge.AdventOfCode.Attributes;
 using CodeChallenge.Core.IO;
 
 [AdventOfCodeSolution(2021, 1, 1)]
-internal class Solution01 : AdventOfCodeSolution<int, int>
+internal class Solution01 : AdventOfCodeSolution<IEnumerable<int>, int>
 {
-    public Solution01(IInputProvider<AdventOfCodeChallengeSelection, int> inputProvider) : base(inputProvider) { }
+    public Solution01(IInputProvider<AdventOfCodeChallengeSelection, IEnumerable<int>> inputProvider) : base(inputProvider) { }
 
     public override Task<int> ComputeSolutionAsync(IEnumerable<int> input)
     {

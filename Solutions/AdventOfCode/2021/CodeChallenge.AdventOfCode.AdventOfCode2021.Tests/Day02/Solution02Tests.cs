@@ -11,7 +11,7 @@ public class Solution02Tests
 
     public Solution02Tests()
     {
-        _solution = new Solution02(new Mock<IInputProvider<AdventOfCodeChallengeSelection, SubmarineInstruction>>().Object);
+        _solution = new Solution02(new Mock<IInputProvider<AdventOfCodeChallengeSelection, IEnumerable<SubmarineInstruction>>>().Object);
     }
 
     [Fact]

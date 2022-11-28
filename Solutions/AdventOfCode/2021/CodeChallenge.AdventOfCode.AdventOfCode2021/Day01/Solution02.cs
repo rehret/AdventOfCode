@@ -5,11 +5,11 @@ using CodeChallenge.AdventOfCode.Attributes;
 using CodeChallenge.Core.IO;
 
 [AdventOfCodeSolution(2021, 1, 2)]
-internal class Solution02 : AdventOfCodeSolution<int, int>
+internal class Solution02 : AdventOfCodeSolution<IEnumerable<int>, int>
 {
     private const ushort WindowSize = 3;
 
-    public Solution02(IInputProvider<AdventOfCodeChallengeSelection, int> inputProvider) : base(inputProvider)  { }
+    public Solution02(IInputProvider<AdventOfCodeChallengeSelection, IEnumerable<int>> inputProvider) : base(inputProvider)  { }
 
     public override Task<int> ComputeSolutionAsync(IEnumerable<int> input)
     {

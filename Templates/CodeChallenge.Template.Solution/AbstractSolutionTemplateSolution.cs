@@ -24,7 +24,7 @@ internal abstract class AbstractSolutionTemplateSolution<TInput, TResult> : Abst
         return GetStringFromResult(result);
     }
 
-    public abstract Task<TResult> ComputeSolutionAsync(IEnumerable<TInput> input);
+    public abstract Task<TResult> ComputeSolutionAsync(TInput input);
 
     protected virtual string GetStringFromResult(TResult result) => result?.ToString() ?? string.Empty;
 
