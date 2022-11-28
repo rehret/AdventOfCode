@@ -21,14 +21,25 @@ internal class AdventOfCodeInputReader : IInputReader<AdventOfCodeChallengeSelec
     {
         var filepath = GetInputFilePath(challengeSelection);
         string fileContent;
-        try
+        if (Path.Exists(filepath))
         {
             using var streamReader = new StreamReader(filepath, Encoding.UTF8);
             fileContent = await streamReader.ReadToEndAsync().ConfigureAwait(false);
         }
-        catch (Exception ex) when (ex is FileNotFoundException or DirectoryNotFoundException && !string.IsNullOrWhiteSpace(_configuration.Session))
+        else if (_configuration.DownloadMissingInput)
         {
+            if (!Directory.Exists(Path.GetDirectoryName(filepath)))
+            {
+                Directory.CreateDirectory(Path.GetDirectoryName(filepath)!);
+            }
             fileContent = await GetInputFromRemoteServer(challengeSelection).ConfigureAwait(false);
+            var streamWriter = new StreamWriter(filepath, Encoding.UTF8, new FileStreamOptions { Mode = FileMode.CreateNew, Access = FileAccess.Write });
+            await using var _ = streamWriter.ConfigureAwait(false);
+            await streamWriter.WriteAsync(fileContent).ConfigureAwait(false);
+        }
+        else
+        {
+            throw new FileNotFoundException("Could not find input file for Advent of Code puzzle", filepath);
         }
         return fileContent.Split('\n', StringSplitOptions.TrimEntries | StringSplitOptions.RemoveEmptyEntries);
     }
@@ -41,16 +52,6 @@ internal class AdventOfCodeInputReader : IInputReader<AdventOfCodeChallengeSelec
 
         var httpResponse = await httpClient.GetAsync(GetRemoteFilePath(challengeSelection)).ConfigureAwait(false);
         httpResponse.EnsureSuccessStatusCode();
-
-        var inputFilePath = GetInputFilePath(challengeSelection);
-        if (!Directory.Exists(Path.GetDirectoryName(inputFilePath)))
-        {
-            Directory.CreateDirectory(Path.GetDirectoryName(inputFilePath)!);
-        }
-        var fileStream = new FileStream(inputFilePath, FileMode.CreateNew);
-        await using var _ = fileStream.ConfigureAwait(false);
-        await httpResponse.Content.CopyToAsync(fileStream).ConfigureAwait(false);
-        fileStream.Close();
 
         return await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
     }
