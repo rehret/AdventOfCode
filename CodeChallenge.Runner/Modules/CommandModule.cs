@@ -21,12 +21,16 @@ internal class CommandModule : Module
             var commandBuilders = ctx.Resolve<IEnumerable<ICommandBuilder>>();
             var rootCommand = new RootCommand("Code Challenge runner")
             {
-                TreatUnmatchedTokensAsErrors = false
+                TreatUnmatchedTokensAsErrors = true
             };
             foreach (var commandBuilder in commandBuilders)
             {
                 rootCommand.AddCommand(commandBuilder.Build());
             }
+
+            var logLevelOption = new Option<string>("--logLevel", "Sets the minimum log level for the console output");
+            logLevelOption.FromAmong("Trace", "Debug", "Information", "Warning", "Error", "Critical", "None");
+            rootCommand.AddGlobalOption(logLevelOption);
 
             return rootCommand;
         });
