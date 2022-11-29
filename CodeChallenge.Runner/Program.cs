@@ -2,12 +2,16 @@
 
 using System.Collections.Immutable;
 using System.CommandLine;
+using System.CommandLine.Builder;
+using System.CommandLine.Parsing;
 using System.Reflection;
 
 using Autofac;
 using Autofac.Configuration;
+using Autofac.Core.Registration;
 using Autofac.Extensions.DependencyInjection;
 
+using CodeChallenge.Core;
 using CodeChallenge.Core.Configuration;
 using CodeChallenge.Runner.Helpers;
 
@@ -21,8 +25,10 @@ public static class Program
     {
         var serviceProvider = BuildServiceProvider(args);
         await using var _ = serviceProvider.ConfigureAwait(false);
-        var rootCommand = serviceProvider.GetRequiredService<RootCommand>();
-        await rootCommand.InvokeAsync(args).ConfigureAwait(false);
+        using var loggerFactory = serviceProvider.GetRequiredService<ILoggerFactory>();
+        var logger = loggerFactory.CreateLogger(typeof(Program).Namespace!);
+        var parser = BuildCommandLineParser(serviceProvider, logger);
+        await parser.InvokeAsync(args).ConfigureAwait(false);
     }
 
     private static AutofacServiceProvider BuildServiceProvider(string[] args)
@@ -49,6 +55,34 @@ public static class Program
 
         var container = builder.Build();
         return new AutofacServiceProvider(container);
+    }
+
+    private static Parser BuildCommandLineParser(IServiceProvider serviceProvider, ILogger logger)
+    {
+        return new CommandLineBuilder(serviceProvider.GetRequiredService<RootCommand>())
+            .UseDefaults()
+            .AddMiddleware(async (context, next) =>
+            {
+                try
+                {
+                    await next(context).ConfigureAwait(false);
+                }
+                catch (ComponentNotRegisteredException componentNotRegisteredException) when (componentNotRegisteredException.Message.Contains(nameof(ISolution)))
+                {
+                    logger.LogError("Solution has not been registered: {SolutionErrorMessage}", componentNotRegisteredException.Message);
+                }
+                catch (Exception ex) when (ex is FileNotFoundException or DirectoryNotFoundException)
+                {
+                    logger.LogError("Could not find input file: '{InputFile}'",
+                        ex switch
+                        {
+                            FileNotFoundException fileNotFoundException           => fileNotFoundException.FileName,
+                            DirectoryNotFoundException directoryNotFoundException => directoryNotFoundException.Message,
+                            _                                                     => "Unknown error"
+                        });
+                }
+            })
+            .Build();
     }
 
     private static IServiceCollection ConfigureOptionsInReferencedAssemblies(this IServiceCollection serviceCollection, IConfiguration config)
