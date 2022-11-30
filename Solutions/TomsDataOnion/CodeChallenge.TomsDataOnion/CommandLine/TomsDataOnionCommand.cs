@@ -1,27 +1,26 @@
-﻿namespace CodeChallenge.TomsDataOnion.Console;
+﻿namespace CodeChallenge.TomsDataOnion.CommandLine;
 
 using System.CommandLine;
 using System.CommandLine.Binding;
 
 using CodeChallenge.Core;
-using CodeChallenge.Core.Console;
+using CodeChallenge.Core.CommandLine;
 
 using Microsoft.Extensions.Logging;
 
-internal sealed class TomsDataOnionCommandBuilder : AbstractCommandBuilder<TomsDataOnionChallengeSelection>
+internal class TomsDataOnionCommand : AbstractCodeChallengeCommand<TomsDataOnionChallengeSelection>
 {
-    protected override Command Command { get; }
-    protected override BinderBase<TomsDataOnionChallengeSelection> Binder { get; }
-
-    public TomsDataOnionCommandBuilder(SolutionFactory solutionFactory, ILoggerFactory loggerFactory) : base(solutionFactory, loggerFactory)
+    public TomsDataOnionCommand(IValueDescriptor<SolutionFactory> solutionFactoryBinder, IValueDescriptor<ILoggerFactory> loggerFactoryBinder) : base("TomsDataOnion", "Execute Tom's Data Onion solutions")
     {
         var challengeSelectionArgument = new Argument<int>("Layer selection", "Layer selection as an integer");
 
-        Command = new Command("TomsDataOnion", "Execute Tom's Data Onion solutions");
-        Command.AddAlias("toms");
-        Command.AddArgument(challengeSelectionArgument);
+        AddAlias("toms");
+        AddArgument(challengeSelectionArgument);
 
-        Binder = new TomsDataOnionChallengeSelectionBinder(challengeSelectionArgument);
+        this.SetHandler(ExecuteSolutionAsync,
+            new TomsDataOnionChallengeSelectionBinder(challengeSelectionArgument),
+            solutionFactoryBinder,
+            loggerFactoryBinder);
     }
 
     private class TomsDataOnionChallengeSelectionBinder : BinderBase<TomsDataOnionChallengeSelection>
