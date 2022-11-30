@@ -33,7 +33,7 @@ internal class AdventOfCodeCommand : AbstractCodeChallengeCommand<AdventOfCodeCh
             loggerFactoryBinder);
 
         AddCommand(BuildDownloadCommand(yearArgument, dayArgument, inputWriterBinder));
-        AddCommand(BuildOpenCommand(yearArgument, dayArgument));
+        AddCommand(BuildOpenCommand(yearArgument, dayArgument, puzzleArgument));
     }
 
     private class AdventOfCodeChallengeSelectionBinder : BinderBase<AdventOfCodeChallengeSelection>
@@ -70,13 +70,13 @@ internal class AdventOfCodeCommand : AbstractCodeChallengeCommand<AdventOfCodeCh
         return downloadCommand;
     }
 
-    private static Command BuildOpenCommand(Argument<int> yearArgument, Argument<int> dayArgument)
+    private static Command BuildOpenCommand(Argument<int> yearArgument, Argument<int> dayArgument, Argument<int> puzzleArgument)
     {
         var openWebBrowserCommand = new Command("open", "Open the webpage for the given year and day in the default browser");
         openWebBrowserCommand.SetHandler(challengeSelection =>
         {
             Process.Start(new ProcessStartInfo(AdventOfCodeResourcePathBuilder.GetWebPageUri(challengeSelection).ToString()) { UseShellExecute = true });
-        }, new AdventOfCodeChallengeSelectionBinder(yearArgument, dayArgument));
+        }, new AdventOfCodeChallengeSelectionBinder(yearArgument, dayArgument, puzzleArgument));
 
         return openWebBrowserCommand;
     }

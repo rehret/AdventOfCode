@@ -9,5 +9,5 @@ internal static class AdventOfCodeResourcePathBuilder
         new($"https://adventofcode.com/{challengeSelection.Year:0000}/day/{challengeSelection.Day:0}/input");
 
     public static Uri GetWebPageUri(AdventOfCodeChallengeSelection challengeSelection) =>
-        new($"https://adventofcode.com/{challengeSelection.Year:0000}/day/{challengeSelection.Day:0}");
+        new($"https://adventofcode.com/{challengeSelection.Year:0000}/day/{challengeSelection.Day:0}{(challengeSelection.Puzzle != 1 ? $"#part{challengeSelection.Puzzle:0}" : "")}");
 }
