@@ -3,10 +3,7 @@
 internal static class AdventOfCodeResourcePathBuilder
 {
     public static string GetInputFilePath(AdventOfCodeChallengeSelection challengeSelection) =>
-        Path.Combine(
-            Environment.CurrentDirectory,
-            $"Resources/AdventOfCode/{challengeSelection.Year:0000}/Day{challengeSelection.Day:00}.txt"
-        );
+        $"Resources/AdventOfCode/{challengeSelection.Year:0000}/Day{challengeSelection.Day:00}.txt";
 
     public static Uri GetRemoteFilePath(AdventOfCodeChallengeSelection challengeSelection) =>
         new($"https://adventofcode.com/{challengeSelection.Year:0000}/day/{challengeSelection.Day:0}/input");
