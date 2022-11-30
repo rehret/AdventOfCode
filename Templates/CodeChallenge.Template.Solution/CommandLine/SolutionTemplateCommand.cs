@@ -2,15 +2,19 @@
 
 using System.CommandLine;
 using System.CommandLine.Binding;
+using System.Diagnostics.CodeAnalysis;
 
 using CodeChallenge.Core;
 using CodeChallenge.Core.CommandLine;
+using CodeChallenge.Core.CommandLine.Binding;
 
 using Microsoft.Extensions.Logging;
 
 internal class SolutionTemplateCommand : AbstractCodeChallengeCommand<SolutionTemplateChallengeSelection>
 {
-    public SolutionTemplateCommand(IValueDescriptor<SolutionFactory> solutionFactoryBinder, IValueDescriptor<ILoggerFactory> loggerFactoryBinder) : base("SolutionTemplate", "Executes SolutionTemplate solutions")
+    [SuppressMessage("ReSharper", "SuggestBaseTypeForParameterInConstructor")]
+    public SolutionTemplateCommand(IAutofacBinder<SolutionFactory> solutionFactoryBinder, IAutofacBinder<ILoggerFactory> loggerFactoryBinder)
+        : base("SolutionTemplate", "Executes SolutionTemplate solutions")
     {
         this.SetHandler(ExecuteSolutionAsync,
             new SolutionTemplateChallengeSelectionBinder(),

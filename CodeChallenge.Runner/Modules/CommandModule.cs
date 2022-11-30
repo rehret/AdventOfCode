@@ -14,7 +14,6 @@ internal class CommandModule : Module
     {
         var assemblies = AssemblyHelpers.GetReferencedAssemblies(false);
         builder.RegisterAssemblyTypes(assemblies)
-            .AssignableTo<Command>()
             .As<Command>();
 
         builder.Register(ctx =>

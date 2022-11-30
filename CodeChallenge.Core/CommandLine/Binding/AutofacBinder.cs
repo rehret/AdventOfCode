@@ -4,7 +4,7 @@ using System.CommandLine.Binding;
 
 using Autofac;
 
-public class AutofacBinder<T> : BinderBase<T>
+public class AutofacBinder<T> : BinderBase<T>, IAutofacBinder<T>
     where T : notnull
 {
     private readonly ILifetimeScope _lifetimeScope;

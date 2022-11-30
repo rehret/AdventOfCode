@@ -2,15 +2,18 @@
 
 using System.CommandLine;
 using System.CommandLine.Binding;
+using System.Diagnostics.CodeAnalysis;
 
 using CodeChallenge.Core;
 using CodeChallenge.Core.CommandLine;
+using CodeChallenge.Core.CommandLine.Binding;
 
 using Microsoft.Extensions.Logging;
 
 internal class TomsDataOnionCommand : AbstractCodeChallengeCommand<TomsDataOnionChallengeSelection>
 {
-    public TomsDataOnionCommand(IValueDescriptor<SolutionFactory> solutionFactoryBinder, IValueDescriptor<ILoggerFactory> loggerFactoryBinder)
+    [SuppressMessage("ReSharper", "SuggestBaseTypeForParameterInConstructor")]
+    public TomsDataOnionCommand(IAutofacBinder<SolutionFactory> solutionFactoryBinder, IAutofacBinder<ILoggerFactory> loggerFactoryBinder)
         : base("TomsDataOnion", "Execute Tom's Data Onion solutions")
     {
         var challengeSelectionArgument = new Argument<int>("Layer selection", "Layer selection as an integer");

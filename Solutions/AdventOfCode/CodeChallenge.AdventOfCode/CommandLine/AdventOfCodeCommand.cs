@@ -3,16 +3,19 @@
 using System.CommandLine;
 using System.CommandLine.Binding;
 using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 
 using CodeChallenge.AdventOfCode.IO;
 using CodeChallenge.Core;
 using CodeChallenge.Core.CommandLine;
+using CodeChallenge.Core.CommandLine.Binding;
 
 using Microsoft.Extensions.Logging;
 
 internal class AdventOfCodeCommand : AbstractCodeChallengeCommand<AdventOfCodeChallengeSelection>
 {
-    public AdventOfCodeCommand(IValueDescriptor<SolutionFactory> solutionFactoryBinder, IValueDescriptor<ILoggerFactory> loggerFactoryBinder, IValueDescriptor<IAdventOfCodeInputWriter> inputWriterBinder)
+    [SuppressMessage("ReSharper", "SuggestBaseTypeForParameterInConstructor")]
+    public AdventOfCodeCommand(IAutofacBinder<SolutionFactory> solutionFactoryBinder, IAutofacBinder<ILoggerFactory> loggerFactoryBinder, IAutofacBinder<IAdventOfCodeInputWriter> inputWriterBinder)
         : base("AdventOfCode", "Executes Advent of Code solutions")
     {
         AddAlias("advent");
@@ -28,11 +31,8 @@ internal class AdventOfCodeCommand : AbstractCodeChallengeCommand<AdventOfCodeCh
             solutionFactoryBinder,
             loggerFactoryBinder);
 
-        var downloadCommand = BuildDownloadCommand(yearArgument, dayArgument, inputWriterBinder);
-        AddCommand(downloadCommand);
-
-        var openWebBrowserCommand = BuildOpenCommand(yearArgument, dayArgument);
-        AddCommand(openWebBrowserCommand);
+        AddCommand(BuildDownloadCommand(yearArgument, dayArgument, inputWriterBinder));
+        AddCommand(BuildOpenCommand(yearArgument, dayArgument));
     }
 
     private class AdventOfCodeChallengeSelectionBinder : BinderBase<AdventOfCodeChallengeSelection>
