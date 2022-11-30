@@ -95,7 +95,7 @@ public static class Program
 
         foreach (var type in configurationTypes)
         {
-            var configurationSection = config.GetSection(type.Name);
+            var configurationSection = config.GetSection(type.Name.Replace("Configuration", string.Empty));
 
             if (configurationSection.Exists())
             {

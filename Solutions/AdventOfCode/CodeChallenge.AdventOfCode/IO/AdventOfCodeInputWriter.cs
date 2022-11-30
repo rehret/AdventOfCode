@@ -19,6 +19,8 @@ internal class AdventOfCodeInputWriter
 
     public async Task FetchRemoteInputAsync(AdventOfCodeChallengeSelection challengeSelection)
     {
+        if (string.IsNullOrWhiteSpace(_configuration.Session)) throw new ArgumentNullException(nameof(_configuration.Session), "Session token is required for fetching input");
+
         var filepath = AdventOfCodeResourcePathBuilder.GetInputFilePath(challengeSelection);
         if (!Directory.Exists(Path.GetDirectoryName(filepath)))
         {

@@ -10,7 +10,8 @@ using Microsoft.Extensions.Logging;
 
 internal class TomsDataOnionCommand : AbstractCodeChallengeCommand<TomsDataOnionChallengeSelection>
 {
-    public TomsDataOnionCommand(IValueDescriptor<SolutionFactory> solutionFactoryBinder, IValueDescriptor<ILoggerFactory> loggerFactoryBinder) : base("TomsDataOnion", "Execute Tom's Data Onion solutions")
+    public TomsDataOnionCommand(IValueDescriptor<SolutionFactory> solutionFactoryBinder, IValueDescriptor<ILoggerFactory> loggerFactoryBinder)
+        : base("TomsDataOnion", "Execute Tom's Data Onion solutions")
     {
         var challengeSelectionArgument = new Argument<int>("Layer selection", "Layer selection as an integer");
 
