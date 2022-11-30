@@ -11,12 +11,17 @@ using Module = Autofac.Module;
 public abstract class SolutionAutoRegisteringModule<T> : Module
     where T : SolutionAttribute
 {
+    protected SolutionAutoRegisteringModule(Assembly thisAssembly)
+    {
+        ThisAssembly = thisAssembly;
+    }
+
     protected override void Load(ContainerBuilder builder)
     {
-        builder.RegisterAssemblyTypes(GetAssembly())
+        builder.RegisterAssemblyTypes(ThisAssembly)
             .Where(type => type.GetCustomAttribute<T>(true) != null)
             .Keyed<ISolution>(type => type.GetCustomAttribute<T>()!.ToChallengeSelection());
     }
 
-    protected abstract Assembly GetAssembly();
+    protected override Assembly ThisAssembly { get; }
 }

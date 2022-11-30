@@ -7,5 +7,5 @@ using CodeChallenge.TomsDataOnion.Attributes;
 
 internal class SolutionModule : SolutionAutoRegisteringModule<TomsDataOnionSolutionAttribute>
 {
-    protected override Assembly GetAssembly() => Assembly.GetExecutingAssembly();
+    public SolutionModule() : base(Assembly.GetExecutingAssembly()) { }
 }

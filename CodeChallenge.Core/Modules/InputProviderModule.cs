@@ -4,5 +4,5 @@ using System.Reflection;
 
 internal class InputProviderModule : InputProviderAutoRegisteringModule
 {
-    protected override Assembly GetAssembly() => Assembly.GetExecutingAssembly();
+    public InputProviderModule() : base(Assembly.GetExecutingAssembly()) { }
 }

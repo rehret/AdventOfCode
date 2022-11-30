@@ -44,19 +44,22 @@ Run the above commands without any arguments to see the support challenges. The 
 
 ### The hard way
 1. Create the project at the path `Solutions/<Challenge Name>/<Project Folder>/<Project>.csproj`
-2. Extend `IInputReader<TChallengeSelection>` as needed
-    - This type is used for getting input from files
-    - There is an `AbstractInputReader<TChallengeSelection>` which does typical file processing (trim, split on `\n`, etc) and extending classes need only implement a method for getting the file path
+2. Extend `ChallengeSelection` as a way to indicate a particular problem & solution within the challenge space.
+    - It is recommended to override `ToString()` as this is used when a requested solution isn't found.
+3. Extend `IInputFilePathProvider<TChallengeSelection>` as needed
+    - This type is used for getting the path to input files (i.e. `Resources/<Challenge>/...`)
+    - This is only needed if the new solutions will rely on the default `InputReader` behavior:
+        - `InputReader` reads the entire file, splits on `\n`, and trims each line. It also discards any lines which are empty.
+        - The returned value is `IEnumerable<string>`
+    - If input must be read in a way that differs from `InputReader`, an implementation of `IInputFilePathProvider<>` is not mandatory.
     - Input files should be places in `Resources/<Challenge Name>/` with the folder structure within left up to the solution to organize as it makes sense
-    - Register any implementations of `IInputReader<TChallengeSelection>` in Autofac
-        - The abstract Autofac module `InputReaderAutoRegisteringModule` can be extended to automatically register implementations in the challenge space's assembly automatically.
-3. Extend `IInputProvider<TChallengeSelection, TOutput>` as needed
+    - Register any implementations of `IInputFilePathProvider<TChallengeSelection>` in Autofac
+        - The abstract Autofac module `InputFilePathProviderAutoRegisteringModule` can be extended to automatically register implementations in the challenge space's assembly automatically.
+4. Extend `IInputProvider<TChallengeSelection, TOutput>` as needed
     - This type is used for getting input (typically via an instance of `IInputProvider<TChallengeSelection>`, but not always) and modifying it to prepare it for the individual solution implementations. This can be as simple as parsing each line as an `int`, but anything can be returned.
     - General-use implementations should be put in `CodeChallenge.InputProviders` for re-use across challenges.
     - Register any implementations of `IInputProvider<TChallengeSelection, TOutput>` in Autofac
         - The abstract Autofac module `InputProviderAutoRegisteringModule` can be extended to automatically register implementations in the challenge space's assembly automatically.
-4. Extend `ChallengeSelection` as a way to indicate a particular problem & solution within the challenge space.
-    - It is recommended to override `ToString()` as this is used when a requested solution isn't found.
 5. Implement a `System.CommandLine.Command` for executing the new solution type.
     - `AbstractCodeChallengeCommand<T>` can be extended to inherit the `ExecuteSolutionAsync` method for use as the command's handler
     - Dependencies can be taken as `IValueDescriptor<T>` and passed to `SetHandler()`

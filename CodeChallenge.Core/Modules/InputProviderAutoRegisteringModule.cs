@@ -10,17 +10,22 @@ using Module = Autofac.Module;
 
 public abstract class InputProviderAutoRegisteringModule : Module
 {
+    protected InputProviderAutoRegisteringModule(Assembly thisAssembly)
+    {
+        ThisAssembly = thisAssembly;
+    }
+
     protected override void Load(ContainerBuilder builder)
     {
         // Registers open implementations (IntInputProvider<T> : IInputProvider<T, int>)
-        builder.RegisterAssemblyOpenGenericTypes(GetAssembly())
+        builder.RegisterAssemblyOpenGenericTypes(ThisAssembly)
             .AssignableTo(typeof(IInputProvider<,>))
             .AsImplementedInterfaces();
 
         // Registers closed implementations (SomePuzzleSpecificInputProvider : IInputProvider<TPuzzle, TInput>)
-        builder.RegisterAssemblyTypes(GetAssembly())
+        builder.RegisterAssemblyTypes(ThisAssembly)
             .AsClosedTypesOf(typeof(IInputProvider<,>));
     }
 
-    protected abstract Assembly GetAssembly();
+    protected override Assembly ThisAssembly { get; }
 }

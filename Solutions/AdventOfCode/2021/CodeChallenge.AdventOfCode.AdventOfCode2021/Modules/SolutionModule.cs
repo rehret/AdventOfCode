@@ -7,5 +7,5 @@ using CodeChallenge.Core.Modules;
 
 internal class SolutionModule : SolutionAutoRegisteringModule<AdventOfCodeSolutionAttribute>
 {
-    protected override Assembly GetAssembly() => Assembly.GetExecutingAssembly();
+    public SolutionModule() : base(Assembly.GetExecutingAssembly()) { }
 }

@@ -1,8 +1,14 @@
 ﻿namespace CodeChallenge.Core.Modules;
 
-using System.Reflection;
+using Autofac;
 
-internal class InputReaderModule : InputReaderAutoRegisteringModule
+using CodeChallenge.Core.IO;
+
+internal class InputReaderModule : Module
 {
-    protected override Assembly GetAssembly() => Assembly.GetExecutingAssembly();
+    protected override void Load(ContainerBuilder builder)
+    {
+        builder.RegisterAssemblyOpenGenericTypes(ThisAssembly)
+            .As(typeof(IInputReader<>));
+    }
 }

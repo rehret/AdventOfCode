@@ -6,5 +6,5 @@ using CodeChallenge.Core.Modules;
 
 internal class InputProviderModule : InputProviderAutoRegisteringModule
 {
-    protected override Assembly GetAssembly() => Assembly.GetExecutingAssembly();
+    public InputProviderModule() : base(Assembly.GetExecutingAssembly()) { }
 }
