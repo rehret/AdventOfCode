@@ -2,6 +2,7 @@
 
 using System.CommandLine;
 using System.CommandLine.Binding;
+using System.CommandLine.Parsing;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 
@@ -19,9 +20,9 @@ internal class AdventOfCodeCommand : AbstractCodeChallengeCommand<AdventOfCodeCh
         : base("AdventOfCode", "Executes Advent of Code solutions")
     {
         AddAlias("advent");
-        var yearArgument = new Argument<int>("Year", "Advent of Code year, in the format 'YYYY'");
-        var dayArgument = new Argument<int>("Day", "Day within the chosen year (1-25)");
-        var puzzleArgument = new Argument<int>("Puzzle", "Puzzle for the given year and day (1-2)");
+        var yearArgument = new Argument<int>("Year", "Advent of Code year, in the format 'yyyy'");
+        var dayArgument = new Argument<int>("Day", GetIntArgumentParser("day", 1, 25), false, "Day within the chosen year [1, 25]");
+        var puzzleArgument = new Argument<int>("Puzzle", GetIntArgumentParser("puzzle", 1, 2), false, "Puzzle for the given year and day [1, 2]");
         AddArgument(yearArgument);
         AddArgument(dayArgument);
         AddArgument(puzzleArgument);
@@ -78,5 +79,28 @@ internal class AdventOfCodeCommand : AbstractCodeChallengeCommand<AdventOfCodeCh
         }, new AdventOfCodeChallengeSelectionBinder(yearArgument, dayArgument));
 
         return openWebBrowserCommand;
+    }
+
+    private static ParseArgument<int> GetIntArgumentParser(string argumentName, int minValue, int maxValue)
+    {
+        return result =>
+        {
+            if (result.Tokens.Count == 0)
+            {
+                result.ErrorMessage = $"Missing {argumentName} argument";
+                return 0;
+            }
+
+            var token = result.Tokens.Single().Value;
+            if (!int.TryParse(token, out var intValue))
+            {
+                result.ErrorMessage = $"Could not parse {argumentName} argument as an integer";
+                return 0;
+            }
+
+            if (intValue >= minValue && intValue <= maxValue) return intValue;
+            result.ErrorMessage = $"{argumentName[..1].ToUpper() + argumentName[1..]} argument must be in the range [{minValue}, {maxValue}]";
+            return 0;
+        };
     }
 }
