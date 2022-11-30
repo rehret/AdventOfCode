@@ -50,6 +50,6 @@ internal class TomsDataOnionInputProvider : IInputProvider<TomsDataOnionChalleng
     private static string GetInputFilePath(TomsDataOnionChallengeSelection challengeSelection) =>
         Path.Combine(
             Environment.CurrentDirectory,
-            $"Resources/TomsDataOnion/Layer{challengeSelection.Layer:0}.txt"
+            TomsDataOnionResourcePathBuilder.GetInputFilePath(challengeSelection)
         );
 }

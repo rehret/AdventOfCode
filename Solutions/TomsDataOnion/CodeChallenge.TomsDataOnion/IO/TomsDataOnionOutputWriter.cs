@@ -24,6 +24,9 @@ internal class TomsDataOnionOutputWriter
     private string GetOutputFilePath(TomsDataOnionChallengeSelection challengeSelection) =>
         Path.Combine(
             Environment.CurrentDirectory,
-            $"Resources/TomsDataOnion/Layer{challengeSelection.Layer + 1:0}{_configuration.OutputFileSuffix}.txt"
+            TomsDataOnionResourcePathBuilder.GetOutputFilePath(
+                new TomsDataOnionChallengeSelection(challengeSelection.Layer + 1),
+                _configuration.OutputFileSuffix
+            )
         );
 }
