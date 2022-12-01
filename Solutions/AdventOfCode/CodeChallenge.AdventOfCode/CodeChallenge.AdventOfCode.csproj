@@ -2,7 +2,9 @@
 
   <ItemGroup>
     <InternalsVisibleTo Include="CodeChallenge.AdventOfCode.AdventOfCode2021" />
+    <InternalsVisibleTo Include="CodeChallenge.AdventOfCode.AdventOfCode2021.Tests" />
     <InternalsVisibleTo Include="CodeChallenge.AdventOfCode.AdventOfCode2022" />
+    <InternalsVisibleTo Include="CodeChallenge.AdventOfCode.AdventOfCode2022.Tests" />
   </ItemGroup>
 
   <ItemGroup>
