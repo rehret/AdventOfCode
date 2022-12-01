@@ -2,11 +2,7 @@
 
 using System.Text;
 
-/// <summary>
-/// Groups lines of input, using empty lines as the delimiter
-/// </summary>
-/// <typeparam name="TChallengeSelection"></typeparam>
-/// <typeparam name="TOutput"></typeparam>
+/// <inheritdoc cref="IGroupedInputProvider{TChallengeSelection,TOutput}"/>
 internal abstract class AbstractGroupedInputProvider<TChallengeSelection, TOutput> : IGroupedInputProvider<TChallengeSelection, TOutput>
     where TChallengeSelection : ChallengeSelection
 {
