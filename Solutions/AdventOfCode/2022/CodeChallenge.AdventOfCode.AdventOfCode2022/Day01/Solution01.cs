@@ -6,12 +6,12 @@ using CodeChallenge.AdventOfCode.Attributes;
 using CodeChallenge.Core.IO;
 
 [AdventOfCodeSolution(2022, 1, 1)]
-internal class Solution01 : AdventOfCodeSolution<IEnumerable<string>, int>
+internal class Solution01 : AdventOfCodeSolution<IEnumerable<IEnumerable<int>>, int>
 {
-    public Solution01(IInputProvider<AdventOfCodeChallengeSelection, IEnumerable<string>> inputProvider) : base(inputProvider) { }
+    public Solution01(IGroupedInputProvider<AdventOfCodeChallengeSelection, int> inputProvider) : base(inputProvider) { }
 
-    public override Task<int> ComputeSolutionAsync(IEnumerable<string> input)
+    public override Task<int> ComputeSolutionAsync(IEnumerable<IEnumerable<int>> input)
     {
-        throw new NotImplementedException();
+        return Task.FromResult(input.Max(x => x.Sum()));
     }
 }

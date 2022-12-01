@@ -3,15 +3,15 @@
 using CodeChallenge.AdventOfCode.AdventOfCode2022.Day01;
 using CodeChallenge.Core.IO;
 
-public class Solution01Tests
+public class Solution02Tests
 {
     private readonly Mock<IGroupedInputProvider<AdventOfCodeChallengeSelection, int>> _inputProviderMock;
-    private readonly Solution01 _solution;
+    private readonly Solution02 _solution;
 
-    public Solution01Tests()
+    public Solution02Tests()
     {
         _inputProviderMock = new Mock<IGroupedInputProvider<AdventOfCodeChallengeSelection, int>>();
-        _solution = new Solution01(_inputProviderMock.Object);
+        _solution = new Solution02(_inputProviderMock.Object);
     }
 
     [Fact]
@@ -32,6 +32,6 @@ public class Solution01Tests
         var result = await _solution.SolveAsync().ConfigureAwait(false);
 
         // Assert
-        Assert.Equal(24000.ToString(), result);
+        Assert.Equal(45000.ToString(), result);
     }
 }
