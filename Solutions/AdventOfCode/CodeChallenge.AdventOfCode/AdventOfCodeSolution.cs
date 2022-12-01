@@ -24,7 +24,9 @@ internal abstract class AdventOfCodeSolution<TInput, TResult> : AbstractSolution
         return GetStringFromResult(result);
     }
 
-    public abstract Task<TResult> ComputeSolutionAsync(TInput input);
+    public virtual Task<TResult> ComputeSolutionAsync(TInput input) => Task.FromResult(ComputeSolution(input));
+
+    protected virtual TResult ComputeSolution(TInput input) => throw new NotImplementedException();
 
     protected virtual string GetStringFromResult(TResult result) => result?.ToString() ?? string.Empty;
 

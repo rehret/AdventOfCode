@@ -2,7 +2,6 @@
 
 using CodeChallenge.AdventOfCode.AdventOfCode2021.Day02.Models;
 using CodeChallenge.AdventOfCode.Attributes;
-using CodeChallenge.Core;
 using CodeChallenge.Core.IO;
 
 [AdventOfCodeSolution(2021, 2, 1)]
@@ -10,10 +9,10 @@ internal class Solution01 : AdventOfCodeSolution<IEnumerable<SubmarineInstructio
 {
     public Solution01(IInputProvider<AdventOfCodeChallengeSelection, IEnumerable<SubmarineInstruction>> inputProvider) : base(inputProvider) { }
 
-    public override Task<int> ComputeSolutionAsync(IEnumerable<SubmarineInstruction> instructions)
+    protected override int ComputeSolution(IEnumerable<SubmarineInstruction> instructions)
     {
         var result = instructions.Aggregate(new SubmarinePosition(), ExecuteInstruction);
-        return Task.FromResult(result.X * result.Y);
+        return result.X * result.Y;
     }
 
     private static SubmarinePosition ExecuteInstruction(SubmarinePosition position, SubmarineInstruction instruction) => instruction.Movement switch

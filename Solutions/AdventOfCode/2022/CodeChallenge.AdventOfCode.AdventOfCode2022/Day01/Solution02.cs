@@ -10,11 +10,11 @@ internal class Solution02 : AdventOfCodeSolution<IEnumerable<IEnumerable<int>>, 
 {
     public Solution02(IGroupedInputProvider<AdventOfCodeChallengeSelection, int> inputProvider) : base(inputProvider) { }
 
-    public override Task<int> ComputeSolutionAsync(IEnumerable<IEnumerable<int>> input)
+    protected override int ComputeSolution(IEnumerable<IEnumerable<int>> input)
     {
-        return Task.FromResult(input.Select(x => x.Sum())
+        return input.Select(x => x.Sum())
             .OrderDescending()
             .Take(3)
-            .Sum());
+            .Sum();
     }
 }

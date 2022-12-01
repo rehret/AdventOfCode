@@ -14,13 +14,13 @@
 using CodeChallenge;
 
 [AdventOfCodeSolution($YEAR$, $DAY$, $PUZZLE$)]
-internal class $CLASS$ : AdventOfCodeSolution&lt;int, int&gt;
+internal class $CLASS$ : AdventOfCodeSolution&lt;IEnumerable&lt;int&gt;, int&gt;
 {
     public $CLASS$(IInputProvider&lt;AdventOfCodeChallengeSelection, int&gt; inputProvider) : base(inputProvider) { }
 
-    public override Task&lt;int&gt; ComputeSolutionAsync(IEnumerable&lt;int&gt; input)
+    protected override int ComputeSolution(IEnumerable&lt;int&gt; input)
     {
-        $END$return Task.FromResult(0);
+        $END$return 0;$END$
     }
 }
 </s:String>

@@ -8,7 +8,7 @@ internal class Solution01 : AdventOfCodeSolution<IEnumerable<string>, string>
 {
     public Solution01(IInputProvider<AdventOfCodeChallengeSelection, IEnumerable<string>> inputProvider) : base(inputProvider) { }
 
-    public override Task<string> ComputeSolutionAsync(IEnumerable<string> input)
+    protected override string ComputeSolution(IEnumerable<string> input)
     {
         throw new NotImplementedException();
     }

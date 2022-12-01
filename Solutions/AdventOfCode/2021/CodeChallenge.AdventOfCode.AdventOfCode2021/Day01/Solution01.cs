@@ -10,7 +10,7 @@ internal class Solution01 : AdventOfCodeSolution<IEnumerable<int>, int>
 {
     public Solution01(IInputProvider<AdventOfCodeChallengeSelection, IEnumerable<int>> inputProvider) : base(inputProvider) { }
 
-    public override Task<int> ComputeSolutionAsync(IEnumerable<int> input)
+    protected override int ComputeSolution(IEnumerable<int> input)
     {
         var increaseCount = input
             .Aggregate(
@@ -23,6 +23,6 @@ internal class Solution01 : AdventOfCodeSolution<IEnumerable<int>, int>
             )
             .IncreaseCount;
 
-        return Task.FromResult(increaseCount);
+        return increaseCount;
     }
 }
