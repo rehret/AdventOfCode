@@ -1,7 +1,5 @@
 ﻿namespace CodeChallenge.AdventOfCode.AdventOfCode2022.Day01;
 
-using AdventOfCode;
-
 using CodeChallenge.AdventOfCode.Attributes;
 using CodeChallenge.Core.IO;
 
