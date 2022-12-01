@@ -22,9 +22,16 @@ public abstract class InputProviderAutoRegisteringModule : Module
             .AssignableTo(typeof(IInputProvider<,>))
             .AsImplementedInterfaces();
 
+        builder.RegisterAssemblyOpenGenericTypes(ThisAssembly)
+            .AssignableTo(typeof(IGroupedInputProvider<,>))
+            .AsImplementedInterfaces();
+
         // Registers closed implementations (SomePuzzleSpecificInputProvider : IInputProvider<TPuzzle, TInput>)
         builder.RegisterAssemblyTypes(ThisAssembly)
             .AsClosedTypesOf(typeof(IInputProvider<,>));
+
+        builder.RegisterAssemblyTypes(ThisAssembly)
+            .AsClosedTypesOf(typeof(IGroupedInputProvider<,>));
     }
 
     protected override Assembly ThisAssembly { get; }
