@@ -1,24 +1,25 @@
 ﻿namespace CodeChallenge.Core.IO.InputProviders;
 
-using System.Text;
-
-/// <inheritdoc cref="IGroupedInputProvider{TChallengeSelection,TOutput}"/>
-internal abstract class AbstractGroupedInputProvider<TChallengeSelection, TOutput> : IGroupedInputProvider<TChallengeSelection, TOutput>
+/// <summary>
+/// Groups lines of input, using empty lines as the delimiter
+/// </summary>
+/// <typeparam name="TChallengeSelection"></typeparam>
+/// <typeparam name="TOutput"></typeparam>
+public abstract class AbstractGroupedInputProvider<TChallengeSelection, TOutput> : IInputProvider<TChallengeSelection, TOutput>
     where TChallengeSelection : ChallengeSelection
 {
-    private readonly IInputFilePathProvider<TChallengeSelection> _inputFilePathProvider;
+    private readonly IInputReader<TChallengeSelection> _inputReader;
 
-    protected AbstractGroupedInputProvider(IInputFilePathProvider<TChallengeSelection> inputFilePathProvider)
+    protected AbstractGroupedInputProvider(IInputReader<TChallengeSelection> inputReader)
     {
-        _inputFilePathProvider = inputFilePathProvider;
+        _inputReader = inputReader;
     }
 
-    public async Task<IEnumerable<IEnumerable<TOutput>>> GetInputAsync(TChallengeSelection challengeSelection)
+    public async Task<TOutput> GetInputAsync(TChallengeSelection challengeSelection)
     {
-        var filepath = GetInputFilePath(challengeSelection);
-        using var streamReader = new StreamReader(filepath, Encoding.UTF8);
-        return (await streamReader.ReadToEndAsync().ConfigureAwait(false))
-            .Split('\n', StringSplitOptions.TrimEntries)
+        // We want to use empty lines as a delimiter, so we're not filtering them from the lines returned from IInputReader<>
+        var groupedInput = (await _inputReader.GetInputAsync(challengeSelection).ConfigureAwait(false))
+            .Select(x => x.Trim())
             .Aggregate((FinalList: new List<IEnumerable<string>>(), CurrentList: new List<string>()),
                 (accumulator, currentString) =>
                 {
@@ -32,17 +33,10 @@ internal abstract class AbstractGroupedInputProvider<TChallengeSelection, TOutpu
                     accumulator.CurrentList.Add(currentString);
                     return accumulator;
                 })
-            .FinalList
-            .Select(ParseLineGroup);
+            .FinalList;
+
+        return ParseGroupedInput(groupedInput);
     }
 
-    protected abstract IEnumerable<TOutput> ParseLineGroup(IEnumerable<string> input);
-
-    private string GetInputFilePath(TChallengeSelection challengeSelection)
-    {
-        return Path.Combine(
-            Environment.CurrentDirectory,
-            _inputFilePathProvider.GetInputFilePath(challengeSelection)
-        );
-    }
+    protected abstract TOutput ParseGroupedInput(IEnumerable<IEnumerable<string>> input);
 }

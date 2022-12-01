@@ -17,7 +17,7 @@ internal class InputReader<TChallengeSelection> : IInputReader<TChallengeSelecti
         var filepath = GetInputFilePath(challengeSelection);
         using var streamReader = new StreamReader(filepath, Encoding.UTF8);
         return (await streamReader.ReadToEndAsync().ConfigureAwait(false))
-            .Split('\n', StringSplitOptions.TrimEntries | StringSplitOptions.RemoveEmptyEntries);
+            .Split('\n', StringSplitOptions.TrimEntries);
     }
 
     private string GetInputFilePath(TChallengeSelection challengeSelection)

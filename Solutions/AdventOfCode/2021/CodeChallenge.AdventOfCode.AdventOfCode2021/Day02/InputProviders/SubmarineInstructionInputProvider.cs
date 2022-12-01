@@ -1,30 +1,23 @@
 ﻿namespace CodeChallenge.AdventOfCode.AdventOfCode2021.Day02.InputProviders;
 
-using System.Text.RegularExpressions;
-
 using CodeChallenge.AdventOfCode.AdventOfCode2021.Day02.Models;
 using CodeChallenge.Core.IO;
+using CodeChallenge.Core.IO.InputProviders;
 
-internal class SubmarineInstructionInputProvider : IInputProvider<AdventOfCodeChallengeSelection, IEnumerable<SubmarineInstruction>>
+internal class SubmarineInstructionInputProvider : AbstractInputProvider<AdventOfCodeChallengeSelection, IEnumerable<SubmarineInstruction>>
 {
-    private static readonly Regex WhitespaceRegex = new(@"\s+", RegexOptions.Compiled);
-
-    private readonly IInputReader<AdventOfCodeChallengeSelection> _inputReader;
-
     public SubmarineInstructionInputProvider(IInputReader<AdventOfCodeChallengeSelection> inputReader)
-    {
-        _inputReader = inputReader;
-    }
+        : base(inputReader)
+    { }
 
-    public async Task<IEnumerable<SubmarineInstruction>> GetInputAsync(AdventOfCodeChallengeSelection challengeSelection)
+    protected override IEnumerable<SubmarineInstruction> ParseLines(IEnumerable<string> lines)
     {
-        return (await _inputReader.GetInputAsync(challengeSelection).ConfigureAwait(false))
-            .Select(ProcessLine);
+        return lines.Select(ProcessLine);
     }
 
     private static SubmarineInstruction ProcessLine(string line)
     {
-        var values = WhitespaceRegex.Split(line).Select(value => value.Trim()).ToArray();
+        var values = line.Split(' ', StringSplitOptions.TrimEntries | StringSplitOptions.RemoveEmptyEntries);
         if (values.Length > 2)
         {
             throw new Exception($"Invalid number of argument on line: '{line}'");

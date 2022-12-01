@@ -9,7 +9,7 @@ public class Solution01Tests
 
     public Solution01Tests()
     {
-        var inputProviderMock = new Mock<IGroupedInputProvider<AdventOfCodeChallengeSelection, int>>();
+        var inputProviderMock = new Mock<IInputProvider<AdventOfCodeChallengeSelection, IEnumerable<IEnumerable<int>>>>();
         _solution = new Solution01(inputProviderMock.Object);
     }
 
