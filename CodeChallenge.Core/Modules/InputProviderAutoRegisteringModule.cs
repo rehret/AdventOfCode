@@ -24,7 +24,8 @@ public abstract class InputProviderAutoRegisteringModule : Module
 
         // Registers closed implementations (SomePuzzleSpecificInputProvider : IInputProvider<TPuzzle, TInput>)
         builder.RegisterAssemblyTypes(ThisAssembly)
-            .AsClosedTypesOf(typeof(IInputProvider<,>));
+            .AsClosedTypesOf(typeof(IInputProvider<,>))
+            .AsImplementedInterfaces();
     }
 
     protected override Assembly ThisAssembly { get; }
