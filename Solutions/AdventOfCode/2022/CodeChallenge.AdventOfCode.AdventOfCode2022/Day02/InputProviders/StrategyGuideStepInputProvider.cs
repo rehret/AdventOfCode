@@ -5,45 +5,58 @@ using CodeChallenge.Core.IO;
 using CodeChallenge.Core.IO.InputProviders;
 
 internal class StrategyGuideStepInputProvider
-    : AbstractInputProvider<AdventOfCodeChallengeSelection, IEnumerable<StrategyGuideStep>>, IStrategyGuideStepInputProvider
+    : AbstractInputProvider<AdventOfCodeChallengeSelection, IEnumerable<StrategyGuideStep>>
 {
-    public bool UseTargetResultInput { get; set; } = false;
+    private readonly StrategyGuideStepInputProviderType _type;
 
-    public StrategyGuideStepInputProvider(IInputReader<AdventOfCodeChallengeSelection> inputReader)
+    public StrategyGuideStepInputProvider(IInputReader<AdventOfCodeChallengeSelection> inputReader, StrategyGuideStepInputProviderType type)
         : base(inputReader)
-    { }
+    {
+        _type = type;
+    }
 
     protected override IEnumerable<StrategyGuideStep> ParseLines(IEnumerable<string> lines)
     {
         return lines
             .Select(line => line.Split(' ', StringSplitOptions.TrimEntries | StringSplitOptions.RemoveEmptyEntries))
-            .Select(parts => (OpponentsMove: parts[0], SuggestedMove: parts[1]))
-            .Select(parts => UseTargetResultInput
-                ? new StrategyGuideStep(ParseOpponentsMove(parts.OpponentsMove), ParseTargetResult(parts.SuggestedMove))
-                : new StrategyGuideStep(ParseOpponentsMove(parts.OpponentsMove), ParseSuggestedMove(parts.SuggestedMove)));
+            .Select(parts => (OpponentsMove: parts[0], SuggestedMoveOrTargetType: parts[1]))
+            .Select(parts => BuildStrategyGuideStep(_type, parts));
     }
-
-    private static RockPaperScissorsMove ParseOpponentsMove(string opponentsMove) => opponentsMove switch
-    {
-        "A" => RockPaperScissorsMove.Rock,
-        "B" => RockPaperScissorsMove.Paper,
-        "C" => RockPaperScissorsMove.Scissors,
-        _   => throw new ArgumentOutOfRangeException(nameof(opponentsMove))
-    };
 
     private static RockPaperScissorsMove ParseSuggestedMove(string suggestedMove) => suggestedMove switch
     {
         "X" => RockPaperScissorsMove.Rock,
         "Y" => RockPaperScissorsMove.Paper,
         "Z" => RockPaperScissorsMove.Scissors,
-        _   => throw new ArgumentOutOfRangeException(nameof(suggestedMove))
+        _   => throw new ArgumentOutOfRangeException(nameof(suggestedMove), suggestedMove, null)
     };
 
-    private static TargetResult ParseTargetResult(string targetResult) => targetResult switch
+    private static RockPaperScissorsResult ParseTargetResult(string targetResult) => targetResult switch
     {
-        "X" => TargetResult.Lose,
-        "Y" => TargetResult.Draw,
-        "Z" => TargetResult.Win,
-        _   => throw new ArgumentOutOfRangeException(nameof(targetResult))
+        "X" => RockPaperScissorsResult.Lose,
+        "Y" => RockPaperScissorsResult.Draw,
+        "Z" => RockPaperScissorsResult.Win,
+        _   => throw new ArgumentOutOfRangeException(nameof(targetResult), targetResult, null)
     };
+
+    private static RockPaperScissorsMove ParseOpponentsMove(string opponentsMove) => opponentsMove switch
+    {
+        "A" => RockPaperScissorsMove.Rock,
+        "B" => RockPaperScissorsMove.Paper,
+        "C" => RockPaperScissorsMove.Scissors,
+        _   => throw new ArgumentOutOfRangeException(nameof(opponentsMove), opponentsMove, null)
+    };
+
+    private static StrategyGuideStep BuildStrategyGuideStep(
+        StrategyGuideStepInputProviderType type,
+        (string OpponentsMove, string SuggestedMoveOrTargetType) parts
+    )
+        => type switch
+        {
+            StrategyGuideStepInputProviderType.SuggestedMove =>
+                new StrategyGuideStep(ParseSuggestedMove(parts.SuggestedMoveOrTargetType), ParseOpponentsMove(parts.OpponentsMove)),
+            StrategyGuideStepInputProviderType.TargetResult =>
+                new StrategyGuideStep(ParseTargetResult(parts.SuggestedMoveOrTargetType), ParseOpponentsMove(parts.OpponentsMove)),
+            _ => throw new ArgumentOutOfRangeException(nameof(type), type, null)
+        };
 }

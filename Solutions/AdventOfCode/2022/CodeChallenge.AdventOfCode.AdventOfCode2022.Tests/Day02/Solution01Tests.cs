@@ -10,7 +10,7 @@ public class Solution01Tests
     public Solution01Tests()
     {
         var inputProviderMock = new Mock<IInputProvider<AdventOfCodeChallengeSelection, IEnumerable<StrategyGuideStep>>>();
-        _solution = new Solution01(inputProviderMock.Object);
+        _solution = new Solution01(_ => inputProviderMock.Object);
     }
 
     [Fact]
@@ -19,8 +19,8 @@ public class Solution01Tests
         // Arrange
         var input = new List<StrategyGuideStep>
         {
-            new(RockPaperScissorsMove.Rock, RockPaperScissorsMove.Paper),
             new(RockPaperScissorsMove.Paper, RockPaperScissorsMove.Rock),
+            new(RockPaperScissorsMove.Rock, RockPaperScissorsMove.Paper),
             new(RockPaperScissorsMove.Scissors, RockPaperScissorsMove.Scissors)
         };
 
