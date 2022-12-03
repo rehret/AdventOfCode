@@ -23,11 +23,11 @@ internal class StrategyGuideStepInputProvider
             .Select(parts => BuildStrategyGuideStep(_type, parts));
     }
 
-    private static RockPaperScissorsMove ParseSuggestedMove(string suggestedMove) => suggestedMove switch
+    private static RockPaperScissorsMove ParseMove(string suggestedMove) => suggestedMove switch
     {
-        "X" => RockPaperScissorsMove.Rock,
-        "Y" => RockPaperScissorsMove.Paper,
-        "Z" => RockPaperScissorsMove.Scissors,
+        "A" or "X" => RockPaperScissorsMove.Rock,
+        "B" or "Y" => RockPaperScissorsMove.Paper,
+        "C" or "Z" => RockPaperScissorsMove.Scissors,
         _   => throw new ArgumentOutOfRangeException(nameof(suggestedMove), suggestedMove, null)
     };
 
@@ -39,14 +39,6 @@ internal class StrategyGuideStepInputProvider
         _   => throw new ArgumentOutOfRangeException(nameof(targetResult), targetResult, null)
     };
 
-    private static RockPaperScissorsMove ParseOpponentsMove(string opponentsMove) => opponentsMove switch
-    {
-        "A" => RockPaperScissorsMove.Rock,
-        "B" => RockPaperScissorsMove.Paper,
-        "C" => RockPaperScissorsMove.Scissors,
-        _   => throw new ArgumentOutOfRangeException(nameof(opponentsMove), opponentsMove, null)
-    };
-
     private static StrategyGuideStep BuildStrategyGuideStep(
         StrategyGuideStepInputProviderType type,
         (string OpponentsMove, string SuggestedMoveOrTargetType) parts
@@ -54,9 +46,9 @@ internal class StrategyGuideStepInputProvider
         => type switch
         {
             StrategyGuideStepInputProviderType.SuggestedMove =>
-                new StrategyGuideStep(ParseSuggestedMove(parts.SuggestedMoveOrTargetType), ParseOpponentsMove(parts.OpponentsMove)),
+                new StrategyGuideStep(ParseMove(parts.SuggestedMoveOrTargetType), ParseMove(parts.OpponentsMove)),
             StrategyGuideStepInputProviderType.TargetResult =>
-                new StrategyGuideStep(ParseTargetResult(parts.SuggestedMoveOrTargetType), ParseOpponentsMove(parts.OpponentsMove)),
+                new StrategyGuideStep(ParseTargetResult(parts.SuggestedMoveOrTargetType), ParseMove(parts.OpponentsMove)),
             _ => throw new ArgumentOutOfRangeException(nameof(type), type, null)
         };
 }
