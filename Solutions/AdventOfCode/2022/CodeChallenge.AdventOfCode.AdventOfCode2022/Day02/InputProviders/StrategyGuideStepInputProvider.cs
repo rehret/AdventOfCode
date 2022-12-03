@@ -42,13 +42,12 @@ internal class StrategyGuideStepInputProvider
     private static StrategyGuideStep BuildStrategyGuideStep(
         StrategyGuideStepInputProviderType type,
         (string OpponentsMove, string SuggestedMoveOrTargetType) parts
-    )
-        => type switch
-        {
-            StrategyGuideStepInputProviderType.SuggestedMove =>
-                new StrategyGuideStep(ParseMove(parts.SuggestedMoveOrTargetType), ParseMove(parts.OpponentsMove)),
-            StrategyGuideStepInputProviderType.TargetResult =>
-                new StrategyGuideStep(ParseTargetResult(parts.SuggestedMoveOrTargetType), ParseMove(parts.OpponentsMove)),
-            _ => throw new ArgumentOutOfRangeException(nameof(type), type, null)
-        };
+    ) => type switch
+    {
+        StrategyGuideStepInputProviderType.SuggestedMove =>
+            new StrategyGuideStep(ParseMove(parts.SuggestedMoveOrTargetType), ParseMove(parts.OpponentsMove)),
+        StrategyGuideStepInputProviderType.TargetResult =>
+            new StrategyGuideStep(ParseTargetResult(parts.SuggestedMoveOrTargetType), ParseMove(parts.OpponentsMove)),
+        _ => throw new ArgumentOutOfRangeException(nameof(type), type, null)
+    };
 }
