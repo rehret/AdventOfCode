@@ -7,7 +7,7 @@ internal class ChunkedIntInputProvider<TChallengeSelection>
     : AbstractChunkedInputProvider<TChallengeSelection, IEnumerable<IEnumerable<int>>>
     where TChallengeSelection : ChallengeSelection
 {
-    public ChunkedIntInputProvider(IInputReader<TChallengeSelection> inputReader, Func<string, int, bool>? chunkSelector = null, ChunkWhenFlags chunkWhenFlags = 0x00)
+    public ChunkedIntInputProvider(IInputReader<TChallengeSelection> inputReader, Func<string, int, bool>? chunkSelector = null, ChunkWhenFlags chunkWhenFlags = ChunkWhenFlags.None)
         : base(inputReader, chunkSelector, chunkWhenFlags)
     { }
 

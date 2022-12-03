@@ -17,7 +17,7 @@ public abstract class AbstractChunkedInputProvider<TChallengeSelection, TOutput>
     private readonly Func<string, int, bool> _chunkSelector;
     private readonly ChunkWhenFlags _chunkWhenFlags;
 
-    protected AbstractChunkedInputProvider(IInputReader<TChallengeSelection> inputReader, Func<string, int, bool>? chunkSelector = null, ChunkWhenFlags flags = 0x00)
+    protected AbstractChunkedInputProvider(IInputReader<TChallengeSelection> inputReader, Func<string, int, bool>? chunkSelector = null, ChunkWhenFlags flags = ChunkWhenFlags.None)
     {
         _inputReader = inputReader;
         _chunkSelector = chunkSelector ?? ((line, _) => string.IsNullOrWhiteSpace(line));

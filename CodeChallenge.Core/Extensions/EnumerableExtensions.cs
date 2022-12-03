@@ -51,6 +51,7 @@ public static class EnumerableExtensions
 [Flags]
 public enum ChunkWhenFlags
 {
+    None                          = 0,
     IncludeMatchedItemInChunk     = 1 << 0,
     IncludeMatchedItemInNextChunk = 1 << 1
 }
