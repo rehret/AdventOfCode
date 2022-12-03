@@ -24,6 +24,8 @@ internal abstract class AdventOfCodeSolution<TInput, TResult> : AbstractSolution
         return GetStringFromResult(result);
     }
 
+    // This method has internal visibility instead of protected so that unit tests can pass TInput and assert on TResult
+    // instead of mocking input and performing string comparison on the result
     internal virtual Task<TResult> ComputeSolutionAsync(TInput input) => Task.FromResult(ComputeSolution(input));
 
     protected virtual TResult ComputeSolution(TInput input) => throw new NotImplementedException();
