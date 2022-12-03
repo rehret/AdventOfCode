@@ -12,8 +12,7 @@ internal class Solution01 : AdventOfCodeSolution<IEnumerable<string>, int>
     {
         return input
             .Select(line => (line[..(line.Length / 2)], line[(line.Length / 2)..]))
-            .Select(compartments =>
-                compartments.Item1[compartments.Item1.IndexOfAny(compartments.Item2.ToCharArray())])
+            .Select(compartments => compartments.Item1.Intersect(compartments.Item2).Single())
             .Select(ItemScoreHelpers.GetItemScore)
             .Sum();
     }
