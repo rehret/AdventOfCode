@@ -17,7 +17,6 @@ public class StringInputProviderTests
 
     [Theory]
     [InlineData("Test String", "Test String")]
-    [InlineData("", "")]
     public async Task GetInputAsync_GivenValidInput_ReturnsInputString(string expected, string input)
     {
         // Arrange
@@ -29,5 +28,21 @@ public class StringInputProviderTests
 
         // Assert
         Assert.Equal(expected, result);
+    }
+
+    [Theory]
+    [InlineData("")]
+    [InlineData(null)]
+    public async Task GetInputAsync_GivenEmptyInput_FiltersEmptyInputFromResult(string input)
+    {
+        // Arrange
+        _inputReaderMock.Setup(x => x.GetInputAsync(It.IsAny<ChallengeSelection>()))
+            .ReturnsAsync(() => new[] { input });
+
+        // Act
+        var result = (await _inputProvider.GetInputAsync(new ChallengeSelection()).ConfigureAwait(false));
+
+        // Assert
+        Assert.Empty(result);
     }
 }
