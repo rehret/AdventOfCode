@@ -21,8 +21,10 @@ internal abstract class TomsDataOnionSolution : AbstractSolution<TomsDataOnionSo
 
     public override async Task<string> SolveAsync(Stopwatch? stopwatch = null)
     {
+        var challengeSelection = GetChallengeSelection();
+
         // Get input
-        var input = await _inputProvider.GetInputAsync(GetChallengeSelection()).ConfigureAwait(false);
+        var input = await _inputProvider.GetInputAsync(challengeSelection).ConfigureAwait(false);
 
         // Process the layer
         stopwatch?.Start();
@@ -30,7 +32,6 @@ internal abstract class TomsDataOnionSolution : AbstractSolution<TomsDataOnionSo
         stopwatch?.Stop();
 
         // Write output
-        var challengeSelection = GetChallengeSelection();
         await _outputWriter.WriteOutput(challengeSelection, stringResult).ConfigureAwait(false);
 
         return GetOutput(stringResult);
