@@ -2,13 +2,6 @@
 
 public static class EnumerableExtensions
 {
-    [Flags]
-    public enum ChunkWhenFlags
-    {
-        IncludeMatchedItemInChunk     = 1 << 0,
-        IncludeMatchedItemInNextChunk = 1 << 1
-    }
-
     public static IEnumerable<IEnumerable<T>> ChunkWhen<T>(
         this IEnumerable<T> collection,
         Func<T, bool> selector,
@@ -53,4 +46,11 @@ public static class EnumerableExtensions
 
         if (chunkHasItems) yield return chunk;
     }
+}
+
+[Flags]
+public enum ChunkWhenFlags
+{
+    IncludeMatchedItemInChunk     = 1 << 0,
+    IncludeMatchedItemInNextChunk = 1 << 1
 }
