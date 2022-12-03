@@ -1,4 +1,4 @@
-﻿namespace CodeChallenge.Core.Tests.InputProviders;
+﻿namespace CodeChallenge.Core.Tests.IO.InputProviders;
 
 using CodeChallenge.Core;
 using CodeChallenge.Core.IO;
