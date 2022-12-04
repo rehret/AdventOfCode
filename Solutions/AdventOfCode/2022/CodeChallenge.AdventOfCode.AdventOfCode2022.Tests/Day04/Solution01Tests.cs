@@ -3,12 +3,14 @@
 using CodeChallenge.AdventOfCode.AdventOfCode2022.Day04;
 using CodeChallenge.Core.IO;
 
+using Range = System.Range;
+
 public class Solution01Tests
 {
     private readonly Solution01 _solution;
     public Solution01Tests()
     {
-        var inputProviderMock = new Mock<IInputProvider<AdventOfCodeChallengeSelection, IEnumerable<string>>>();
+        var inputProviderMock = new Mock<IInputProvider<AdventOfCodeChallengeSelection, IEnumerable<(Range, Range)>>>();
         _solution = new Solution01(inputProviderMock.Object);
     }
 
@@ -16,14 +18,14 @@ public class Solution01Tests
     public async Task ComputeSolutionAsync_WithSampleInput_ProducesSampleOutput()
     {
         // Arrange
-        var input = new List<string>
+        var input = new List<(Range, Range)>
         {
-            "2-4,6-8",
-            "2-3,4-5",
-            "5-7,7-9",
-            "2-8,3-7",
-            "6-6,4-6",
-            "2-6,4-8"
+            (new Range(2, 5), new Range(6, 9)),
+            (new Range(2, 4), new Range(4, 6)),
+            (new Range(5, 8), new Range(7, 10)),
+            (new Range(2, 9), new Range(3, 8)),
+            (new Range(6, 7), new Range(4, 7)),
+            (new Range(2, 7), new Range(4, 8))
         };
 
         // Act

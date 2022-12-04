@@ -1,13 +1,14 @@
-﻿namespace CodeChallenge.AdventOfCode.AdventOfCode2022.Day04;
+﻿namespace CodeChallenge.AdventOfCode.AdventOfCode2022.Day04.InputProviders;
 
 using CodeChallenge.Core.IO;
+using CodeChallenge.Core.IO.InputProviders;
 
-internal abstract class AbstractDay04Solution : AdventOfCodeSolution<IEnumerable<string>, int>
+internal class RangeTupleInputProvider : AbstractInputProvider<AdventOfCodeChallengeSelection, IEnumerable<(Range, Range)>>
 {
-    protected AbstractDay04Solution(IInputProvider<AdventOfCodeChallengeSelection, IEnumerable<string>> inputProvider) : base(inputProvider) { }
+    public RangeTupleInputProvider(IInputReader<AdventOfCodeChallengeSelection> inputReader) : base(inputReader) { }
 
-    protected static IEnumerable<(Range, Range)> BuildRangePairs(IEnumerable<string> input) =>
-        input
+    protected override IEnumerable<(Range, Range)> ParseLines(IEnumerable<string> lines) =>
+        lines
             .Select(x => x.Split(',', 2, StringSplitOptions.TrimEntries))
             .Select(x => (BuildRange(x[0]), BuildRange(x[1])));
 
