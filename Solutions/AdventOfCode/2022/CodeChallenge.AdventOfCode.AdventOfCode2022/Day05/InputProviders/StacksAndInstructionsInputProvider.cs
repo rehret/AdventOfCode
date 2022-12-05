@@ -5,7 +5,6 @@ using System.Text.RegularExpressions;
 using CodeChallenge.AdventOfCode.AdventOfCode2022.Day05.Models;
 using CodeChallenge.Core.Extensions;
 using CodeChallenge.Core.IO;
-using CodeChallenge.Core.IO.InputProviders;
 
 internal class StacksAndInstructionsInputProvider : IInputProvider<AdventOfCodeChallengeSelection, StacksAndInstructions>
 {
@@ -34,36 +33,37 @@ internal class StacksAndInstructionsInputProvider : IInputProvider<AdventOfCodeC
 
     private static Stack<char>[] ParseStacks(IEnumerable<string> lines)
     {
-        const int stackColumnWidth = 4; // Each column is a left square-bracket, a letter, a right square bracket, and a space (ex: '[X] ')
-
         var linesArray = lines.ToArray();
 
-        var numberOfColumns = linesArray
+        var stackPositions = linesArray
             .Last()
-            .Split(' ', StringSplitOptions.TrimEntries | StringSplitOptions.RemoveEmptyEntries)
-            .Select(int.Parse)
-            .Max();
+            .ToCharArray()
+            .Select((@char, index) => (CharacterPosition: index, StackNumber: @char))
+            .Where(x => char.IsNumber(x.StackNumber))
+            .ToDictionary(
+                x => int.Parse(x.StackNumber.ToString()) - 1,
+                x => x.CharacterPosition
+            );
 
-        var stacks = new Stack<char>[numberOfColumns];
-        for (var i = 0; i < numberOfColumns; i++)
+        var stacks = new Stack<char>[stackPositions.Keys.Count];
+        for (var i = 0; i < stackPositions.Keys.Count; i++)
         {
             stacks[i] = new Stack<char>();
         }
 
         var stackInputs = linesArray
-            .Take(linesArray.Length - 1) // Remove last line because it only has the stack numbers
-            .Reverse()
-            .Select(line => line.ToCharArray().Chunk(stackColumnWidth).Select(boxChars => string.Join("", boxChars)))
-            .Select(boxes => boxes.Select((box, index) => (index, box[1])).Where(x => char.IsLetter(x.Item2)))
-            .Select(x => x.ToArray());
+            .Take(linesArray.Length - 1); // Remove last line because it only has the stack numbers
 
-        foreach (var stackInput in stackInputs)
-        {
-            foreach (var (index, box) in stackInput)
-            {
-                stacks[index].Push(box);
-            }
-        }
+         foreach (var stackInput in stackInputs.Reverse()) // Reverse so we push bottom items first
+         {
+             foreach (var (stackNumber, characterPosition) in stackPositions)
+             {
+                 if (char.IsLetter(stackInput[characterPosition]))
+                 {
+                     stacks[stackNumber].Push(stackInput[characterPosition]);
+                 }
+             }
+         }
 
         return stacks;
     }
