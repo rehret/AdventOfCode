@@ -70,8 +70,7 @@ internal class FileSystemInputProvider : AbstractInputProvider<AdventOfCodeChall
         }
 
         var directory = workingDirectory.Peek().Entities
-            .Where(x => x is Directory)
-            .Cast<Directory>()
+            .OfType<Directory>()
             .SingleOrDefault(x => x.Name == args[0]);
         if (directory != null)
         {

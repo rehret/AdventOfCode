@@ -25,7 +25,7 @@ internal class Solution01 : AdventOfCodeSolution<Directory, int>
             result.Add(directory);
         }
 
-        result.AddRange(directory.Entities.Where(x => x is Directory).Cast<Directory>().SelectMany(GetDirectoriesUnderThresholdSize));
+        result.AddRange(directory.Entities.OfType<Directory>().SelectMany(GetDirectoriesUnderThresholdSize));
 
         return result;
     }

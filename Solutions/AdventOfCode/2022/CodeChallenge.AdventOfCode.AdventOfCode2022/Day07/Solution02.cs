@@ -28,8 +28,8 @@ internal class Solution02 : AdventOfCodeSolution<Directory, int>
     {
         var result = new List<Directory> { directory };
 
-        var subDirectories = directory.Entities.Where(x => x is Directory)
-            .Cast<Directory>()
+        var subDirectories = directory.Entities
+            .OfType<Directory>()
             .SelectMany(GetAllDirectories);
 
         result.AddRange(subDirectories);

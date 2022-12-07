@@ -2,7 +2,6 @@
 
 using CodeChallenge.AdventOfCode.AdventOfCode2022.Day07.InputProviders;
 using CodeChallenge.AdventOfCode.AdventOfCode2022.Day07.Models;
-using CodeChallenge.Core;
 using CodeChallenge.Core.IO;
 
 public class FileSystemInputProviderTests
@@ -55,48 +54,30 @@ public class FileSystemInputProviderTests
 
         // Assert
         Assert.Equal("/", result.Name);
-        var a = result.Entities.Single(x => x is Directory && x.Name == "a") as Directory;
-        Assert.NotNull(a);
-        var e = a.Entities.Single(x => x is Directory && x.Name == "e") as Directory;
-        Assert.NotNull(e);
-        Assert.Collection(
-            e.Entities,
-            x =>
-            {
-                var file = x as File;
-                Assert.NotNull(file);
-                Assert.Equal("i", file.Name);
-                Assert.Equal(584, file.Size);
-            }
-        );
-        var f = a.Entities.Single(x => x is File && x.Name == "f") as File;
-        Assert.NotNull(f);
+        var a = result.Entities.OfType<Directory>().Single(x => x.Name == "a");
+        var e = a.Entities.OfType<Directory>().Single(x => x.Name == "e");
+        Assert.Empty(e.Entities.OfType<Directory>());
+        var i = e.Entities.OfType<File>().Single();
+        Assert.Equal("i", i.Name);
+        Assert.Equal(584, i.Size);
+        var f = a.Entities.OfType<File>().Single(x =>x.Name == "f");
         Assert.Equal(29116, f.Size);
-        var g = a.Entities.Single(x => x is File && x.Name == "g") as File;
-        Assert.NotNull(g);
+        var g = a.Entities.OfType<File>().Single(x => x.Name == "g");
         Assert.Equal(2557, g.Size);
-        var hLst = a.Entities.Single(x => x is File && x.Name == "h.lst") as File;
-        Assert.NotNull(hLst);
+        var hLst = a.Entities.OfType<File>().Single(x => x.Name == "h.lst");
         Assert.Equal(62596, hLst.Size);
-        var bTxt = result.Entities.Single(x => x is File && x.Name == "b.txt") as File;
-        Assert.NotNull(bTxt);
+        var bTxt = result.Entities.OfType<File>().Single(x => x.Name == "b.txt");
         Assert.Equal(14848514, bTxt.Size);
-        var cDat = result.Entities.Single(x => x is File && x.Name == "c.dat") as File;
-        Assert.NotNull(cDat);
+        var cDat = result.Entities.OfType<File>().Single(x => x.Name == "c.dat");
         Assert.Equal(8504156, cDat.Size);
-        var d = result.Entities.Single(x => x is Directory && x.Name == "d") as Directory;
-        Assert.NotNull(d);
-        var j = d.Entities.Single(x => x is File && x.Name == "j") as File;
-        Assert.NotNull(j);
+        var d = result.Entities.OfType<Directory>().Single(x => x.Name == "d");
+        var j = d.Entities.OfType<File>().Single(x => x.Name == "j");
         Assert.Equal(4060174, j.Size);
-        var dLog = d.Entities.Single(x => x is File && x.Name == "d.log") as File;
-        Assert.NotNull(dLog);
+        var dLog = d.Entities.OfType<File>().Single(x => x.Name == "d.log");
         Assert.Equal(8033020, dLog.Size);
-        var dExt = d.Entities.Single(x => x is File && x.Name == "d.ext") as File;
-        Assert.NotNull(dExt);
+        var dExt = d.Entities.OfType<File>().Single(x => x.Name == "d.ext");
         Assert.Equal(5626152, dExt.Size);
-        var k = d.Entities.Single(x => x is File && x.Name == "k") as File;
-        Assert.NotNull(k);
+        var k = d.Entities.OfType<File>().Single(x => x.Name == "k");
         Assert.Equal(7214296, k.Size);
     }
 }
