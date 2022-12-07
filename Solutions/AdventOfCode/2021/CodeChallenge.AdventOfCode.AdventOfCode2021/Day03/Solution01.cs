@@ -6,7 +6,7 @@ using CodeChallenge.Core.IO;
 [AdventOfCodeSolution(2021, 3, 1)]
 internal class Solution01 : AdventOfCodeSolution<IEnumerable<string>, string>
 {
-    public Solution01(IInputProvider<AdventOfCodeChallengeSelection, IEnumerable<string>> inputProvider) : base(inputProvider) { }
+    public Solution01(IInputProviderBuilder<AdventOfCodeChallengeSelection> inputProviderBuilder) : base(inputProviderBuilder.ReadLines().ParseUsing((string x) => x).Build()) { }
 
     protected override string ComputeSolution(IEnumerable<string> input)
     {

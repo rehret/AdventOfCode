@@ -7,7 +7,9 @@ using CodeChallenge.Core.IO;
 [AdventOfCodeSolution(2022, 5, 1)]
 internal class Solution01 : AdventOfCodeSolution<StacksAndInstructions, string>
 {
-    public Solution01(IInputProvider<AdventOfCodeChallengeSelection, StacksAndInstructions> inputProvider) : base(inputProvider) { }
+    public Solution01(IInputProviderBuilder<AdventOfCodeChallengeSelection> inputProviderBuilder)
+        : base(inputProviderBuilder.BuildDay05InputProvider())
+    { }
 
     protected override string ComputeSolution(StacksAndInstructions input)
     {

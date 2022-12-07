@@ -10,7 +10,9 @@ internal class Solution02 : AdventOfCodeSolution<Directory, int>
     private const int FilesystemSize = 70000000;
     private const int UpdateSize = 30000000;
 
-    public Solution02(IInputProvider<AdventOfCodeChallengeSelection, Directory> inputProvider) : base(inputProvider) { }
+    public Solution02(IInputProviderBuilder<AdventOfCodeChallengeSelection> inputProviderBuilder)
+        : base(inputProviderBuilder.BuildDay07InputProvider())
+    { }
 
     protected override int ComputeSolution(Directory root)
     {

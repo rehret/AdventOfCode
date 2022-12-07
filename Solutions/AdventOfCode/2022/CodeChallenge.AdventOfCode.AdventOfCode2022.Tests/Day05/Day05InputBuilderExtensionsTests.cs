@@ -1,18 +1,19 @@
-﻿namespace CodeChallenge.AdventOfCode.AdventOfCode2022.Tests.Day05.InputProviders;
+﻿namespace CodeChallenge.AdventOfCode.AdventOfCode2022.Tests.Day05;
 
-using CodeChallenge.AdventOfCode.AdventOfCode2022.Day05.InputProviders;
+using CodeChallenge.AdventOfCode.AdventOfCode2022.Day05;
 using CodeChallenge.AdventOfCode.AdventOfCode2022.Day05.Models;
 using CodeChallenge.Core.IO;
 
-public class StacksAndInstructionsInputProviderTests
+public class Day05InputBuilderExtensionsTests
 {
     private readonly Mock<IInputReader<AdventOfCodeChallengeSelection>> _inputReaderMock;
-    private readonly StacksAndInstructionsInputProvider _inputProvider;
+    private readonly IInputProvider<AdventOfCodeChallengeSelection, StacksAndInstructions> _inputProvider;
 
-    public StacksAndInstructionsInputProviderTests()
+    public Day05InputBuilderExtensionsTests()
     {
         _inputReaderMock = new Mock<IInputReader<AdventOfCodeChallengeSelection>>();
-        _inputProvider = new StacksAndInstructionsInputProvider(_inputReaderMock.Object);
+        _inputProvider = new InputProviderBuilder<AdventOfCodeChallengeSelection>(_inputReaderMock.Object)
+            .BuildDay05InputProvider();
     }
 
     [Fact]
@@ -33,7 +34,7 @@ public class StacksAndInstructionsInputProviderTests
         };
 
         _inputReaderMock.Setup(x => x.GetInputAsync(It.IsAny<AdventOfCodeChallengeSelection>()))
-            .ReturnsAsync(() => input);
+            .ReturnsAsync(() => string.Join("\n", input));
 
         // Act
         var result = await _inputProvider.GetInputAsync(new AdventOfCodeChallengeSelection(0, 0, 0)).ConfigureAwait(false);

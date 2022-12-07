@@ -9,8 +9,9 @@ public class Solution01Tests
     private readonly Solution01 _solution;
     public Solution01Tests()
     {
-        var inputProviderMock = new Mock<IInputProvider<AdventOfCodeChallengeSelection, IEnumerable<StrategyGuideStep>>>();
-        _solution = new Solution01(_ => inputProviderMock.Object);
+        var inputReaderMock = new Mock<IInputReader<AdventOfCodeChallengeSelection>>();
+        var inputBuilder = new InputProviderBuilder<AdventOfCodeChallengeSelection>(inputReaderMock.Object);
+        _solution = new Solution01(inputBuilder);
     }
 
     [Fact]

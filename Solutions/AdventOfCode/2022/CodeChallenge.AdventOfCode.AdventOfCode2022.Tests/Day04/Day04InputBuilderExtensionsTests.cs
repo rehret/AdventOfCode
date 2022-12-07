@@ -1,19 +1,20 @@
-﻿namespace CodeChallenge.AdventOfCode.AdventOfCode2022.Tests.Day04.InputProviders;
+﻿namespace CodeChallenge.AdventOfCode.AdventOfCode2022.Tests.Day04;
 
-using CodeChallenge.AdventOfCode.AdventOfCode2022.Day04.InputProviders;
+using CodeChallenge.AdventOfCode.AdventOfCode2022.Day04;
 using CodeChallenge.Core.IO;
 
 using Range = System.Range;
 
-public class RangeTupleInputProviderTests
+public class Day04InputBuilderExtensionsTests
 {
     private readonly Mock<IInputReader<AdventOfCodeChallengeSelection>> _inputReaderMock;
-    private readonly RangeTupleInputProvider _inputProvider;
+    private readonly IInputProvider<AdventOfCodeChallengeSelection, IEnumerable<(Range, Range)>> _inputProvider;
 
-    public RangeTupleInputProviderTests()
+    public Day04InputBuilderExtensionsTests()
     {
         _inputReaderMock = new Mock<IInputReader<AdventOfCodeChallengeSelection>>();
-        _inputProvider = new RangeTupleInputProvider(_inputReaderMock.Object);
+        _inputProvider = new InputProviderBuilder<AdventOfCodeChallengeSelection>(_inputReaderMock.Object)
+            .BuildDay04InputProvider();
     }
 
     [Theory]
@@ -22,7 +23,7 @@ public class RangeTupleInputProviderTests
     {
         // Arrange
         _inputReaderMock.Setup(x => x.GetInputAsync(It.IsAny<AdventOfCodeChallengeSelection>()))
-            .ReturnsAsync(() => new[] { input });
+            .ReturnsAsync(() => input);
 
         // Act
         var result = (await _inputProvider.GetInputAsync(new AdventOfCodeChallengeSelection(0, 0, 0)).ConfigureAwait(false)).Single();

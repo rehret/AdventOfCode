@@ -6,8 +6,8 @@ internal class AbstractDay06Solution : AdventOfCodeSolution<string, int>
 {
     private readonly int _bufferSize;
 
-    protected AbstractDay06Solution(IInputProvider<AdventOfCodeChallengeSelection, string> inputProvider, int bufferSize)
-        : base(inputProvider)
+    protected AbstractDay06Solution(IInputProviderBuilder<AdventOfCodeChallengeSelection> inputProviderBuilder, int bufferSize)
+        : base(inputProviderBuilder.ReadAllInput(true).AsString().Build())
     {
         _bufferSize = bufferSize;
     }

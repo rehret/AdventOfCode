@@ -9,7 +9,9 @@ internal class Solution01 : AdventOfCodeSolution<Directory, int>
 {
     private const int ThresholdSize = 100000;
 
-    public Solution01(IInputProvider<AdventOfCodeChallengeSelection, Directory> inputProvider) : base(inputProvider) { }
+    public Solution01(IInputProviderBuilder<AdventOfCodeChallengeSelection> inputProviderBuilder)
+        : base(inputProviderBuilder.BuildDay07InputProvider())
+    { }
 
     protected override int ComputeSolution(Directory root)
     {

@@ -2,7 +2,6 @@
 
 using CodeChallenge.AdventOfCode.AdventOfCode2021.Day02;
 using CodeChallenge.AdventOfCode.AdventOfCode2021.Day02.Models;
-using CodeChallenge.Core;
 using CodeChallenge.Core.IO;
 
 public class Solution01Tests
@@ -11,7 +10,9 @@ public class Solution01Tests
 
     public Solution01Tests()
     {
-        _solution = new Solution01(new Mock<IInputProvider<AdventOfCodeChallengeSelection, IEnumerable<SubmarineInstruction>>>().Object);
+        var inputReaderMock = new Mock<IInputReader<AdventOfCodeChallengeSelection>>();
+        var inputBuilder = new InputProviderBuilder<AdventOfCodeChallengeSelection>(inputReaderMock.Object);
+        _solution = new Solution01(inputBuilder);
     }
 
     [Fact]

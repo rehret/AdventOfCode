@@ -8,7 +8,7 @@ internal class Solution01 : AbstractDay06Solution
 {
     private const int BufferSize = 4;
 
-    public Solution01(IInputProvider<AdventOfCodeChallengeSelection, string> inputProvider)
-        : base(inputProvider, BufferSize)
+    public Solution01(IInputProviderBuilder<AdventOfCodeChallengeSelection> inputProviderBuilder)
+        : base(inputProviderBuilder, BufferSize)
     { }
 }

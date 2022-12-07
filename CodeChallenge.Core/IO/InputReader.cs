@@ -12,12 +12,11 @@ internal class InputReader<TChallengeSelection> : IInputReader<TChallengeSelecti
         _inputFilePathProvider = inputFilePathProvider;
     }
 
-    public async Task<IEnumerable<string>> GetInputAsync(TChallengeSelection challengeSelection)
+    public async Task<string> GetInputAsync(TChallengeSelection challengeSelection)
     {
         var filepath = GetInputFilePath(challengeSelection);
         using var streamReader = new StreamReader(filepath, Encoding.UTF8);
-        return (await streamReader.ReadToEndAsync().ConfigureAwait(false))
-            .Split('\n');
+        return await streamReader.ReadToEndAsync().ConfigureAwait(false);
     }
 
     private string GetInputFilePath(TChallengeSelection challengeSelection)

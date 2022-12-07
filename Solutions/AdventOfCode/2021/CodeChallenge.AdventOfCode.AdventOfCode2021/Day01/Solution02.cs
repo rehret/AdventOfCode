@@ -9,7 +9,9 @@ internal class Solution02 : AdventOfCodeSolution<IEnumerable<int>, int>
 {
     private const ushort WindowSize = 3;
 
-    public Solution02(IInputProvider<AdventOfCodeChallengeSelection, IEnumerable<int>> inputProvider) : base(inputProvider)  { }
+    public Solution02(IInputProviderBuilder<AdventOfCodeChallengeSelection> inputProviderBuilder)
+        : base(inputProviderBuilder.BuildDay01InputProvider())
+    { }
 
     protected override int ComputeSolution(IEnumerable<int> input)
     {

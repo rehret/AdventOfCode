@@ -8,7 +8,9 @@ using CodeChallenge.Core.IO;
 [AdventOfCodeSolution(2021, 1, 1)]
 internal class Solution01 : AdventOfCodeSolution<IEnumerable<int>, int>
 {
-    public Solution01(IInputProvider<AdventOfCodeChallengeSelection, IEnumerable<int>> inputProvider) : base(inputProvider) { }
+    public Solution01(IInputProviderBuilder<AdventOfCodeChallengeSelection> inputProviderBuilder)
+        : base(inputProviderBuilder.BuildDay01InputProvider())
+    { }
 
     protected override int ComputeSolution(IEnumerable<int> input)
     {

@@ -7,7 +7,7 @@ using CodeChallenge.Core.IO;
 [AdventOfCodeSolution(2021, 2, 2)]
 internal class Solution02 : AdventOfCodeSolution<IEnumerable<SubmarineInstruction>, int>
 {
-    public Solution02(IInputProvider<AdventOfCodeChallengeSelection, IEnumerable<SubmarineInstruction>> inputProvider) : base(inputProvider) { }
+    public Solution02(IInputProviderBuilder<AdventOfCodeChallengeSelection> inputProviderBuilder) : base(inputProviderBuilder.BuildDay02InputProvider()) { }
 
     protected override int ComputeSolution(IEnumerable<SubmarineInstruction> instructions)
     {

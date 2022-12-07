@@ -3,12 +3,10 @@
 using CodeChallenge.AdventOfCode.Attributes;
 using CodeChallenge.Core.IO;
 
-using Microsoft.VisualBasic;
-
 [AdventOfCodeSolution(2022, 3, 2)]
 internal class Solution02 : AdventOfCodeSolution<IEnumerable<string>, int>
 {
-    public Solution02(IInputProvider<AdventOfCodeChallengeSelection, IEnumerable<string>> inputProvider) : base(inputProvider) { }
+    public Solution02(IInputProviderBuilder<AdventOfCodeChallengeSelection> inputProviderBuilder) : base(inputProviderBuilder.BuildDay03InputProvider()) { }
 
     protected override int ComputeSolution(IEnumerable<string> input)
     {
