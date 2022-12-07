@@ -2,7 +2,7 @@
 
 using System.Text.RegularExpressions;
 
-internal class TomtelCoreI69Emulator : IDisposable, IAsyncDisposable
+internal partial class TomtelCoreI69Emulator : IDisposable, IAsyncDisposable
 {
     private readonly MachineState _state;
     private readonly MemoryStream _outputStream;
@@ -36,7 +36,7 @@ internal class TomtelCoreI69Emulator : IDisposable, IAsyncDisposable
                 line = line[..line.IndexOf('#')];
             }
 
-            var operands = new Regex(@"\s+").Split(line.Trim());
+            var operands = WhitespaceRegex().Split(line.Trim());
             return operands.Select(op => Convert.ToByte(op, 16));
         }).ToArray();
     }
@@ -50,4 +50,7 @@ internal class TomtelCoreI69Emulator : IDisposable, IAsyncDisposable
     {
         await _outputStream.DisposeAsync().ConfigureAwait(false);
     }
+
+    [GeneratedRegex(@"\s+", RegexOptions.Compiled)]
+    private static partial Regex WhitespaceRegex();
 }

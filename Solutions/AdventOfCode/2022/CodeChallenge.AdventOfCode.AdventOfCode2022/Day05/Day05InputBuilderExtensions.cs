@@ -79,6 +79,6 @@ internal static partial class Day05InputBuilderExtensions
             ));
     }
 
-    [GeneratedRegex("^move\\s+(?<Count>\\d+)\\s+from\\s+(?<Source>\\d+)\\s+to\\s+(?<Destination>\\d+)$", RegexOptions.Compiled)]
+    [GeneratedRegex(@"^move\s+(?<Count>\d+)\s+from\s+(?<Source>\d+)\s+to\s+(?<Destination>\d+)$", RegexOptions.Compiled)]
     private static partial Regex MoveInstructionRegex();
 }

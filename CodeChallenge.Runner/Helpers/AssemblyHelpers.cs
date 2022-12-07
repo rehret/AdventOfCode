@@ -3,10 +3,8 @@
 using System.Reflection;
 using System.Text.RegularExpressions;
 
-internal static class AssemblyHelpers
+internal static partial class AssemblyHelpers
 {
-    private static readonly Regex ReferencedAssemblyPattern = new(@"CodeChallenge[^\\/]*\.dll", RegexOptions.Compiled);
-
     private static Assembly[]? _referencedAssemblies;
     private static readonly object ReferencedAssembliesLock = new();
 
@@ -17,10 +15,13 @@ internal static class AssemblyHelpers
         {
             _referencedAssemblies ??= Directory
                 .EnumerateFiles(AppDomain.CurrentDomain.BaseDirectory, "*.dll", SearchOption.AllDirectories)
-                .Where(filename => ReferencedAssemblyPattern.IsMatch(filename))
+                .Where(filename => ReferencedAssemblyPattern().IsMatch(filename))
                 .Select(Assembly.LoadFrom)
                 .ToArray();
         }
         return _referencedAssemblies.Where(assembly => includeCurrentAssembly || assembly != thisAssembly).ToArray();
     }
+
+    [GeneratedRegex(@"CodeChallenge[^\\/]*\.dll", RegexOptions.Compiled)]
+    private static partial Regex ReferencedAssemblyPattern();
 }
