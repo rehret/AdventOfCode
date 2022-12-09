@@ -8,10 +8,6 @@ internal record Coordinate(int X, int Y)
         MoveDirection.Left      => this with { X = X - 1 },
         MoveDirection.Down      => this with { Y = Y - 1 },
         MoveDirection.Right     => this with { X = X + 1 },
-        MoveDirection.UpLeft    => new Coordinate(X: X - 1, Y: Y + 1),
-        MoveDirection.DownLeft  => new Coordinate(X: X - 1, Y: Y - 1),
-        MoveDirection.DownRight => new Coordinate(X: X + 1, Y: Y - 1),
-        MoveDirection.UpRight   => new Coordinate(X: X + 1, Y: Y + 1),
         _                       => throw new ArgumentOutOfRangeException(nameof(direction))
     };
 

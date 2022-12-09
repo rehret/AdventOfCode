@@ -5,9 +5,5 @@ internal enum MoveDirection
     Up,
     Left,
     Down,
-    Right,
-    UpLeft,
-    DownLeft,
-    DownRight,
-    UpRight
+    Right
 }
