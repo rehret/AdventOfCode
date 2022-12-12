@@ -20,6 +20,28 @@ public abstract class AbstractCodeChallengeCommand<T> : Command
         var stopwatch = new Stopwatch();
         var result = await solution.SolveAsync(stopwatch).ConfigureAwait(false);
         Console.WriteLine(result);
-        logger.LogDebug("Solution execution took {SolutionExecutionDuration}ms", stopwatch.ElapsedMilliseconds);
+        logger.LogDebug("Solution execution took {SolutionExecutionDuration}", TimeSpanToString(TimeSpan.FromMilliseconds(stopwatch.ElapsedMilliseconds)));
+    }
+
+    private static string TimeSpanToString(TimeSpan timeSpan)
+    {
+        if (timeSpan.TotalSeconds <= 1)
+        {
+            return $@"{timeSpan:%s\.%ff}s";
+        }
+        if (timeSpan.TotalMinutes <= 1)
+        {
+            return $@"{timeSpan:%s\.%ff}s";
+        }
+        if (timeSpan.TotalHours <= 1)
+        {
+            return $@"{timeSpan:%m}m";
+        }
+        if (timeSpan.TotalDays <= 1)
+        {
+            return $@"{timeSpan:%h}h";
+        }
+
+        return $@"{timeSpan:%d}d";
     }
 }
