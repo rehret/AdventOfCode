@@ -25,19 +25,19 @@ public abstract class AbstractCodeChallengeCommand<T> : Command
 
     private static string TimeSpanToString(TimeSpan timeSpan)
     {
-        if (timeSpan.TotalSeconds <= 1)
+        if (timeSpan.TotalSeconds < 1)
         {
-            return $@"{timeSpan:%s\.%ff}s";
+            return $@"{timeSpan.TotalMilliseconds}ms";
         }
-        if (timeSpan.TotalMinutes <= 1)
+        if (timeSpan.TotalMinutes < 1)
         {
-            return $@"{timeSpan:%s\.%ff}s";
+            return $@"{timeSpan:%s\.ff}s";
         }
-        if (timeSpan.TotalHours <= 1)
+        if (timeSpan.TotalHours < 1)
         {
             return $@"{timeSpan:%m}m";
         }
-        if (timeSpan.TotalDays <= 1)
+        if (timeSpan.TotalDays < 1)
         {
             return $@"{timeSpan:%h}h";
         }
