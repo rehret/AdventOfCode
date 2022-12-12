@@ -30,5 +30,8 @@ internal abstract class Abstract32BitMoveInstruction : Instruction
         state.ThirtyTwoBitRegisters[destinationLocation] = sourceValue;
     }
 
-    protected virtual uint GetSourceValue(MachineState state, byte threeBitSrc) => throw new NotImplementedException();
+    private static uint GetSourceValue(MachineState state, byte threeBitSrc)
+    {
+        return state.ThirtyTwoBitRegisters[GetThirtyTwoBitRegister(threeBitSrc)];
+    }
 }

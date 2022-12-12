@@ -37,5 +37,11 @@ internal abstract class Abstract8BitMoveInstruction : Instruction
         }
     }
 
-    protected virtual byte GetSourceValue(MachineState state, byte threeBitSrc) => throw new NotImplementedException();
+    private static byte GetSourceValue(MachineState state, byte threeBitSrc)
+    {
+        var sourceLocation = GetEightBitRegister(threeBitSrc);
+        return sourceLocation == MachineState.Registers.EightBit.Pointer
+            ? state.Memory[state.ThirtyTwoBitRegisters[MachineState.Registers.ThirtyTwoBit.PTR] + state.EightBitRegisters[MachineState.Registers.EightBit.C]]
+            : state.EightBitRegisters[sourceLocation];
+    }
 }
