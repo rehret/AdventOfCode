@@ -5,12 +5,12 @@ using CodeChallenge.Core.IO;
 
 using Range = System.Range;
 
-public class Day04InputBuilderExtensionsTests
+public class Day04InputProviderBuilderExtensionsTests
 {
     private readonly Mock<IInputReader<AdventOfCodeChallengeSelection>> _inputReaderMock;
     private readonly IInputProvider<AdventOfCodeChallengeSelection, IEnumerable<(Range, Range)>> _inputProvider;
 
-    public Day04InputBuilderExtensionsTests()
+    public Day04InputProviderBuilderExtensionsTests()
     {
         _inputReaderMock = new Mock<IInputReader<AdventOfCodeChallengeSelection>>();
         _inputProvider = new InputProviderBuilder<AdventOfCodeChallengeSelection>(_inputReaderMock.Object)
