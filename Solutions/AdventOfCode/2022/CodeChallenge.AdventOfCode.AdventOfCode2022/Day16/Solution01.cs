@@ -10,7 +10,6 @@ internal class Solution01 : AdventOfCodeSolution<Graph<Valve>, int>
 {
     private const int TotalTimeInMinutes = 30;
     private const string StartingValve = "AA";
-    private static readonly string[] StuckValves = { StartingValve };
 
     public Solution01(IInputProviderBuilder<AdventOfCodeChallengeSelection> inputProviderBuilder)
         : base(inputProviderBuilder.BuildDay16InputProvider())
@@ -18,51 +17,66 @@ internal class Solution01 : AdventOfCodeSolution<Graph<Valve>, int>
 
     protected override int ComputeSolution(Graph<Valve> input)
     {
-        var pressureReleased = 0;
-        var pressurePerMinute = 0;
-        var minute = 0;
+        var valves = input.GetVertices();
+        var start = valves.Single(v => v.Label == StartingValve);
+        var targetValves = valves.Where(v => !v.Equals(start) && v.FlowRate > 0);
 
-        var current = input.GetVertices().Single(v => v.Label == StartingValve);
-        var (target, path) = GetNextTarget(input, current, minute);
+        var initialState = new State(input, 0, 0, 0, start, targetValves);
+        return GetMaxFlow(initialState);
+    }
 
-        while (minute < TotalTimeInMinutes)
+    private int GetMaxFlow(State state)
+    {
+        int ComputeRemainingFlow()
         {
-            if (target == null)
-            {
-                // All valves are open, just wait
-                minute++;
-                pressureReleased += pressurePerMinute;
-            }
-            else if (current == target)
-            {
-                target.IsOpen = true;
-                minute++;
-                pressureReleased += pressurePerMinute;
-                pressurePerMinute += current.FlowRate;
-
-                (target, path) = GetNextTarget(input, current, minute);
-            }
-            else
-            {
-                current = path.First();
-                path.RemoveAt(0);
-                minute++;
-                pressureReleased += pressurePerMinute;
-            }
+            return state.FlowRate * (TotalTimeInMinutes - state.Minute);
         }
 
-        return pressureReleased;
+        if (!state.RemainingValves.Any())
+        {
+            return state.TotalFlow + ComputeRemainingFlow();
+        }
+
+        return state.RemainingValves
+            .Select(valve =>
+            {
+                var distance = GetDistance(state.Graph, state.CurrentValve, valve);
+
+                if (distance >= TotalTimeInMinutes - state.Minute)
+                {
+                    return state.TotalFlow + ComputeRemainingFlow();
+                }
+
+                var newState = state with
+                {
+                    TotalFlow = state.TotalFlow + state.FlowRate * distance,
+                    Minute = state.Minute + distance,
+                    CurrentValve = valve,
+                    FlowRate = state.FlowRate + valve.FlowRate,
+                    RemainingValves = state.RemainingValves.Where(v => !v.Equals(valve))
+                };
+
+                return GetMaxFlow(newState);
+            })
+            .Max();
     }
 
-    private static (Valve? Target, List<Valve> Path) GetNextTarget(Graph<Valve> graph, Valve current, int minute)
+    private readonly IDictionary<(Valve, Valve), int> _distanceCache = new Dictionary<(Valve, Valve), int>();
+    private int GetDistance(Graph<Valve> graph, Valve start, Valve end)
     {
-        var targetAndPath = graph.GetVertices()
-            .Where(v => v is { IsOpen: false, FlowRate: > 0 } && !StuckValves.Contains(v.Label))
-            .Select(v => (Valve: v, Path: Dijkstra.GetShortestPath(graph, current, v).Skip(1).ToList()))
-            .ToList();
+        if (_distanceCache.TryGetValue((start, end), out var distance))
+        {
+            return distance;
+        }
 
-        return targetAndPath.Any()
-            ? targetAndPath.MaxBy(tuple => tuple.Valve.FlowRate / Math.Pow(tuple.Path.Count, 2))
-            : (null, new List<Valve>());
+        if (_distanceCache.TryGetValue((end, start), out var reverseDistance))
+        {
+            return reverseDistance;
+        }
+
+        _distanceCache.Add((start, end), Dijkstra.GetShortestPath(graph, start, end).Count());
+        return _distanceCache[(start, end)];
     }
+
+    private record State(Graph<Valve> Graph, int Minute, int FlowRate, int TotalFlow, Valve CurrentValve, IEnumerable<Valve> RemainingValves);
 }
