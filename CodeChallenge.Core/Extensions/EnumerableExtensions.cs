@@ -46,6 +46,13 @@ public static class EnumerableExtensions
 
         if (chunkHasItems) yield return chunk;
     }
+
+    public static void Deconstruct<T1, T2>(this IEnumerable<(T1, T2)> collection, out IEnumerable<T1> first, out IEnumerable<T2> second)
+    {
+        var queryable = collection.AsQueryable();
+        first = queryable.Select(x => x.Item1);
+        second = queryable.Select(x => x.Item2);
+    }
 }
 
 [Flags]

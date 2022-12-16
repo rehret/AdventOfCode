@@ -31,6 +31,13 @@ public class Graph<T>
             .ToList();
     }
 
+    public IReadOnlyList<Edge> GetEdgesToVertex(T vertex)
+    {
+        return _edges
+            .Where(edge => edge.Second.Equals(vertex))
+            .ToList();
+    }
+
     public void AddVertex(T vertex)
     {
         if (!_vertices.Contains(vertex))
