@@ -2,9 +2,9 @@
 
 using System.Text;
 
-using CodeChallenge.TomsDataOnion.Solutions.Layer6.TomtelCorel69Emulator;
+using CodeChallenge.TomsDataOnion.Solutions.Layer6.TomtelCoreI69Emulator;
 
-public class TomtelCorel69EmulatorTests
+public class TomtelCoreI69EmulatorTests
 {
     [Fact]
     public async Task TomtelCorel69Emulator_GivenSampleInput_ProducesSampleOutput()

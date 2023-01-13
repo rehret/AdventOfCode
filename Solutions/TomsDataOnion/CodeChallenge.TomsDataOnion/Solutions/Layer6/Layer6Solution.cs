@@ -3,7 +3,6 @@
 using CodeChallenge.Core.IO;
 using CodeChallenge.TomsDataOnion.Attributes;
 using CodeChallenge.TomsDataOnion.IO;
-using CodeChallenge.TomsDataOnion.Solutions.Layer6.TomtelCorel69Emulator;
 
 [TomsDataOnionSolution(6)]
 internal class Layer6Solution : TomsDataOnionSolution
@@ -15,7 +14,7 @@ internal class Layer6Solution : TomsDataOnionSolution
     protected override IEnumerable<byte> Decode(IEnumerable<byte> input)
     {
         var program = input.ToArray();
-        var emulator = new TomtelCoreI69Emulator(program.Length);
+        var emulator = new TomtelCoreI69Emulator.TomtelCoreI69Emulator(program.Length);
         emulator.LoadProgram(program);
         return emulator.Execute();
     }

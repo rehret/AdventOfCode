@@ -1,7 +1,7 @@
-﻿namespace CodeChallenge.TomsDataOnion.Solutions.Layer6.TomtelCorel69Emulator;
+﻿namespace CodeChallenge.TomsDataOnion.Solutions.Layer6.TomtelCoreI69Emulator;
 
 using CodeChallenge.TomsDataOnion.Solutions.Layer6.Helpers;
-using CodeChallenge.TomsDataOnion.Solutions.Layer6.TomtelCorel69Emulator.Instructions;
+using CodeChallenge.TomsDataOnion.Solutions.Layer6.TomtelCoreI69Emulator.Instructions;
 
 internal abstract class Instruction
 {

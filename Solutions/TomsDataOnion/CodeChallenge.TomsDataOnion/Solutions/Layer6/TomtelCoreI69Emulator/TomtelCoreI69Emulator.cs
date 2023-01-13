@@ -1,4 +1,4 @@
-﻿namespace CodeChallenge.TomsDataOnion.Solutions.Layer6.TomtelCorel69Emulator;
+﻿namespace CodeChallenge.TomsDataOnion.Solutions.Layer6.TomtelCoreI69Emulator;
 
 using System.Text.RegularExpressions;
 

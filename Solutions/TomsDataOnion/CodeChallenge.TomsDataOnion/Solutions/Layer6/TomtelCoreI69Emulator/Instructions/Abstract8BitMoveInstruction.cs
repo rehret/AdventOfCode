@@ -1,4 +1,4 @@
-﻿namespace CodeChallenge.TomsDataOnion.Solutions.Layer6.TomtelCorel69Emulator.Instructions;
+﻿namespace CodeChallenge.TomsDataOnion.Solutions.Layer6.TomtelCoreI69Emulator.Instructions;
 
 internal abstract class Abstract8BitMoveInstruction : Instruction
 {
