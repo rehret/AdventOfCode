@@ -1,4 +1,4 @@
-# TomtelCorel69 Emulator
+# Tomtel Core i69 Emulator
 
 ## Building
 ```powershell
@@ -9,5 +9,5 @@ dotnet publish -r <architechture> -c Release
 ## Running
 ```powershell
 # From within .\bin\Release\<dotnet-version>\<architecture>\publish
-.\TomtelCorel69Emulator.exe <path to input file>
+.\TomtelCoreI69Emulator.exe <path to input file>
 ```

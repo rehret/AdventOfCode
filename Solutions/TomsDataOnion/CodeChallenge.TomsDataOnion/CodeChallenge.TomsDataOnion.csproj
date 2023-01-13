@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <ItemGroup>
-    <InternalsVisibleTo Include="TomtelCorel69Emulator" />
+    <InternalsVisibleTo Include="TomtelCoreI69Emulator" />
     <InternalsVisibleToSuffix Include=".Tests" />
   </ItemGroup>
 

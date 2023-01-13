@@ -52,7 +52,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CodeChallenge.TomsDataOnion
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Toys", "Toys", "{ADB1DB68-AED7-4407-9964-114AE9D5D079}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TomtelCorel69Emulator", "Solutions\TomsDataOnion\Toys\TomtelCorel69Emulator\TomtelCorel69Emulator.csproj", "{9888B46A-2B0C-4F55-9FF4-6FA9B7013DCD}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TomtelCorel69Emulator", "Solutions\TomsDataOnion\Toys\TomtelCoreI69Emulator\TomtelCoreI69Emulator.csproj", "{9888B46A-2B0C-4F55-9FF4-6FA9B7013DCD}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

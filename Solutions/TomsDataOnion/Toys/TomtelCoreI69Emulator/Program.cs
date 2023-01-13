@@ -3,9 +3,9 @@ using System.CommandLine.Builder;
 using System.CommandLine.Parsing;
 using System.Text;
 
-using CodeChallenge.TomsDataOnion.Solutions.Layer6.TomtelCorel69Emulator;
+using CodeChallenge.TomsDataOnion.Solutions.Layer6.TomtelCoreI69Emulator;
 
-var rootCommand = new RootCommand("TomtelCore69Emulator");
+var rootCommand = new RootCommand("TomtelCoreI69Emulator");
 var filePathArgument = new Argument<FileInfo>("FilePath", description: "Specifies the input file containing TomtelCorel69 assembly code");
 rootCommand.AddArgument(filePathArgument);
 rootCommand.SetHandler(async filePath =>
