@@ -8,7 +8,7 @@
     <ProjectReference Include="..\CodeChallenge.Core\CodeChallenge.Core.csproj" />
 
     <!-- Include all projects in the Solutions directory to automatically include them in the output -->
-    <ProjectReference Include="..\Solutions\**\*.csproj" Exclude="..\Solutions\**\*.Tests.csproj" />
+    <ProjectReference Include="..\Solutions\**\*.csproj" Exclude="..\Solutions\**\*.Tests.csproj;..\Solutions\TomsDataOnion\Toys\**\*.csproj" />
   </ItemGroup>
 
   <ItemGroup>
