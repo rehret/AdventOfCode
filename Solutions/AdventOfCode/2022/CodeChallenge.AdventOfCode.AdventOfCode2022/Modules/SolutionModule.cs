@@ -5,7 +5,5 @@ using System.Reflection;
 using CodeChallenge.AdventOfCode.Attributes;
 using CodeChallenge.Core.Modules;
 
-internal class SolutionModule : SolutionAutoRegisteringModule<AdventOfCodeSolutionAttribute>
-{
-    public SolutionModule() : base(Assembly.GetExecutingAssembly()) { }
-}
+internal class SolutionModule()
+    : SolutionAutoRegisteringModule<AdventOfCodeSolutionAttribute>(Assembly.GetExecutingAssembly());
