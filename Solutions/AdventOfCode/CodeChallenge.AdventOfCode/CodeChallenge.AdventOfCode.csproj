@@ -5,6 +5,8 @@
     <InternalsVisibleTo Include="CodeChallenge.AdventOfCode.AdventOfCode2021.Tests" />
     <InternalsVisibleTo Include="CodeChallenge.AdventOfCode.AdventOfCode2022" />
     <InternalsVisibleTo Include="CodeChallenge.AdventOfCode.AdventOfCode2022.Tests" />
+    <InternalsVisibleTo Include="CodeChallenge.AdventOfCode.AdventOfCode2023" />
+    <InternalsVisibleTo Include="CodeChallenge.AdventOfCode.AdventOfCode2023.Tests" />
   </ItemGroup>
 
   <ItemGroup>

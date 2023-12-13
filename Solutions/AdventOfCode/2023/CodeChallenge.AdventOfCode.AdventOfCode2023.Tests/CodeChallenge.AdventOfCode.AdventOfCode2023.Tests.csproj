@@ -1,0 +1,5 @@
+<Project Sdk="Microsoft.NET.Sdk">
+    <ItemGroup>
+        <ProjectReference Include="..\CodeChallenge.AdventOfCode.AdventOfCode2023\CodeChallenge.AdventOfCode.AdventOfCode2023.csproj" />
+    </ItemGroup>
+</Project>
