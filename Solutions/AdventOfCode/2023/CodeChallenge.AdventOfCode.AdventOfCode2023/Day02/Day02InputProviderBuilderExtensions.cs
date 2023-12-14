@@ -3,7 +3,7 @@
 using CodeChallenge.AdventOfCode.AdventOfCode2023.Day02.Models;
 using CodeChallenge.Core.IO;
 
-internal static class Day02InputBuilderExtensions
+internal static class Day02InputProviderBuilderExtensions
 {
     public static IInputProvider<AdventOfCodeChallengeSelection, IEnumerable<Game>> BuildDay02InputProvider(
         this IInputProviderBuilder<AdventOfCodeChallengeSelection> builder

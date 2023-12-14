@@ -4,12 +4,12 @@ using CodeChallenge.AdventOfCode.AdventOfCode2023.Day02;
 using CodeChallenge.AdventOfCode.AdventOfCode2023.Day02.Models;
 using CodeChallenge.Core.IO;
 
-public class Day02InputBuilderExtensionsTests
+public class Day02InputProviderBuilderExtensionsTests
 {
     private readonly Mock<IInputReader<AdventOfCodeChallengeSelection>> _inputReaderMock;
     private readonly IInputProviderBuilder<AdventOfCodeChallengeSelection> _inputProviderBuilder;
 
-    public Day02InputBuilderExtensionsTests()
+    public Day02InputProviderBuilderExtensionsTests()
     {
         _inputReaderMock = new Mock<IInputReader<AdventOfCodeChallengeSelection>>();
         _inputProviderBuilder = new InputProviderBuilder<AdventOfCodeChallengeSelection>(_inputReaderMock.Object);
